@@ -6,6 +6,7 @@
     <title>Roya — Royalty Reporting, Automated</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :focus-visible { outline: 2px solid #7c3aed; outline-offset: 2px; border-radius: 4px; }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
@@ -36,10 +37,11 @@
         .nav-links a:hover { color: #1a1a2e; }
         .nav-cta {
             font-size: 0.82rem; font-weight: 600; color: white !important;
-            background: #7c3aed; padding: 8px 18px; border-radius: 8px; border: none;
+            background: #7c3aed; padding: 10px 20px; border-radius: 8px; border: none;
         }
         .nav-cta:hover { background: #6d28d9; }
         .nav-mobile { display: none; background: none; border: none; font-size: 1.4rem; color: #6b7280; }
+        .nav-links.mobile-open { display: flex !important; flex-direction: column; position: absolute; top: 56px; left: 0; right: 0; background: white; padding: 16px 32px; border-bottom: 1px solid #e5e7eb; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 
         /* ===== HERO ===== */
         .hero { padding: 160px 0 120px; }
@@ -54,7 +56,7 @@
             font-size: 1.15rem; color: #6b7280; line-height: 1.6;
             margin-bottom: 32px;
         }
-        .hero-right { position: relative; min-height: 420px; }
+        .hero-right { position: relative; min-height: 380px; }
         .btn-primary {
             display: inline-flex; align-items: center; gap: 8px;
             font-size: 0.95rem; font-weight: 600; color: white;
@@ -72,7 +74,35 @@
             position: absolute; background: white; border: 1px solid #e5e7eb;
             border-radius: 12px; padding: 14px 18px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            opacity: 0; transform: translateY(12px);
+            transition: all 0.5s cubic-bezier(.4,.0,.2,1);
         }
+        .hero-float-card.visible { opacity: 1; transform: translateY(0); }
+        .hero-float-card.accent-pop { animation: accentPop 0.4s cubic-bezier(.4,.0,.2,1) forwards; }
+        @keyframes accentPop {
+            0% { opacity:0; transform:scale(0.85) translateY(8px); }
+            100% { opacity:1; transform:scale(1) translateY(0); }
+        }
+        .hero-progress-bar {
+            height: 4px; background: #f3f4f6; border-radius: 2px; overflow: hidden; margin-top: 6px;
+        }
+        .hero-progress-fill {
+            height: 100%; background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            border-radius: 2px; width: 0%; transition: width 1.2s ease;
+        }
+        .hero-check-row {
+            display:flex; align-items:center; gap:6px; font-size:0.66rem; opacity:0;
+            transform:translateX(-6px); transition: all 0.3s ease;
+        }
+        .hero-check-row.visible { opacity:1; transform:translateX(0); }
+        .hero-check-icon {
+            width:14px; height:14px; border-radius:50%; display:flex;
+            align-items:center; justify-content:center; flex-shrink:0;
+        }
+        .hero-check-icon.done { background:#f0fdf4; color:#16a34a; }
+        .hero-check-icon.pending { background:#f3f4f6; color:#9ca3af; }
+        .hero-left { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .hero-left.visible { opacity: 1; transform: translateY(0); }
 
         /* ===== HOW IT WORKS - ALTERNATING ===== */
         .hw-card {
@@ -112,7 +142,7 @@
 
         /* ===== LOGO BAR ===== */
         .logo-bar { padding: 64px 0; border-bottom: 1px solid #f3f4f6; }
-        .logo-bar-label { font-size: 0.82rem; color: #9ca3af; text-align: center; margin-bottom: 28px; }
+        .logo-bar-label { font-size: 0.82rem; color: #6b7280; text-align: center; margin-bottom: 28px; }
         .logo-bar-track-wrap { max-width: 900px; margin: 0 auto; overflow: hidden; }
         .logo-track {
             display: flex; width: max-content;
@@ -148,11 +178,7 @@
             background: white; padding: 40px;
             display: flex; flex-direction: column;
         }
-        .feature-icon {
-            width: 40px; height: 40px; border-radius: 10px;
-            background: #f3f4f6; display: flex; align-items: center; justify-content: center;
-            margin-bottom: 20px;
-        }
+        .feature-icon { margin-bottom: 12px; color: #6b7280; }
         .feature-card h3 {
             font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em;
             margin-bottom: 10px;
@@ -275,9 +301,9 @@
         .footer-inner { display: flex; justify-content: space-between; align-items: center; }
         .footer-logo { font-size: 1.05rem; font-weight: 800; color: #7c3aed; }
         .footer-links { display: flex; gap: 24px; }
-        .footer-links a { font-size: 0.82rem; color: #9ca3af; }
+        .footer-links a { font-size: 0.82rem; color: #6b7280; }
         .footer-links a:hover { color: #6b7280; }
-        .footer-copy { font-size: 0.78rem; color: #c4c7cc; }
+        .footer-copy { font-size: 0.78rem; color: #9ca3af; }
 
         /* ===== GETTING STARTED ===== */
         .steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; position: relative; }
@@ -322,6 +348,183 @@
             max-height: 300px; padding-bottom: 24px;
         }
 
+        /* ===== CROSS-MAPPING (Step 1) ===== */
+        .map-container {
+            display: flex; gap: 90px; align-items: flex-start;
+            position: relative; width: 100%; max-width: 440px;
+        }
+        .field-col {
+            display: flex; flex-direction: column; gap: 5px; width: 130px;
+        }
+        .col-label {
+            font-size: 0.55rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.08em; margin-bottom: 6px; padding-left: 2px;
+        }
+        .col-label.erp { color: #9ca3af; }
+        .col-label.licensor { color: #7c3aed; }
+        .field-pill {
+            font-size: 0.6rem; font-weight: 500; padding: 5px 9px;
+            border-radius: 6px; border: 1px solid #e5e7eb;
+            background: #fff; color: #374151;
+            opacity: 0; transform: translateX(-12px);
+            transition: all 0.35s cubic-bezier(.4,.0,.2,1);
+            white-space: nowrap;
+        }
+        .field-pill.licensor-pill {
+            border-color: #ddd6fe; background: #faf8ff; color: #7c3aed;
+            transform: translateX(12px);
+        }
+        .field-pill.visible { opacity: 1; transform: translateX(0); }
+        .field-pill.mapped {
+            border-color: #a78bfa; background: #f5f3ff;
+            box-shadow: 0 0 6px rgba(124,58,237,0.12);
+        }
+        .field-pill.licensor-pill.mapped {
+            background: #ede9fe;
+            box-shadow: 0 0 6px rgba(124,58,237,0.18);
+        }
+        .field-pill.dimmed { opacity: 0.3; }
+        .map-lines-svg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; overflow: visible;
+        }
+        .map-line {
+            stroke: #c4b5fd; stroke-width: 1.5; fill: none;
+            stroke-dasharray: 200; stroke-dashoffset: 200;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        .map-line.drawn { stroke-dashoffset: 0; }
+
+        /* ===== STACK TRANSFORM (Step 2) ===== */
+        .source-chip {
+            position: absolute; background: #fff; border: 1px solid #e5e7eb;
+            border-radius: 10px; padding: 10px 14px; width: 200px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            opacity: 0; transition: all 0.5s cubic-bezier(.4,.2,.2,1);
+        }
+        .source-chip .chip-type {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.06em; padding: 2px 6px; border-radius: 4px;
+            display: inline-block; margin-bottom: 6px;
+        }
+        .source-chip .chip-type.data { color: #2563eb; background: #eff6ff; }
+        .source-chip .chip-type.agreement { color: #7c3aed; background: #f5f3ff; }
+        .source-chip .chip-type.history { color: #d97706; background: #fffbeb; }
+        .source-chip .chip-name { font-size: 0.72rem; font-weight: 600; color: #1a1a2e; margin-bottom: 2px; }
+        .source-chip .chip-detail { font-size: 0.58rem; color: #9ca3af; font-family: 'JetBrains Mono', monospace; }
+        .source-chip:nth-child(1) { transform: rotate(-1.5deg) translate(-10px, 20px); z-index: 3; }
+        .source-chip:nth-child(2) { transform: rotate(1deg) translate(12px, -10px); z-index: 2; }
+        .source-chip:nth-child(3) { transform: rotate(-0.5deg) translate(-8px, -42px); z-index: 1; }
+        .st-phase-1 .source-chip { opacity: 1; }
+        .st-phase-1 .source-chip:nth-child(3) { transition-delay: 0s; }
+        .st-phase-1 .source-chip:nth-child(2) { transition-delay: 0.15s; }
+        .st-phase-1 .source-chip:nth-child(1) { transition-delay: 0.3s; }
+        .st-phase-2 .source-chip {
+            transform: rotate(0deg) translate(0, 0) scale(0.3) !important;
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(.4,.0,.2,1), opacity 0.4s ease 0.2s;
+        }
+        .roya-node {
+            position: absolute; z-index: 10;
+            width: 72px; height: 72px;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: scale(0.5);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(.4,.0,.2,1);
+        }
+        .roya-node.visible { opacity: 1; transform: scale(1); }
+        .roya-core {
+            width: 56px; height: 56px; border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #a78bfa);
+            display: flex; align-items: center; justify-content: center;
+            position: relative; z-index: 2;
+        }
+        .roya-core span { font-size: 0.65rem; font-weight: 800; color: white; letter-spacing: 0.03em; }
+        .orbit-ring { position: absolute; width: 72px; height: 72px; border-radius: 50%; top: 0; left: 0; }
+        .orbit-ring.r1 { animation: orbitSpin 2s linear infinite; }
+        .orbit-ring.r2 { animation: orbitSpin 2.6s linear infinite reverse; }
+        .orbit-ring.r3 { animation: orbitSpin 1.8s linear infinite; }
+        .orbit-ring .particle { position: absolute; border-radius: 50%; }
+        .r1 .particle { width: 5px; height: 5px; background: #a78bfa; top: -2px; left: 50%; margin-left: -2.5px; }
+        .r2 .particle { width: 4px; height: 4px; background: #c4b5fd; bottom: -2px; right: 8px; }
+        .r3 .particle { width: 3px; height: 3px; background: #ddd6fe; top: 50%; left: -1px; margin-top: -1.5px; }
+        @keyframes orbitSpin { to { transform: rotate(360deg); } }
+        .pulse-ring {
+            position: absolute; width: 56px; height: 56px;
+            border-radius: 50%; border: 2px solid #7c3aed;
+            top: 8px; left: 8px; opacity: 0; z-index: 1;
+        }
+        .roya-node.processing .pulse-ring { animation: pulseOut 1s ease-out infinite; }
+        .roya-node.processing .pulse-ring:nth-child(5) { animation-delay: 0.5s; }
+        @keyframes pulseOut {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+        .st-report {
+            position: absolute; width: 340px; background: #fff;
+            border: 1px solid #e5e7eb; border-radius: 14px; padding: 22px 26px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            opacity: 0; transform: scale(0.85);
+            transition: transform 0.5s cubic-bezier(.4,.0,.2,1), opacity 0.4s ease;
+            z-index: 10;
+        }
+        .st-phase-4 .st-report { opacity: 1; transform: scale(1); }
+        .st-phase-4 .roya-node { opacity: 0; transform: scale(0.3); transition: all 0.3s ease; }
+        .st-report .st-row {
+            display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.75rem;
+        }
+        .st-report .st-row .st-label { color: #9ca3af; font-weight: 500; }
+        .st-report .st-row .st-val { font-weight: 600; color: #1a1a2e; }
+        .st-report .st-row.st-total .st-label { font-weight: 700; color: #7c3aed; font-size: 0.82rem; }
+        .st-report .st-row.st-total .st-val { font-weight: 700; color: #7c3aed; font-size: 0.82rem; }
+        .st-fade { opacity: 0; transform: translateY(6px); transition: opacity 0.3s ease, transform 0.3s ease; }
+        .st-phase-4 .st-fade:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
+        .st-phase-4 .st-fade:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+        .st-phase-4 .st-fade:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+        .st-phase-4 .st-fade:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+        .st-phase-4 .st-fade:nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 0.45s; }
+        .st-phase-4 .st-fade:nth-child(6) { opacity: 1; transform: translateY(0); transition-delay: 0.55s; }
+
+        /* ===== SUBMIT ANIMATION (Step 3) ===== */
+        .submit-portal-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 11px 0; border-bottom: 1px solid #f3f4f6;
+            opacity: 0; transform: translateY(4px);
+        }
+        .submit-portal-row:last-of-type { border-bottom: none; }
+        .submit-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: #d1d5db;
+            transition: background 0.4s ease;
+        }
+        .submit-dot.mapped { background: #7c3aed; }
+        .submit-dot.sent { background: #7c3aed; }
+        .submit-badge {
+            font-size: 0.68rem; font-weight: 500; color: #9ca3af;
+            transition: color 0.4s ease;
+        }
+        .submit-badge.mapped { color: #7c3aed; }
+        .submit-badge.sent { color: #7c3aed; }
+        .submit-footer-area {
+            margin-top: 16px; padding-top: 14px; border-top: 1px solid #f3f4f6;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .submit-footer-area.visible { opacity: 1; }
+        .submit-all-btn {
+            width: 100%; padding: 10px; font-size: 0.78rem; font-weight: 600;
+            font-family: 'Inter', sans-serif; color: white; background: #7c3aed;
+            border: none; border-radius: 8px; cursor: pointer;
+            opacity: 0; transform: translateY(4px);
+            transition: all 0.4s ease;
+        }
+        .submit-all-btn.visible { opacity: 1; transform: translateY(0); }
+        .submit-all-btn.sent { background: #5b21b6; }
+        .submit-confirm {
+            text-align: center; font-size: 0.72rem; font-weight: 500;
+            color: #7c3aed; margin-top: 8px; opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .submit-confirm.visible { opacity: 1; }
+
         /* ===== SCROLL REVEAL ===== */
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 0.6s cubic-bezier(0.4,0,0.2,1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -330,7 +533,7 @@
         @media (max-width: 900px) {
             .hero-inner { grid-template-columns: 1fr; gap: 40px; }
             .hero h1 { font-size: 2.6rem; }
-            .hero-right { min-height: 320px; }
+            .hero-right { min-height: 300px; }
             .feature-grid { grid-template-columns: 1fr; }
             .feature-full-inner { grid-template-columns: 1fr; }
             .feature-full-text { padding: 32px 32px 0; }
@@ -363,6 +566,7 @@
     </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:999;padding:12px 24px;background:#7c3aed;color:white;font-weight:600;font-size:0.9rem;border-radius:0 0 8px 0;text-decoration:none" onfocus="this.style.position='fixed';this.style.left='0';this.style.top='0';this.style.width='auto';this.style.height='auto'" onblur="this.style.position='absolute';this.style.left='-9999px';this.style.width='1px';this.style.height='1px'">Skip to content</a>
 
 <!-- NAV -->
 <nav class="nav">
@@ -373,12 +577,12 @@
             <a href="#faq">FAQ</a>
             <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="nav-cta">Get Early Access</a>
         </div>
-        <button class="nav-mobile">&#9776;</button>
+        <button class="nav-mobile" aria-label="Open navigation menu">&#9776;</button>
     </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="main-content">
     <div class="container">
         <div class="hero-inner">
             <div class="hero-left">
@@ -386,46 +590,50 @@
                 <p>The fastest, easiest way to stay compliant with complex licensing agreements.</p>
                 <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="btn-primary">Get early access <span>&rarr;</span></a>
             </div>
-            <div class="hero-right">
+            <div class="hero-right" id="heroRight">
                 <!-- Main dashboard card -->
-                <div class="hero-float-card" style="top:20px;left:0;right:0;z-index:2">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                <div class="hero-float-card" id="heroMain" style="top:0;left:10px;right:10px;z-index:2">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
                         <div>
-                            <div style="font-size:0.85rem;font-weight:600">Disney - Q1 2026</div>
-                            <div style="font-size:0.62rem;color:#9ca3af">Consolidated &bull; 3 Agreements</div>
+                            <div style="font-size:0.82rem;font-weight:600">Disney - Q1 2026</div>
+                            <div style="font-size:0.6rem;color:#9ca3af">Consolidated &bull; 3 Agreements</div>
                         </div>
-                        <span class="mini-badge green">Approved</span>
+                        <span class="mini-badge green" id="heroBadge" style="opacity:0;transition:opacity 0.3s">Approved</span>
                     </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
-                        <div style="background:#fafafa;border-radius:8px;padding:10px 12px">
-                            <div style="font-size:0.58rem;color:#9ca3af;margin-bottom:2px">Reportable Units</div>
-                            <div style="font-size:0.95rem;font-weight:700" class="mono">2,480</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px">
+                        <div style="background:#fafafa;border-radius:8px;padding:8px 10px">
+                            <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Reportable Units</div>
+                            <div style="font-size:0.88rem;font-weight:700" class="mono" id="heroUnits">0</div>
                         </div>
-                        <div style="background:#fafafa;border-radius:8px;padding:10px 12px">
-                            <div style="font-size:0.58rem;color:#9ca3af;margin-bottom:2px">Total Royalty</div>
-                            <div style="font-size:0.95rem;font-weight:700;color:#7c3aed" class="mono">$18,600</div>
+                        <div style="background:#fafafa;border-radius:8px;padding:8px 10px">
+                            <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Total Royalty</div>
+                            <div style="font-size:0.88rem;font-weight:700;color:#7c3aed" class="mono" id="heroRoyalty">$0</div>
                         </div>
-                        <div style="background:#fafafa;border-radius:8px;padding:10px 12px">
-                            <div style="font-size:0.58rem;color:#9ca3af;margin-bottom:2px">Effective Rate</div>
-                            <div style="font-size:0.95rem;font-weight:700" class="mono">8.29%</div>
+                        <div style="background:#fafafa;border-radius:8px;padding:8px 10px">
+                            <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Effective Rate</div>
+                            <div style="font-size:0.88rem;font-weight:700" class="mono" id="heroRate">0%</div>
                         </div>
                     </div>
-                    <div style="font-size:0.6rem;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Top Products</div>
-                    <div class="mini-row" style="padding:3px 0"><span style="font-size:0.72rem;font-weight:500">Star Wars: Galactic Chess</span><span style="font-size:0.72rem;font-weight:600;color:#7c3aed" class="mono">$12,400</span></div>
-                    <div class="mini-row" style="padding:3px 0"><span style="font-size:0.72rem;font-weight:500">Frozen: Ice Palace Puzzle</span><span style="font-size:0.72rem;font-weight:600;color:#7c3aed" class="mono">$2,850</span></div>
-                    <div class="mini-row" style="padding:3px 0"><span style="font-size:0.72rem;font-weight:500">Marvel: Strategy Board Game</span><span style="font-size:0.72rem;font-weight:600;color:#7c3aed" class="mono">$1,740</span></div>
+                    <div style="font-size:0.58rem;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Top Products</div>
+                    <div class="mini-row" style="padding:2px 0"><span style="font-size:0.7rem;font-weight:500">Star Wars: Galactic Chess</span><span style="font-size:0.7rem;font-weight:600;color:#7c3aed" class="mono" id="heroProd1">$0</span></div>
+                    <div class="mini-row" style="padding:2px 0"><span style="font-size:0.7rem;font-weight:500">Frozen: Ice Palace Puzzle</span><span style="font-size:0.7rem;font-weight:600;color:#7c3aed" class="mono" id="heroProd2">$0</span></div>
+                    <div class="mini-row" style="padding:2px 0"><span style="font-size:0.7rem;font-weight:500">Marvel: Strategy Board Game</span><span style="font-size:0.7rem;font-weight:600;color:#7c3aed" class="mono" id="heroProd3">$0</span></div>
                 </div>
-                <!-- Floating status card -->
-                <div class="hero-float-card" style="bottom:10px;right:-10px;z-index:3;padding:10px 14px">
-                    <div style="display:flex;align-items:center;gap:6px">
-                        <div style="width:6px;height:6px;border-radius:50%;background:#16a34a"></div>
-                        <span style="font-size:0.68rem;font-weight:500;color:#16a34a">Report submitted</span>
+                <!-- Floating: Report Progress card -->
+                <div class="hero-float-card" id="heroProgress" style="bottom:30px;left:-14px;z-index:3;padding:10px 14px;min-width:160px">
+                    <div style="font-size:0.52rem;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Report Progress</div>
+                    <div style="display:flex;flex-direction:column;gap:4px">
+                        <div class="hero-check-row" id="hc1"><div class="hero-check-icon pending" id="hci1"><svg width="8" height="8" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div><span style="color:#374151;font-weight:500">Data ingested</span></div>
+                        <div class="hero-check-row" id="hc2"><div class="hero-check-icon pending" id="hci2"><svg width="8" height="8" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div><span style="color:#374151;font-weight:500">Fields mapped</span></div>
+                        <div class="hero-check-row" id="hc3"><div class="hero-check-icon pending" id="hci3"><svg width="8" height="8" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div><span style="color:#374151;font-weight:500">Royalties calculated</span></div>
+                        <div class="hero-check-row" id="hc4"><div class="hero-check-icon pending" id="hci4"><svg width="8" height="8" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div><span style="color:#374151;font-weight:500">Submitted</span></div>
                     </div>
                 </div>
-                <!-- Floating rate card -->
-                <div class="hero-float-card" style="bottom:50px;left:-10px;z-index:3;padding:10px 14px">
-                    <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Royalty Rate</div>
-                    <div style="font-size:0.82rem;font-weight:700;color:#7c3aed" class="mono">8.5%</div>
+                <!-- Floating: Royalty Rate card -->
+                <div class="hero-float-card" id="heroRate2" style="bottom:4px;right:-8px;z-index:3;padding:8px 14px">
+                    <div style="font-size:0.52rem;color:#9ca3af;margin-bottom:2px">Royalty Rate</div>
+                    <div style="font-size:0.78rem;font-weight:700;color:#7c3aed" class="mono" id="heroRateVal">0%</div>
+                    <div class="hero-progress-bar"><div class="hero-progress-fill" id="heroRateBar"></div></div>
                 </div>
             </div>
         </div>
@@ -450,6 +658,7 @@
         {src:'erp logos/rillet-logo-cropped.svg', alt:'Rillet', h:26},
         {src:'erp logos/dual-entry-logo.png', alt:'Dual Entry', h:30},
         {src:'erp logos/NetSuite-Logo.png', alt:'NetSuite', h:28},
+        {src:'erp logos/amazon-logo-transparent.png', alt:'Amazon', h:24},
     ];
     function buildLogoSet() {
         return logoFiles.map(l => `<img src="${l.src}" alt="${l.alt}" loading="lazy" style="height:${l.h}px">`).join('');
@@ -468,8 +677,8 @@
 <section class="section" id="features">
     <div class="container">
         <div class="section-header reveal">
-            <h2>Stay compliant and automate away royalty reporting.</h2>
-            <p>Intelligent workflows for data ingestion, licensor mapping, and report generation - backed by white-glove support.</p>
+            <h2>Stop losing weeks to spreadsheets every quarter.</h2>
+            <p>Licensees spend 4-6 weeks per quarter wrestling with Excel, juggling 25+ portals, and praying they don't trigger an audit. Roya eliminates all of it.</p>
         </div>
 
         <!-- Dashboard screenshot (Numeral-style large product view) -->
@@ -563,8 +772,8 @@
                 <div class="feature-icon">
                     <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                 </div>
-                <h3>Review exceptions</h3>
-                <p>Territory mismatches, rate overrides, and missing data are flagged automatically. Resolve each one in seconds.</p>
+                <h3>Catch errors before they cost you</h3>
+                <p>Wrong territory, misapplied rate, missing IP code — caught in seconds, not in an audit.</p>
                 <div class="feature-ui">
                     <div style="max-width:300px;width:100%">
                         <div class="mini-card" style="margin-bottom:8px;border-color:#bbf7d0;background:#fafff9">
@@ -597,8 +806,8 @@
                 <div class="feature-icon">
                     <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
-                <h3>Immutable audit trail</h3>
-                <p>Every calculation, approval, and submission is logged. Full transparency for internal reviews and audits.</p>
+                <h3>Audit-ready from day one</h3>
+                <p>Every calculation, approval, and field change — logged, timestamped, and explainable.</p>
                 <div class="feature-ui">
                     <div class="stacked-cards" style="max-width:300px;width:100%">
                         <div class="card-back"></div>
@@ -624,8 +833,8 @@
                 <div class="feature-icon">
                     <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 </div>
-                <h3>Up and running in hours</h3>
-                <p>Connect your ERP, upload agreements, and generate your first report. Our team handles setup end-to-end.</p>
+                <h3>Replace weeks of Excel with a single day</h3>
+                <p>Connect your ERP or drop in a CSV. We handle setup, migration, and white-glove onboarding.</p>
                 <div class="feature-ui">
                     <div style="max-width:300px;width:100%">
                         <div class="mini-card">
@@ -648,47 +857,69 @@
                                     <div><div style="font-size:0.75rem;font-weight:500">First Report Generated</div><div style="font-size:0.6rem;color:#16a34a">Complete</div></div>
                                 </div>
                             </div>
-                            <div style="margin-top:12px;text-align:center;font-size:0.7rem;font-weight:600;color:#16a34a;background:#f0fdf4;padding:6px;border-radius:6px">Live in under 1 hour</div>
+                            <div style="margin-top:12px;text-align:center;font-size:0.7rem;font-weight:600;color:#16a34a;background:#f0fdf4;padding:6px;border-radius:6px">First report in under 1 day</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Security -->
+            <!-- One Workflow -->
             <div class="feature-card">
                 <div class="feature-icon">
-                    <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                    <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
                 </div>
-                <h3>Enterprise-grade security</h3>
-                <p>Your data is encrypted at rest and in transit. Role-based access and SOC 2 Type II compliance built in.</p>
+                <h3>One workflow for every licensor</h3>
+                <p>25+ portals, one interface. Select the licensor, review, submit.</p>
                 <div class="feature-ui">
                     <div style="max-width:300px;width:100%">
                         <div class="mini-card">
-                            <div class="mini-card-title">Security</div>
+                            <div class="mini-card-title">Submit Reports</div>
                             <div style="display:flex;flex-direction:column;gap:6px">
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px">
-                                    <div style="font-size:0.72rem;font-weight:500">Data Encryption</div>
-                                    <span style="font-size:0.58rem;font-weight:600;color:#16a34a">Active</span>
+                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#faf8ff;border:1px solid #ddd6fe;border-radius:8px">
+                                    <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:#7c3aed"></span><span style="font-size:0.72rem;font-weight:500">Disney OPA</span></div>
+                                    <span style="font-size:0.58rem;font-weight:600;color:#7c3aed">Ready</span>
                                 </div>
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px">
-                                    <div style="font-size:0.72rem;font-weight:500">Role-Based Access</div>
-                                    <span style="font-size:0.58rem;font-weight:600;color:#16a34a">Active</span>
+                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#faf8ff;border:1px solid #ddd6fe;border-radius:8px">
+                                    <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:#7c3aed"></span><span style="font-size:0.72rem;font-weight:500">NFL / CLC</span></div>
+                                    <span style="font-size:0.58rem;font-weight:600;color:#7c3aed">Ready</span>
                                 </div>
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px">
-                                    <div style="font-size:0.72rem;font-weight:500">Audit Trail</div>
-                                    <span style="font-size:0.58rem;font-weight:600;color:#16a34a">Active</span>
+                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#faf8ff;border:1px solid #ddd6fe;border-radius:8px">
+                                    <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:#7c3aed"></span><span style="font-size:0.72rem;font-weight:500">Hasbro Portal</span></div>
+                                    <span style="font-size:0.58rem;font-weight:600;color:#7c3aed">Ready</span>
                                 </div>
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px">
-                                    <div style="font-size:0.72rem;font-weight:500">SOC 2 Type II</div>
-                                    <span style="font-size:0.58rem;font-weight:600;color:#16a34a">Active</span>
+                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#faf8ff;border:1px solid #ddd6fe;border-radius:8px">
+                                    <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:#7c3aed"></span><span style="font-size:0.72rem;font-weight:500">Sanrio</span></div>
+                                    <span style="font-size:0.58rem;font-weight:600;color:#7c3aed">Ready</span>
                                 </div>
                             </div>
+                            <div style="margin-top:10px;text-align:center;font-size:0.7rem;font-weight:600;color:white;background:#7c3aed;padding:7px;border-radius:7px">Submit All Reports</div>
                         </div>
                     </div>
                 </div>
             </div>
 
         </div>
+
+        <!-- Trust strip -->
+        <div class="reveal" style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:48px;padding:0 20px">
+            <div style="display:flex;align-items:center;gap:6px;font-size:0.85rem;font-weight:600;color:#4b5563">
+                <svg width="14" height="14" fill="none" stroke="#16a34a" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                SOC 2 Ready
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:0.85rem;font-weight:600;color:#4b5563">
+                <svg width="14" height="14" fill="none" stroke="#16a34a" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                Encrypted at rest &amp; in transit
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:0.85rem;font-weight:600;color:#4b5563">
+                <svg width="14" height="14" fill="none" stroke="#16a34a" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                Role-based access
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:0.85rem;font-weight:600;color:#4b5563">
+                <svg width="14" height="14" fill="none" stroke="#16a34a" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                AI never trains on your data
+            </div>
+        </div>
+
     </div>
 </section>
 
@@ -696,7 +927,7 @@
 <section class="section" style="background:#fafafa" id="workflow">
     <div class="container">
         <div class="section-header reveal">
-            <h2>How it works</h2>
+            <h2>Up and running in hours</h2>
             <p>From raw sales data to submitted reports - one cohesive experience that handles every licensor's unique requirements.</p>
         </div>
 
@@ -709,36 +940,33 @@
                     </div>
                     <div class="hw-step-label">Step 1</div>
                     <h3>Ingest and map</h3>
-                    <p>Upload your license agreements or connect your ERP. Roya extracts royalty rates, territories, channels, and minimum guarantees - then maps your raw sales data into each licensor's exact template, down to the SKU level.</p>
+                    <p>Upload individual files or connect your ERP. Roya extracts royalty rates, territories, channels, and minimum guarantees - then maps your raw sales data into each licensor's exact template, down to the SKU level.</p>
                     <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="hw-link">Book a demo &rsaquo;</a>
                 </div>
-                <div class="hw-ui">
-                    <div style="width:100%;max-width:420px;display:flex;flex-direction:column;gap:8px">
-                        <div class="mini-card" style="padding:14px 18px">
-                            <div style="font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#9ca3af;margin-bottom:8px">ERP Transaction Data</div>
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:0.7rem">
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label">Transaction ID</span><span class="mini-row-value mono" style="font-size:0.65rem">99700002</span></div>
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label">Item ID</span><span class="mini-row-value mono" style="font-size:0.65rem">COL-PHN-001</span></div>
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label">Description</span><span class="mini-row-value" style="font-size:0.65rem">Iron Man Slim-Fit Case</span></div>
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label">Merch Total</span><span class="mini-row-value mono" style="font-size:0.65rem">$19,905</span></div>
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label">Channel</span><span class="mini-row-value" style="font-size:0.65rem">Wholesale</span></div>
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label">Territory</span><span class="mini-row-value" style="font-size:0.65rem">AU</span></div>
-                            </div>
+                <div class="hw-ui" id="mapFrame" style="position:relative;min-height:380px;display:flex;align-items:center;justify-content:center">
+                    <div class="map-container" id="mapContainer">
+                        <div class="field-col">
+                            <div class="col-label erp">Your ERP</div>
+                            <div class="field-pill erp-pill">transaction_id</div>
+                            <div class="field-pill erp-pill">item_sku</div>
+                            <div class="field-pill erp-pill">item_description</div>
+                            <div class="field-pill erp-pill">merch_total</div>
+                            <div class="field-pill erp-pill">net_amount</div>
+                            <div class="field-pill erp-pill">units_sold</div>
+                            <div class="field-pill erp-pill">channel_code</div>
+                            <div class="field-pill erp-pill">ship_country</div>
                         </div>
-                        <div style="text-align:center;font-size:0.6rem;font-weight:600;color:#7c3aed;padding:2px 0">ROYA MAPS &darr;</div>
-                        <div class="mini-card" style="padding:14px 18px;border-color:#ddd6fe;background:#faf8ff">
-                            <div style="font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#7c3aed;margin-bottom:8px">Disney Licensor Template</div>
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:0.7rem">
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Licensed Article</span><span class="mini-row-value" style="font-size:0.65rem">COL-PHN-001-NA-N/A</span></div>
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Size / Color</span><span class="mini-row-value" style="font-size:0.65rem">N/A / N/A</span></div>
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Mark</span><span class="mini-row-value" style="font-size:0.65rem">Arc Reactor Emblem</span></div>
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Classification</span><span class="mini-row-value" style="font-size:0.65rem">Collectibles</span></div>
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Units</span><span class="mini-row-value mono" style="font-size:0.65rem">378</span></div>
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Gross Sales</span><span class="mini-row-value mono" style="font-size:0.65rem">$19,905</span></div>
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Net Sales</span><span class="mini-row-value mono" style="font-size:0.65rem">$18,584</span></div>
-                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Royalty (10%)</span><span class="mini-row-value mono" style="font-size:0.65rem;color:#7c3aed;font-weight:600">$1,858</span></div>
-                            </div>
+                        <div class="field-col">
+                            <div class="col-label licensor">Disney Template</div>
+                            <div class="field-pill licensor-pill">Licensed Article ID</div>
+                            <div class="field-pill licensor-pill">Article Description</div>
+                            <div class="field-pill licensor-pill">Units Sold</div>
+                            <div class="field-pill licensor-pill">Gross Sales</div>
+                            <div class="field-pill licensor-pill">Net Sales</div>
+                            <div class="field-pill licensor-pill">Sales Channel</div>
+                            <div class="field-pill licensor-pill">Territory</div>
                         </div>
+                        <svg class="map-lines-svg" id="mapLinesSvg"></svg>
                     </div>
                 </div>
             </div>
@@ -756,43 +984,43 @@
                     <p>One click to calculate royalties across all agreements. Gross sales, deductions, net sales, and rates are applied automatically per your contract terms.</p>
                     <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="hw-link">Book a demo &rsaquo;</a>
                 </div>
-                <div class="hw-ui">
-                    <div style="width:100%;max-width:420px">
-                        <div class="mini-card" style="padding:18px 22px;width:100%">
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-                                <div>
-                                    <div style="font-size:0.82rem;font-weight:600">Disney - Q1 2026</div>
-                                    <div style="font-size:0.6rem;color:#9ca3af">MAR-ENT-2022-009 &bull; 3 Properties</div>
-                                </div>
-                                <span class="mini-badge purple" style="font-size:0.58rem">Ready for review</span>
-                            </div>
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
-                                <div style="background:#fafafa;border-radius:8px;padding:10px 12px">
-                                    <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Gross Sales</div>
-                                    <div style="font-size:0.88rem;font-weight:700" class="mono">$84,200</div>
-                                </div>
-                                <div style="background:#fafafa;border-radius:8px;padding:10px 12px">
-                                    <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Deductions</div>
-                                    <div style="font-size:0.88rem;font-weight:700" class="mono">($3,816)</div>
-                                </div>
-                                <div style="background:#fafafa;border-radius:8px;padding:10px 12px">
-                                    <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Net Sales</div>
-                                    <div style="font-size:0.88rem;font-weight:700" class="mono">$80,384</div>
-                                </div>
-                                <div style="background:#f5f3ff;border-radius:8px;padding:10px 12px;border:1px solid #ede9fe">
-                                    <div style="font-size:0.55rem;color:#7c3aed;margin-bottom:2px">Royalty Due</div>
-                                    <div style="font-size:0.88rem;font-weight:700;color:#7c3aed" class="mono">$6,833</div>
-                                </div>
-                            </div>
-                            <div style="font-size:0.58rem;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">By Property</div>
-                            <div class="mini-row" style="padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:0.72rem;font-weight:500">Iron Man Collectibles</span><span style="font-size:0.72rem;font-weight:600;color:#7c3aed" class="mono">$3,420</span></div>
-                            <div class="mini-row" style="padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:0.72rem;font-weight:500">Spider-Man Collectibles</span><span style="font-size:0.72rem;font-weight:600;color:#7c3aed" class="mono">$2,180</span></div>
-                            <div class="mini-row" style="padding:5px 0"><span style="font-size:0.72rem;font-weight:500">Star Wars Accessories</span><span style="font-size:0.72rem;font-weight:600;color:#7c3aed" class="mono">$1,233</span></div>
-                            <div style="margin-top:14px;display:flex;gap:8px">
-                                <div style="flex:1;text-align:center;padding:8px;font-size:0.7rem;font-weight:600;color:white;background:#7c3aed;border-radius:8px">Approve</div>
-                                <div style="flex:1;text-align:center;padding:8px;font-size:0.7rem;font-weight:600;color:#6b7280;background:#f3f4f6;border-radius:8px">Export</div>
-                            </div>
+                <div class="hw-ui" id="stackFrame" style="position:relative;min-height:380px">
+                    <!-- Input chips -->
+                    <div class="source-chip">
+                        <div class="chip-type data">Transactions</div>
+                        <div class="chip-name">Master Transaction</div>
+                        <div class="chip-detail">2,126 rows &bull; Q1 2026</div>
+                    </div>
+                    <div class="source-chip">
+                        <div class="chip-type agreement">Agreement</div>
+                        <div class="chip-name">Licensing Agreements</div>
+                        <div class="chip-detail">rates, minimums, terms</div>
+                    </div>
+                    <div class="source-chip">
+                        <div class="chip-type history">Requirements</div>
+                        <div class="chip-name">Licensor Requirements</div>
+                        <div class="chip-detail">templates, fields, deadlines</div>
+                    </div>
+                    <!-- Roya fusion node -->
+                    <div class="roya-node" id="royaNode">
+                        <div class="orbit-ring r1"><div class="particle"></div></div>
+                        <div class="orbit-ring r2"><div class="particle"></div></div>
+                        <div class="orbit-ring r3"><div class="particle"></div></div>
+                        <div class="pulse-ring"></div>
+                        <div class="pulse-ring"></div>
+                        <div class="roya-core"><span>Roya</span></div>
+                    </div>
+                    <!-- Report output -->
+                    <div class="st-report">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px" class="st-fade">
+                            <span style="font-weight:700;font-size:0.92rem;color:#1a1a2e">Disney - Q1 2026</span>
+                            <span class="mini-badge green" style="font-size:0.6rem">Approved</span>
                         </div>
+                        <div class="st-row st-fade"><span class="st-label">Gross Sales</span><span class="st-val mono">$84,200</span></div>
+                        <div class="st-row st-fade"><span class="st-label">Deductions</span><span class="st-val mono">($3,816)</span></div>
+                        <div class="st-row st-fade"><span class="st-label">Net Sales</span><span class="st-val mono">$80,384</span></div>
+                        <hr class="st-fade" style="border:none;border-top:1px solid #e5e7eb;margin:8px 0">
+                        <div class="st-row st-total st-fade"><span class="st-label">Royalty Due</span><span class="st-val mono">$6,833</span></div>
                     </div>
                 </div>
             </div>
@@ -810,54 +1038,55 @@
                     <p>Push formatted reports to every licensor portal in the exact format they require. No more manual uploads, copy-pasting, or reformatting spreadsheets.</p>
                     <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="hw-link">Book a demo &rsaquo;</a>
                 </div>
-                <div class="hw-ui">
+                <div class="hw-ui" id="submitFrame">
                     <div style="width:100%;max-width:420px">
-                        <div class="mini-card" style="padding:18px 22px;width:100%">
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-                                <div style="font-size:0.78rem;font-weight:600">Submission Status</div>
-                                <span class="mini-badge green" style="font-size:0.58rem">All submitted</span>
+                        <div class="mini-card" style="padding:20px 24px;width:100%">
+                            <div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#7c3aed;margin-bottom:14px">Submission Status</div>
+
+                            <div class="submit-portal-row" data-d="200">
+                                <div style="display:flex;align-items:center;gap:10px">
+                                    <div class="submit-dot"></div>
+                                    <span style="font-size:0.82rem;font-weight:500">NFL (CLC)</span>
+                                    <span style="font-size:0.65rem;color:#9ca3af" class="mono">.xlsx</span>
+                                </div>
+                                <span class="submit-badge">&mdash;</span>
                             </div>
-                            <div style="display:flex;flex-direction:column;gap:0">
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;margin-bottom:8px">
-                                    <div style="display:flex;align-items:center;gap:10px">
-                                        <div style="width:28px;height:28px;border-radius:8px;background:white;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#1a1a2e">D</div>
-                                        <div>
-                                            <div style="font-size:0.75rem;font-weight:600">Disney</div>
-                                            <div style="font-size:0.58rem;color:#6b7280">OPA Portal &bull; Q1 2026</div>
-                                        </div>
-                                    </div>
-                                    <div style="display:flex;align-items:center;gap:5px"><div style="width:6px;height:6px;border-radius:50%;background:#16a34a"></div><span style="font-size:0.65rem;font-weight:500;color:#16a34a">Sent</span></div>
+                            <div class="submit-portal-row" data-d="400">
+                                <div style="display:flex;align-items:center;gap:10px">
+                                    <div class="submit-dot"></div>
+                                    <span style="font-size:0.82rem;font-weight:500">Disney</span>
+                                    <span style="font-size:0.65rem;color:#9ca3af" class="mono">.xml</span>
                                 </div>
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;margin-bottom:8px">
-                                    <div style="display:flex;align-items:center;gap:10px">
-                                        <div style="width:28px;height:28px;border-radius:8px;background:white;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#1a1a2e">N</div>
-                                        <div>
-                                            <div style="font-size:0.75rem;font-weight:600">NFL (CLC)</div>
-                                            <div style="font-size:0.58rem;color:#6b7280">CLC Brandcomply &bull; Jan 2026</div>
-                                        </div>
-                                    </div>
-                                    <div style="display:flex;align-items:center;gap:5px"><div style="width:6px;height:6px;border-radius:50%;background:#16a34a"></div><span style="font-size:0.65rem;font-weight:500;color:#16a34a">Sent</span></div>
+                                <span class="submit-badge">&mdash;</span>
+                            </div>
+                            <div class="submit-portal-row" data-d="600">
+                                <div style="display:flex;align-items:center;gap:10px">
+                                    <div class="submit-dot"></div>
+                                    <span style="font-size:0.82rem;font-weight:500">Hasbro</span>
+                                    <span style="font-size:0.65rem;color:#9ca3af" class="mono">.csv</span>
                                 </div>
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;margin-bottom:8px">
-                                    <div style="display:flex;align-items:center;gap:10px">
-                                        <div style="width:28px;height:28px;border-radius:8px;background:white;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#1a1a2e">H</div>
-                                        <div>
-                                            <div style="font-size:0.75rem;font-weight:600">Hasbro</div>
-                                            <div style="font-size:0.58rem;color:#6b7280">Hasbro Licensing &bull; Q1 2026</div>
-                                        </div>
-                                    </div>
-                                    <div style="display:flex;align-items:center;gap:5px"><div style="width:6px;height:6px;border-radius:50%;background:#16a34a"></div><span style="font-size:0.65rem;font-weight:500;color:#16a34a">Sent</span></div>
+                                <span class="submit-badge">&mdash;</span>
+                            </div>
+                            <div class="submit-portal-row" data-d="800">
+                                <div style="display:flex;align-items:center;gap:10px">
+                                    <div class="submit-dot"></div>
+                                    <span style="font-size:0.82rem;font-weight:500">Sanrio</span>
+                                    <span style="font-size:0.65rem;color:#9ca3af" class="mono">.xlsx</span>
                                 </div>
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px">
-                                    <div style="display:flex;align-items:center;gap:10px">
-                                        <div style="width:28px;height:28px;border-radius:8px;background:white;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#1a1a2e">P</div>
-                                        <div>
-                                            <div style="font-size:0.75rem;font-weight:600">Pokemon</div>
-                                            <div style="font-size:0.58rem;color:#6b7280">TPC Portal &bull; Q1 2026</div>
-                                        </div>
-                                    </div>
-                                    <div style="display:flex;align-items:center;gap:5px"><div style="width:6px;height:6px;border-radius:50%;background:#16a34a"></div><span style="font-size:0.65rem;font-weight:500;color:#16a34a">Sent</span></div>
+                                <span class="submit-badge">&mdash;</span>
+                            </div>
+                            <div class="submit-portal-row" data-d="1000">
+                                <div style="display:flex;align-items:center;gap:10px">
+                                    <div class="submit-dot"></div>
+                                    <span style="font-size:0.82rem;font-weight:500">Paramount</span>
+                                    <span style="font-size:0.65rem;color:#9ca3af" class="mono">.csv</span>
                                 </div>
+                                <span class="submit-badge">&mdash;</span>
+                            </div>
+
+                            <div class="submit-footer-area" id="submitFooter">
+                                <button class="submit-all-btn" id="submitAllBtn">Submit All Reports</button>
+                                <div class="submit-confirm" id="submitConfirm">All reports submitted successfully</div>
                             </div>
                         </div>
                     </div>
@@ -877,32 +1106,32 @@
         <div class="faq-list reveal">
 
             <div class="faq-item">
-                <button class="faq-q">Can't I just build an internal tool using AI?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
+                <button class="faq-q" aria-expanded="false">Can't I just build an internal tool using AI?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
                 <div class="faq-a">You could, but a script won't protect you during an audit. Roya works closely with licensors to ensure your data is mapped exactly how they require. We act as a trusted, third-party system of record connecting licensees and licensors - with full audit trails, approval workflows, and portal-ready formatting that an internal tool can't replicate.</div>
             </div>
 
             <div class="faq-item">
-                <button class="faq-q">How do I know the calculations are accurate?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
+                <button class="faq-q" aria-expanded="false">How do I know the calculations are accurate?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
                 <div class="faq-a">Roya isn't a black box. We turn complex legal contracts into strict math rules - whether you have tiered rates, territory exclusions, or minimum guarantees. Every step is logged and flagged for your team to review before anything is finalized.</div>
             </div>
 
             <div class="faq-item">
-                <button class="faq-q">What platforms do you integrate with?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
+                <button class="faq-q" aria-expanded="false">What platforms do you integrate with?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
                 <div class="faq-a">We connect directly with platforms like NetSuite, SAP, Shopify, and QuickBooks. But even without a big ERP, getting started is easy - Roya is built to instantly ingest and standardize raw CSV or Excel exports. Just drop your files in and go.</div>
             </div>
 
             <div class="faq-item">
-                <button class="faq-q">Is my data secure?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
+                <button class="faq-q" aria-expanded="false">Is my data secure?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
                 <div class="faq-a">Yes. We secure your sales data and contracts with enterprise-grade encryption (AES-256, TLS 1.3). Our platform is engineered to strict SOC 2 Type II compliance standards with role-based access controls and immutable audit logs.</div>
             </div>
 
             <div class="faq-item">
-                <button class="faq-q">How much does Roya cost?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
+                <button class="faq-q" aria-expanded="false">How much does Roya cost?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
                 <div class="faq-a">We work with licensees of all sizes. Our Growth tier offers simple, volume-based pricing for smaller brands (based on the number of licensor portals you submit to), and our Enterprise tier includes unlimited licenses and custom integrations. If price is a concern, reach out - we'd love to find a way to make it work.</div>
             </div>
 
             <div class="faq-item">
-                <button class="faq-q">What happens if I get audited?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
+                <button class="faq-q" aria-expanded="false">What happens if I get audited?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
                 <div class="faq-a">Roya turns a painful, weeks-long audit into a five-minute export. We track exactly what data was used, what rules were applied, and who approved each report - giving you a perfect paper trail to hand directly to auditors.</div>
             </div>
 
@@ -914,7 +1143,7 @@
 <section class="cta-section" id="cta">
     <div class="container">
         <h2>Ready to automate royalty reporting?</h2>
-        <p>Join leading licensees who are saving hundreds of hours monthly with Roya.</p>
+        <p>Join leading licensees saving hundreds of hours monthly with Roya.</p>
         <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="btn-cta" style="text-decoration:none;display:inline-block;">Get Early Access</a>
     </div>
 </section>
@@ -941,13 +1170,326 @@ const revObs = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 
+// Hero entrance animations
+(function() {
+    const heroMain = document.getElementById('heroMain');
+    const heroProgress = document.getElementById('heroProgress');
+    const heroRate2 = document.getElementById('heroRate2');
+    const heroBadge = document.getElementById('heroBadge');
+    const heroRateBar = document.getElementById('heroRateBar');
+    let heroTimer = null;
+
+    function countUp(el, target, prefix, suffix, duration) {
+        const start = performance.now();
+        const format = (n) => prefix + n.toLocaleString() + suffix;
+        function step(now) {
+            const t = Math.min((now - start) / duration, 1);
+            const ease = 1 - Math.pow(1 - t, 3);
+            el.textContent = format(Math.round(target * ease));
+            if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    }
+
+    function countUpDecimal(el, target, prefix, suffix, duration) {
+        const start = performance.now();
+        function step(now) {
+            const t = Math.min((now - start) / duration, 1);
+            const ease = 1 - Math.pow(1 - t, 3);
+            el.textContent = prefix + (target * ease).toFixed(2) + suffix;
+            if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    }
+
+    function checkStep(i) {
+        const row = document.getElementById('hc' + i);
+        const icon = document.getElementById('hci' + i);
+        row.classList.add('visible');
+        icon.classList.remove('pending');
+        icon.classList.add('done');
+    }
+
+    function resetHero() {
+        [heroMain, heroProgress, heroRate2].forEach(c => {
+            c.classList.remove('visible', 'accent-pop');
+        });
+        heroBadge.style.opacity = '0';
+        heroRateBar.style.width = '0%';
+        document.getElementById('heroUnits').textContent = '0';
+        document.getElementById('heroRoyalty').textContent = '$0';
+        document.getElementById('heroRate').textContent = '0%';
+        document.getElementById('heroRateVal').textContent = '0%';
+        document.getElementById('heroProd1').textContent = '$0';
+        document.getElementById('heroProd2').textContent = '$0';
+        document.getElementById('heroProd3').textContent = '$0';
+        for (let i = 1; i <= 4; i++) {
+            document.getElementById('hc' + i).classList.remove('visible');
+            const icon = document.getElementById('hci' + i);
+            icon.classList.remove('done');
+            icon.classList.add('pending');
+        }
+    }
+
+    function runHeroAnimation() {
+        resetHero();
+        const left = document.querySelector('.hero-left');
+        setTimeout(() => left.classList.add('visible'), 100);
+        setTimeout(() => heroMain.classList.add('visible'), 200);
+        setTimeout(() => {
+            countUp(document.getElementById('heroUnits'), 2480, '', '', 1000);
+            countUp(document.getElementById('heroRoyalty'), 18600, '$', '', 1000);
+            countUpDecimal(document.getElementById('heroRate'), 8.29, '', '%', 1000);
+            countUp(document.getElementById('heroProd1'), 12400, '$', '', 800);
+            countUp(document.getElementById('heroProd2'), 2850, '$', '', 800);
+            countUp(document.getElementById('heroProd3'), 1740, '$', '', 800);
+        }, 600);
+        setTimeout(() => heroProgress.classList.add('accent-pop'), 1200);
+        setTimeout(() => checkStep(1), 1600);
+        setTimeout(() => checkStep(2), 2000);
+        setTimeout(() => checkStep(3), 2400);
+        setTimeout(() => checkStep(4), 2800);
+        setTimeout(() => heroRate2.classList.add('accent-pop'), 2200);
+        setTimeout(() => {
+            countUpDecimal(document.getElementById('heroRateVal'), 8.5, '', '%', 600);
+            heroRateBar.style.width = '85%';
+        }, 2500);
+        setTimeout(() => heroBadge.style.opacity = '1', 3200);
+        heroTimer = setTimeout(() => runHeroAnimation(), 7000);
+    }
+
+    window.addEventListener('load', () => setTimeout(runHeroAnimation, 200));
+})();
+
+// Animate How It Works UI elements on scroll
+const hwObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const cards = e.target.querySelectorAll('.mini-card');
+        cards.forEach((c, i) => {
+            c.style.opacity = '0';
+            c.style.transform = 'translateY(12px)';
+            c.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            setTimeout(() => { c.style.opacity = '1'; c.style.transform = 'translateY(0)'; }, 150 + i * 200);
+        });
+        hwObs.unobserve(e.target);
+    });
+}, { threshold: 0.3 });
+document.querySelectorAll('.hw-ui').forEach(el => hwObs.observe(el));
+
+// Animate dashboard table rows on scroll
+const dashObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const rows = e.target.querySelectorAll('[style*="grid-template-columns"]:not(:first-child)');
+        rows.forEach((r, i) => {
+            if (r.querySelector('span[style*="font-weight:500"]')) {
+                r.style.opacity = '0';
+                r.style.transform = 'translateY(6px)';
+                r.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                setTimeout(() => { r.style.opacity = '1'; r.style.transform = 'translateY(0)'; }, 200 + i * 120);
+            }
+        });
+        dashObs.unobserve(e.target);
+    });
+}, { threshold: 0.2 });
+document.querySelectorAll('.dash-mini').forEach(el => dashObs.observe(el));
+
+// Step 1: Cross-mapping animation
+(function() {
+    const container = document.getElementById('mapContainer');
+    const svg = document.getElementById('mapLinesSvg');
+    const frame = document.getElementById('mapFrame');
+    if (!container || !svg || !frame) return;
+    const erpPills = container.querySelectorAll('.erp-pill');
+    const licPills = container.querySelectorAll('.licensor-pill');
+    let loopTimer = null;
+
+    // ERP: 0=transaction_id, 1=item_sku, 2=item_description, 3=merch_total, 4=net_amount, 5=units_sold, 6=channel_code, 7=ship_country
+    // LIC: 0=Licensed Article ID, 1=Article Description, 2=Units Sold, 3=Gross Sales, 4=Net Sales, 5=Sales Channel, 6=Territory
+    const mappings = [[1,0],[2,1],[5,2],[3,3],[4,4],[6,5],[7,6]];
+
+    function resetMap() {
+        erpPills.forEach(p => p.classList.remove('visible','mapped','dimmed'));
+        licPills.forEach(p => p.classList.remove('visible','mapped'));
+        svg.innerHTML = '';
+    }
+
+    function getRightEdge(el) {
+        const r = el.getBoundingClientRect(), cr = container.getBoundingClientRect();
+        return { x: r.right - cr.left + 4, y: r.top + r.height/2 - cr.top };
+    }
+    function getLeftEdge(el) {
+        const r = el.getBoundingClientRect(), cr = container.getBoundingClientRect();
+        return { x: r.left - cr.left - 4, y: r.top + r.height/2 - cr.top };
+    }
+
+    function drawLine(from, to) {
+        const p1 = getRightEdge(from), p2 = getLeftEdge(to);
+        const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+        path.setAttribute('d', 'M'+p1.x+','+p1.y+' C'+(p1.x+25)+','+p1.y+' '+(p2.x-25)+','+p2.y+' '+p2.x+','+p2.y);
+        path.classList.add('map-line');
+        svg.appendChild(path);
+        const len = path.getTotalLength();
+        path.style.strokeDasharray = len;
+        path.style.strokeDashoffset = len;
+        requestAnimationFrame(() => { path.style.strokeDashoffset = '0'; });
+    }
+
+    function runMap() {
+        resetMap();
+        void frame.offsetWidth;
+        erpPills.forEach((p, i) => setTimeout(() => p.classList.add('visible'), i * 60));
+        setTimeout(() => {
+            licPills.forEach((p, i) => setTimeout(() => p.classList.add('visible'), i * 60));
+        }, 500);
+        setTimeout(() => {
+            mappings.forEach(([ei, li], i) => {
+                setTimeout(() => {
+                    drawLine(erpPills[ei], licPills[li]);
+                    erpPills[ei].classList.add('mapped');
+                    licPills[li].classList.add('mapped');
+                }, i * 220);
+            });
+            setTimeout(() => erpPills[0].classList.add('dimmed'), mappings.length * 220);
+        }, 1100);
+        loopTimer = setTimeout(runMap, 5800);
+    }
+
+    frame.addEventListener('click', () => { if (loopTimer) clearTimeout(loopTimer); runMap(); });
+
+    const mapObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { runMap(); mapObs.unobserve(e.target); }
+        });
+    }, { threshold: 0.3 });
+    mapObs.observe(frame);
+})();
+
+// Step 2: Stack transform animation
+(function() {
+    const sf = document.getElementById('stackFrame');
+    const rn = document.getElementById('royaNode');
+    if (!sf || !rn) return;
+    let loopTimer = null;
+
+    function resetStack() {
+        sf.classList.remove('st-phase-1', 'st-phase-2', 'st-phase-4');
+        rn.classList.remove('visible', 'processing');
+    }
+
+    function runStack() {
+        resetStack();
+        void sf.offsetWidth;
+        sf.classList.add('st-phase-1');
+        setTimeout(() => sf.classList.add('st-phase-2'), 900);
+        setTimeout(() => rn.classList.add('visible'), 1200);
+        setTimeout(() => rn.classList.add('processing'), 1400);
+        setTimeout(() => sf.classList.add('st-phase-4'), 2400);
+        loopTimer = setTimeout(runStack, 5500);
+    }
+
+    sf.addEventListener('click', () => { if (loopTimer) clearTimeout(loopTimer); runStack(); });
+
+    const stObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { runStack(); stObs.unobserve(e.target); }
+        });
+    }, { threshold: 0.3 });
+    stObs.observe(sf);
+})();
+
+// Step 3: Submit animation
+(function() {
+    let submitLoop = null;
+    function runSubmitAnim() {
+        const rows = document.querySelectorAll('.submit-portal-row');
+        const footer = document.getElementById('submitFooter');
+        const btn = document.getElementById('submitAllBtn');
+        const confirmEl = document.getElementById('submitConfirm');
+
+        // Reset
+        rows.forEach(r => {
+            r.style.opacity = '0'; r.style.transform = 'translateY(4px)'; r.style.transition = 'none';
+            r.querySelector('.submit-dot').className = 'submit-dot';
+            const b = r.querySelector('.submit-badge'); b.textContent = '\u2014'; b.className = 'submit-badge';
+        });
+        footer.classList.remove('visible');
+        btn.classList.remove('visible', 'sent'); btn.textContent = 'Submit All Reports';
+        confirmEl.classList.remove('visible');
+
+        void document.getElementById('submitFrame').offsetWidth;
+
+        // Reveal rows staggered
+        rows.forEach(r => {
+            setTimeout(() => {
+                r.style.transition = 'all 0.4s cubic-bezier(0.4,0,0.2,1)';
+                r.style.opacity = '1'; r.style.transform = 'translateY(0)';
+            }, +r.dataset.d);
+        });
+
+        // Map portals one by one (purple)
+        rows.forEach(r => {
+            setTimeout(() => {
+                r.querySelector('.submit-dot').classList.add('mapped');
+                const b = r.querySelector('.submit-badge'); b.textContent = 'Mapped'; b.classList.add('mapped');
+            }, +r.dataset.d + 600);
+        });
+
+        // Show footer + button
+        setTimeout(() => footer.classList.add('visible'), 1600);
+        setTimeout(() => btn.classList.add('visible'), 2200);
+
+        // Auto-submit
+        setTimeout(() => {
+            btn.classList.add('sent'); btn.textContent = 'Submitted';
+            rows.forEach(r => {
+                r.querySelector('.submit-dot').className = 'submit-dot sent';
+                const b = r.querySelector('.submit-badge'); b.textContent = 'Submitted'; b.className = 'submit-badge sent';
+            });
+            setTimeout(() => confirmEl.classList.add('visible'), 400);
+        }, 3000);
+
+        // Loop
+        submitLoop = setTimeout(runSubmitAnim, 6000);
+    }
+
+    const sf3 = document.getElementById('submitFrame');
+    if (sf3) {
+        sf3.addEventListener('click', () => { if (submitLoop) clearTimeout(submitLoop); runSubmitAnim(); });
+        const submitObs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { runSubmitAnim(); submitObs.unobserve(e.target); } });
+        }, { threshold: 0.3 });
+        submitObs.observe(sf3);
+    }
+})();
+
 // FAQ accordion
+// Mobile menu toggle
+(function() {
+    const hamburger = document.querySelector('.nav-mobile');
+    const navLinks = document.querySelector('.nav-links');
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('mobile-open');
+            hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            hamburger.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+        });
+    }
+})();
+
 document.querySelectorAll('.faq-q').forEach(btn => {
     btn.addEventListener('click', () => {
         const item = btn.parentElement;
         const wasOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-        if (!wasOpen) item.classList.add('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+            item.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+        }
     });
 });
 </script>
