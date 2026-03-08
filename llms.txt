@@ -1,0 +1,33 @@
+# Roya
+
+> Automate royalty reporting for licensees. Stop losing weeks to Excel every quarter.
+
+Roya is an AI-powered platform that automates the entire royalty reporting workflow for brand licensees — from raw sales data to submitted reports.
+
+## What Roya Does
+
+- **Data Ingestion**: Connect your ERP (NetSuite, SAP, Shopify, QuickBooks, etc.) or drop in CSV/Excel files. Roya standardizes everything automatically.
+- **Licensor Mapping**: Each licensor has unique reporting templates and rules. Roya maps your sales data to every licensor's specific format — territories, channels, SKUs, royalty tiers.
+- **Compliance Validation**: Check any SKU, territory, or retailer against your agreements instantly. Every calculation, approval, and field change is logged and timestamped for audit readiness.
+- **Portal Submission**: Submit compliant reports to 25+ licensor portals from one interface. Select the licensor, review, submit.
+
+## The Problem Roya Solves
+
+Brand licensees spend weeks every quarter manually formatting royalty reports in Excel across dozens of licensors. Each licensor has different templates, rules, and portals. One mistake can trigger an audit costing tens of thousands of dollars. Roya reduces this from a 30-day cycle to a 1-day review.
+
+## Key Features
+
+- Validate before you ship: check SKUs, territories, and retailers against agreements before a PO goes out
+- Audit-ready from day one: every calculation logged, timestamped, and explainable
+- Replace weeks of Excel with a single day: white-glove onboarding, up and running in hours
+- One workflow for every licensor: 25+ portals, one interface
+
+## Integrations
+
+Oracle, Shopify, SAP, Square, QuickBooks, Rillet, Dual Entry, NetSuite, Amazon
+
+## Company
+
+- Website: https://royaengine.com
+- Founded by Vlad Serban (former licensing manager at Dolby)
+- Contact: vlad@royaengine.com
