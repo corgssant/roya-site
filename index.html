@@ -56,7 +56,7 @@
             font-size: 1.15rem; color: #6b7280; line-height: 1.6;
             margin-bottom: 32px;
         }
-        .hero-right { position: relative; min-height: 380px; }
+        .hero-right { position: relative; min-height: 560px; }
         .btn-primary {
             display: inline-flex; align-items: center; gap: 8px;
             font-size: 0.95rem; font-weight: 600; color: white;
@@ -65,42 +65,93 @@
         }
         .btn-primary:hover { background: #6d28d9; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(124,58,237,0.25); }
 
-        .hero-product {
-            border: 1px solid #e5e7eb; border-radius: 16px;
-            overflow: hidden; background: white; position: relative;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.05), 0 8px 40px rgba(0,0,0,0.04);
+        /* Hero mosaic (Option F) */
+        .hero-mosaic { position: relative; width: 100%; height: 560px; }
+        .hero-mosaic .pill-label {
+            display: inline-block; font-size: 0.58rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.06em;
+            background: #374151; color: #e5e7eb; padding: 5px 14px;
+            border-radius: 20px; white-space: nowrap;
+            position: absolute; top: -14px; right: 20px; z-index: 10;
+            opacity: 0; transform: translateY(6px);
+            transition: all 0.4s cubic-bezier(.4,.0,.2,1);
         }
-        .hero-float-card {
-            position: absolute; background: white; border: 1px solid #e5e7eb;
-            border-radius: 12px; padding: 14px 18px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            opacity: 0; transform: translateY(12px);
+        .hero-mosaic .pill-label.visible { opacity: 1; transform: translateY(0); }
+        .hero-mosaic .hf-card {
+            position: absolute; background: white; border-radius: 16px;
+            padding: 24px 26px; border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            opacity: 0; transform: translateY(16px);
             transition: all 0.5s cubic-bezier(.4,.0,.2,1);
         }
-        .hero-float-card.visible { opacity: 1; transform: translateY(0); }
-        .hero-float-card.accent-pop { animation: accentPop 0.4s cubic-bezier(.4,.0,.2,1) forwards; }
-        @keyframes accentPop {
-            0% { opacity:0; transform:scale(0.85) translateY(8px); }
-            100% { opacity:1; transform:scale(1) translateY(0); }
+        .hero-mosaic .hf-card.visible { opacity: 1; transform: translateY(0); }
+        .hf-accent-bubble {
+            position: absolute; background: #374151; border-radius: 14px;
+            padding: 10px 14px; z-index: 20;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            opacity: 0; transform: scale(0.8);
+            transition: all 0.35s cubic-bezier(.4,.0,.2,1);
         }
-        .hero-progress-bar {
-            height: 4px; background: #f3f4f6; border-radius: 2px; overflow: hidden; margin-top: 6px;
-        }
-        .hero-progress-fill {
-            height: 100%; background: linear-gradient(90deg, #7c3aed, #a78bfa);
-            border-radius: 2px; width: 0%; transition: width 1.2s ease;
-        }
-        .hero-check-row {
-            display:flex; align-items:center; gap:6px; font-size:0.66rem; opacity:0;
-            transform:translateX(-6px); transition: all 0.3s ease;
-        }
-        .hero-check-row.visible { opacity:1; transform:translateX(0); }
-        .hero-check-icon {
-            width:14px; height:14px; border-radius:50%; display:flex;
-            align-items:center; justify-content:center; flex-shrink:0;
-        }
-        .hero-check-icon.done { background:#f0fdf4; color:#16a34a; }
-        .hero-check-icon.pending { background:#f3f4f6; color:#9ca3af; }
+        .hf-accent-bubble.visible { opacity: 1; transform: scale(1); }
+        .hf-accent-bubble .bt { font-size: 0.52rem; font-weight: 600; color: #e5e7eb; }
+        .card-agreement { top: 30px; left: 60px; width: 340px; }
+        .agree-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+        .agree-title { font-size: 0.95rem; font-weight: 600; color: #1a1a2e; }
+        .agree-sub { font-size: 0.6rem; color: #9ca3af; margin-top: 2px; }
+        .agree-badge { font-size: 0.55rem; font-weight: 600; padding: 3px 10px; border-radius: 8px; opacity: 0; transition: all 0.4s; }
+        .agree-badge.visible { opacity: 1; }
+        .agree-badge.approaching { background: #fff7ed; color: #f97316; }
+        .agree-badge.met { background: #f0fdf4; color: #16a34a; }
+        .agree-metric-label { font-size: 0.72rem; font-weight: 500; color: #374151; margin-bottom: 6px; }
+        .agree-bar-wrap { width: 100%; height: 6px; background: #f3f4f6; border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
+        .agree-bar { height: 100%; border-radius: 3px; width: 0%; transition: width 1.5s ease, background 0.5s; background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+        .agree-bar.exceeded { background: linear-gradient(90deg, #16a34a, #4ade80); }
+        .agree-nums { display: flex; justify-content: space-between; font-size: 0.65rem; }
+        .agree-pct { font-weight: 700; color: #7c3aed; transition: color 0.5s; }
+        .agree-pct.green { color: #16a34a; }
+        .agree-total { color: #6b7280; }
+        .agree-total strong { color: #7c3aed; transition: color 0.5s; }
+        .agree-total strong.green { color: #16a34a; }
+        .card-calc { top: 290px; left: 0; width: 290px; }
+        .calc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+        .calc-icon { width: 36px; height: 36px; border-radius: 10px; background: #faf8ff; display: flex; align-items: center; justify-content: center; }
+        .calc-htitle { font-size: 0.6rem; color: #9ca3af; }
+        .calc-hname { font-size: 0.92rem; font-weight: 600; color: #1a1a2e; }
+        .calc-line { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.78rem; }
+        .calc-label { color: #6b7280; font-weight: 500; }
+        .calc-val { font-weight: 600; color: #374151; }
+        .calc-highlight-row { background: #f0fdf4; border-radius: 10px; padding: 8px 14px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; opacity: 0; transition: opacity 0.4s; }
+        .calc-highlight-row.visible { opacity: 1; }
+        .calc-hl-label { font-size: 0.7rem; font-weight: 600; color: #16a34a; }
+        .calc-hl-val { font-size: 0.78rem; font-weight: 700; color: #16a34a; }
+        .calc-total-line { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.82rem; }
+        .calc-total-label { font-weight: 600; color: #374151; }
+        .calc-total-val { font-weight: 700; color: #7c3aed; font-size: 0.92rem; }
+        .card-file { top: 290px; right: 0; width: 260px; }
+        .file-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .file-title-row { display: flex; align-items: center; gap: 8px; }
+        .file-icon { color: #7c3aed; }
+        .file-title { font-size: 0.82rem; font-weight: 600; color: #1a1a2e; }
+        .file-period { font-size: 0.78rem; font-weight: 700; color: #1a1a2e; }
+        .file-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0; }
+        .file-stat { background: #fafafa; border-radius: 10px; padding: 10px 12px; }
+        .file-stat-label { font-size: 0.5rem; font-weight: 600; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.04em; }
+        .file-stat-val { font-size: 0.95rem; font-weight: 700; color: #1a1a2e; margin-top: 2px; }
+        .file-checks { display: flex; flex-direction: column; gap: 0; border: 1px solid #f3f4f6; border-radius: 10px; overflow: hidden; }
+        .file-check { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #f3f4f6; font-size: 0.78rem; font-weight: 500; color: #1a1a2e; opacity: 0; transition: all 0.3s ease; }
+        .file-check:last-child { border-bottom: none; }
+        .file-check.visible { opacity: 1; }
+        .fc-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .fc-icon.pending { background: #f3f4f6; color: #d1d5db; }
+        .fc-icon.done { background: #f0fdf4; color: #16a34a; }
+
+        /* Portal cycling list */
+        .portal-window { mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%); }
+        .portal-scroll { transition: transform 0.5s cubic-bezier(.4,.0,.2,1); }
+        .portal-row { display: flex; align-items: center; gap: 10px; padding: 10px 18px; }
+        .portal-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .portal-name { font-size: 0.78rem; font-weight: 500; color: #1a1a2e; flex: 1; }
+        .portal-badge { font-size: 0.52rem; font-weight: 600; color: #16a34a; background: #f0fdf4; padding: 3px 8px; border-radius: 6px; }
         .hero-left { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
         .hero-left.visible { opacity: 1; transform: translateY(0); }
 
@@ -533,7 +584,9 @@
         @media (max-width: 900px) {
             .hero-inner { grid-template-columns: 1fr; gap: 40px; }
             .hero h1 { font-size: 2.6rem; }
-            .hero-right { min-height: 300px; }
+            .hero-right { min-height: 480px; }
+            .hero-mosaic { height: 480px; transform: scale(0.85); transform-origin: top center; }
+            .card-agreement { left: 20px; }
             .feature-grid { grid-template-columns: 1fr; }
             .feature-full-inner { grid-template-columns: 1fr; }
             .feature-full-text { padding: 32px 32px 0; }
@@ -590,50 +643,76 @@
                 <p>The fastest, easiest way to stay compliant with complex licensing agreements.</p>
                 <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="btn-primary">Get early access <span>&rarr;</span></a>
             </div>
-            <div class="hero-right" id="heroRight">
-                <!-- Main dashboard card -->
-                <div class="hero-float-card" id="heroMain" style="top:0;left:10px;right:10px;z-index:2">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-                        <div>
-                            <div style="font-size:0.82rem;font-weight:600">Disney - Q1 2026</div>
-                            <div style="font-size:0.6rem;color:#9ca3af">Consolidated &bull; 3 Agreements</div>
+            <div class="hero-right">
+                <div class="hero-mosaic" id="heroMosaic">
+                    <!-- Accent: Auto-submit toggle -->
+                    <div class="hf-accent-bubble" id="hfAb1" style="top:50px;right:0">
+                        <div id="hfToggleWrap" style="width:40px;height:22px;background:#4b5563;border-radius:11px;position:relative;transition:background 0.3s">
+                            <div id="hfToggleDot" style="width:18px;height:18px;border-radius:50%;background:white;position:absolute;top:2px;left:2px;transition:left 0.3s"></div>
                         </div>
-                        <span class="mini-badge green" id="heroBadge" style="opacity:0;transition:opacity 0.3s">Approved</span>
+                        <span class="bt">Auto-submit</span>
                     </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px">
-                        <div style="background:#fafafa;border-radius:8px;padding:8px 10px">
-                            <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Reportable Units</div>
-                            <div style="font-size:0.88rem;font-weight:700" class="mono" id="heroUnits">0</div>
+                    <!-- Accent: Encrypted lock -->
+                    <div class="hf-accent-bubble" id="hfAb2" style="bottom:0;left:50%;transform:translateX(-50%)">
+                        <svg width="14" height="14" fill="none" stroke="#a78bfa" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                        <span class="bt">Encrypted</span>
+                    </div>
+                    <!-- Card 1: Agreement monitoring -->
+                    <div class="hf-card card-agreement" id="hfC1">
+                        <div class="pill-label" id="hfPl1">Monitor & Validate</div>
+                        <div class="agree-header">
+                            <div>
+                                <div class="agree-title">Disney — Minimum Guarantee</div>
+                                <div class="agree-sub">Annual threshold tracking</div>
+                            </div>
+                            <span class="agree-badge approaching" id="hfBadge">Approaching</span>
                         </div>
-                        <div style="background:#fafafa;border-radius:8px;padding:8px 10px">
-                            <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Total Royalty</div>
-                            <div style="font-size:0.88rem;font-weight:700;color:#7c3aed" class="mono" id="heroRoyalty">$0</div>
-                        </div>
-                        <div style="background:#fafafa;border-radius:8px;padding:8px 10px">
-                            <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Effective Rate</div>
-                            <div style="font-size:0.88rem;font-weight:700" class="mono" id="heroRate">0%</div>
+                        <div class="agree-metric-label">Royalties Paid</div>
+                        <div class="agree-bar-wrap"><div class="agree-bar" id="hfBar"></div></div>
+                        <div class="agree-nums">
+                            <span class="agree-pct" id="hfPct">0%</span>
+                            <span class="agree-total"><strong id="hfCur">$0</strong> / $150,000</span>
                         </div>
                     </div>
-                    <div style="font-size:0.58rem;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Top Products</div>
-                    <div class="mini-row" style="padding:2px 0"><span style="font-size:0.7rem;font-weight:500">Star Wars: Galactic Chess</span><span style="font-size:0.7rem;font-weight:600;color:#7c3aed" class="mono" id="heroProd1">$0</span></div>
-                    <div class="mini-row" style="padding:2px 0"><span style="font-size:0.7rem;font-weight:500">Frozen: Ice Palace Puzzle</span><span style="font-size:0.7rem;font-weight:600;color:#7c3aed" class="mono" id="heroProd2">$0</span></div>
-                    <div class="mini-row" style="padding:2px 0"><span style="font-size:0.7rem;font-weight:500">Marvel: Strategy Board Game</span><span style="font-size:0.7rem;font-weight:600;color:#7c3aed" class="mono" id="heroProd3">$0</span></div>
-                </div>
-                <!-- Floating: Report Progress card -->
-                <div class="hero-float-card" id="heroProgress" style="bottom:30px;left:-14px;z-index:3;padding:10px 14px;min-width:160px">
-                    <div style="font-size:0.52rem;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Report Progress</div>
-                    <div style="display:flex;flex-direction:column;gap:4px">
-                        <div class="hero-check-row" id="hc1"><div class="hero-check-icon pending" id="hci1"><svg width="8" height="8" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div><span style="color:#374151;font-weight:500">Data ingested</span></div>
-                        <div class="hero-check-row" id="hc2"><div class="hero-check-icon pending" id="hci2"><svg width="8" height="8" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div><span style="color:#374151;font-weight:500">Fields mapped</span></div>
-                        <div class="hero-check-row" id="hc3"><div class="hero-check-icon pending" id="hci3"><svg width="8" height="8" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div><span style="color:#374151;font-weight:500">Royalties calculated</span></div>
-                        <div class="hero-check-row" id="hc4"><div class="hero-check-icon pending" id="hci4"><svg width="8" height="8" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div><span style="color:#374151;font-weight:500">Submitted</span></div>
+                    <!-- Card 2: Calculation -->
+                    <div class="hf-card card-calc" id="hfC2">
+                        <div class="pill-label" id="hfPl2">Calculate & Review</div>
+                        <div class="calc-header">
+                            <div class="calc-icon">
+                                <svg width="16" height="16" fill="none" stroke="#7c3aed" stroke-width="1.8" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+                            </div>
+                            <div>
+                                <div class="calc-htitle">Royalty Report</div>
+                                <div class="calc-hname">Q1 2026 Summary</div>
+                            </div>
+                        </div>
+                        <div class="calc-line"><span class="calc-label">Net Sales</span><span class="calc-val mono" id="hfNet">$0</span></div>
+                        <div class="calc-highlight-row" id="hfHL">
+                            <span class="calc-hl-label">Royalty (8.5%)</span>
+                            <span class="calc-hl-val mono" id="hfRoy">$0</span>
+                        </div>
+                        <div class="calc-total-line"><span class="calc-total-label">Total Due</span><span class="calc-total-val mono" id="hfTotal">$0</span></div>
                     </div>
-                </div>
-                <!-- Floating: Royalty Rate card -->
-                <div class="hero-float-card" id="heroRate2" style="bottom:4px;right:-8px;z-index:3;padding:8px 14px">
-                    <div style="font-size:0.52rem;color:#9ca3af;margin-bottom:2px">Royalty Rate</div>
-                    <div style="font-size:0.78rem;font-weight:700;color:#7c3aed" class="mono" id="heroRateVal">0%</div>
-                    <div class="hero-progress-bar"><div class="hero-progress-fill" id="heroRateBar"></div></div>
+                    <!-- Card 3: Filing -->
+                    <div class="hf-card card-file" id="hfC3">
+                        <div class="pill-label" id="hfPl3">File & Submit</div>
+                        <div class="file-header">
+                            <div class="file-title-row">
+                                <span class="file-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span>
+                                <span class="file-title">Disney Portal</span>
+                            </div>
+                            <span class="file-period">Q1 2026</span>
+                        </div>
+                        <div class="file-stats">
+                            <div class="file-stat"><div class="file-stat-label">Net Sales</div><div class="file-stat-val mono" id="hfSales">$0</div></div>
+                            <div class="file-stat"><div class="file-stat-label">Royalty Due</div><div class="file-stat-val mono" id="hfDue">$0</div></div>
+                        </div>
+                        <div class="file-checks">
+                            <div class="file-check" id="hfFc1"><div class="fc-icon pending" id="hfFci1"><svg width="10" height="10" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div><span>Prepared</span></div>
+                            <div class="file-check" id="hfFc2"><div class="fc-icon pending" id="hfFci2"><svg width="10" height="10" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div><span>Approved</span></div>
+                            <div class="file-check" id="hfFc3"><div class="fc-icon pending" id="hfFci3"><svg width="10" height="10" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div><span>Submitted</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -775,28 +854,35 @@
                 <h3>Catch errors before they cost you</h3>
                 <p>Wrong territory, misapplied rate, missing IP code — caught in seconds, not in an audit.</p>
                 <div class="feature-ui">
-                    <div style="max-width:300px;width:100%">
-                        <div class="mini-card" style="margin-bottom:8px;border-color:#bbf7d0;background:#fafff9">
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-                                <span style="font-size:0.62rem;font-weight:600;color:#16a34a;text-transform:uppercase;letter-spacing:0.05em">Territory Mismatch</span>
-                                <span style="font-size:0.62rem;font-weight:500;color:#16a34a">Resolved</span>
+                    <div style="max-width:320px;width:100%;position:relative">
+                        <div class="mini-card" style="padding:0;overflow:hidden">
+                            <div style="display:grid;grid-template-columns:3fr 1.2fr 32px;padding:8px 16px;background:#f9fafb;border-bottom:1px solid #e5e7eb">
+                                <span style="font-size:0.5rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em">Product</span>
+                                <span style="font-size:0.5rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em">Rate</span>
+                                <span></span>
                             </div>
-                            <div style="font-size:0.72rem">3 SKUs in <strong>Japan</strong> - excluded</div>
-                        </div>
-                        <div class="mini-card" style="margin-bottom:8px;border-color:#fed7aa;background:#fffbf5">
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-                                <span style="font-size:0.62rem;font-weight:600;color:#f97316;text-transform:uppercase;letter-spacing:0.05em">Rate Override</span>
-                                <span style="font-size:0.62rem;font-weight:500;color:#7c3aed">Review</span>
+                            <div style="display:grid;grid-template-columns:3fr 1.2fr 32px;padding:10px 16px;border-bottom:1px solid #f3f4f6;align-items:center">
+                                <span style="font-size:0.72rem;font-weight:500">Chess Set</span>
+                                <span style="font-size:0.72rem;font-weight:600" class="mono">8.5%</span>
+                                <span style="width:8px;height:8px;border-radius:50%;background:#16a34a;margin:auto"></span>
                             </div>
-                            <div style="font-size:0.72rem">Promo rate <strong>6.0%</strong> vs standard <strong>8.5%</strong></div>
-                        </div>
-                        <div class="mini-card" style="border-color:#fed7aa;background:#fffbf5">
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-                                <span style="font-size:0.62rem;font-weight:600;color:#f97316;text-transform:uppercase;letter-spacing:0.05em">Missing IP Code</span>
-                                <span style="font-size:0.62rem;font-weight:500;color:#7c3aed">Review</span>
+                            <div style="display:grid;grid-template-columns:3fr 1.2fr 32px;padding:10px 16px;border-bottom:1px solid #f3f4f6;align-items:center;background:#fff7ed">
+                                <span style="font-size:0.72rem;font-weight:600;color:#9a3412">Board Game</span>
+                                <span style="font-size:0.72rem;font-weight:700;color:#f97316" class="mono">6.0%</span>
+                                <span style="width:8px;height:8px;border-radius:50%;background:#f97316;margin:auto"></span>
                             </div>
-                            <div style="font-size:0.72rem">No code for <strong>DIS-GAME-2024</strong></div>
+                            <div style="display:grid;grid-template-columns:3fr 1.2fr 32px;padding:10px 16px;border-bottom:1px solid #f3f4f6;align-items:center">
+                                <span style="font-size:0.72rem;font-weight:500">Ice Puzzle</span>
+                                <span style="font-size:0.72rem;font-weight:600" class="mono">8.5%</span>
+                                <span style="width:8px;height:8px;border-radius:50%;background:#16a34a;margin:auto"></span>
+                            </div>
+                            <div style="display:grid;grid-template-columns:3fr 1.2fr 32px;padding:10px 16px;align-items:center;background:#fef2f2">
+                                <span style="font-size:0.72rem;font-weight:600;color:#991b1b">Card Game</span>
+                                <span style="font-size:0.72rem;font-weight:700;color:#dc2626" class="mono">&mdash;</span>
+                                <span style="width:8px;height:8px;border-radius:50%;background:#dc2626;margin:auto"></span>
+                            </div>
                         </div>
+                        <div style="position:absolute;top:-10px;right:-10px;background:#374151;color:#e5e7eb;padding:5px 12px;border-radius:20px;font-size:0.55rem;font-weight:700">2 flagged</div>
                     </div>
                 </div>
             </div>
@@ -809,19 +895,41 @@
                 <h3>Audit-ready from day one</h3>
                 <p>Every calculation, approval, and field change — logged, timestamped, and explainable.</p>
                 <div class="feature-ui">
-                    <div class="stacked-cards" style="max-width:300px;width:100%">
-                        <div class="card-back"></div>
-                        <div class="mini-card card-front">
-                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-                                <span class="mini-card-title" style="margin:0">Audit Trail</span>
-                                <span class="mini-badge green" style="font-size:0.58rem">5 events</span>
-                            </div>
-                            <div style="border-left:2px solid #e5e7eb;padding-left:12px;display:flex;flex-direction:column;gap:8px">
-                                <div><div style="font-size:0.55rem;color:#9ca3af" class="mono">9:14 AM</div><div style="font-size:0.7rem">Sales data imported - <strong>847</strong> items</div></div>
-                                <div><div style="font-size:0.55rem;color:#9ca3af" class="mono">9:15 AM</div><div style="font-size:0.7rem">Rate <span style="background:#ede9fe;color:#7c3aed;padding:1px 4px;border-radius:3px;font-size:0.65rem">8.5%</span> applied</div></div>
-                                <div><div style="font-size:0.55rem;color:#9ca3af" class="mono">9:15 AM</div><div style="font-size:0.7rem"><span style="background:#fff7ed;color:#f97316;padding:1px 4px;border-radius:3px;font-size:0.65rem">3 SKUs flagged</span></div></div>
-                                <div><div style="font-size:0.55rem;color:#9ca3af" class="mono">9:22 AM</div><div style="font-size:0.7rem">Report <span style="background:#f0fdf4;color:#16a34a;padding:1px 4px;border-radius:3px;font-size:0.65rem">approved</span></div></div>
-                                <div><div style="font-size:0.55rem;color:#9ca3af" class="mono">9:23 AM</div><div style="font-size:0.7rem">Submitted to <strong>Disney OPA</strong></div></div>
+                    <div style="max-width:300px;width:100%;position:relative">
+                        <div class="stacked-cards">
+                            <div class="card-back"></div>
+                            <div class="mini-card card-front" style="padding:16px 20px">
+                                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+                                    <span style="font-size:0.72rem;font-weight:600;color:#1a1a2e">Activity</span>
+                                    <span style="font-size:0.52rem;font-weight:600;color:#16a34a;background:#f0fdf4;padding:3px 8px;border-radius:6px">12 events</span>
+                                </div>
+                                <div style="display:flex;align-items:flex-end;gap:3px;height:48px;margin-bottom:16px">
+                                    <div style="flex:1;background:#ede9fe;border-radius:2px;height:25%"></div>
+                                    <div style="flex:1;background:#ede9fe;border-radius:2px;height:50%"></div>
+                                    <div style="flex:1;background:#ede9fe;border-radius:2px;height:35%"></div>
+                                    <div style="flex:1;background:#ede9fe;border-radius:2px;height:65%"></div>
+                                    <div style="flex:1;background:#ede9fe;border-radius:2px;height:40%"></div>
+                                    <div style="flex:1;background:#ede9fe;border-radius:2px;height:80%"></div>
+                                    <div style="flex:1;background:#ede9fe;border-radius:2px;height:55%"></div>
+                                    <div style="flex:1;background:#7c3aed;border-radius:2px;height:100%"></div>
+                                </div>
+                                <div style="display:flex;flex-direction:column;gap:8px">
+                                    <div style="display:flex;align-items:center;gap:8px">
+                                        <span style="width:6px;height:6px;border-radius:50%;background:#7c3aed;flex-shrink:0"></span>
+                                        <span style="font-size:0.65rem;color:#6b7280">Data imported</span>
+                                        <span style="font-size:0.52rem;color:#9ca3af;margin-left:auto" class="mono">9:14</span>
+                                    </div>
+                                    <div style="display:flex;align-items:center;gap:8px">
+                                        <span style="width:6px;height:6px;border-radius:50%;background:#f97316;flex-shrink:0"></span>
+                                        <span style="font-size:0.65rem;color:#6b7280">3 SKUs flagged</span>
+                                        <span style="font-size:0.52rem;color:#9ca3af;margin-left:auto" class="mono">9:15</span>
+                                    </div>
+                                    <div style="display:flex;align-items:center;gap:8px">
+                                        <span style="width:6px;height:6px;border-radius:50%;background:#16a34a;flex-shrink:0"></span>
+                                        <span style="font-size:0.65rem;color:#6b7280">Approved & submitted</span>
+                                        <span style="font-size:0.52rem;color:#9ca3af;margin-left:auto" class="mono">9:22</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -838,26 +946,39 @@
                 <div class="feature-ui">
                     <div style="max-width:300px;width:100%">
                         <div class="mini-card">
-                            <div class="mini-card-title">Onboarding</div>
-                            <div style="display:flex;flex-direction:column;gap:10px">
-                                <div style="display:flex;align-items:center;gap:10px">
-                                    <div style="width:20px;height:20px;border-radius:50%;background:#f0fdf4;color:#16a34a;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div>
-                                    <div><div style="font-size:0.75rem;font-weight:500">Connect ERP</div><div style="font-size:0.6rem;color:#16a34a">Complete</div></div>
+                            <div style="display:flex;flex-direction:column;gap:16px">
+                                <div>
+                                    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                                        <span style="font-size:0.55rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em">Before</span>
+                                        <span style="font-size:0.55rem;font-weight:700;color:#dc2626">3 weeks</span>
+                                    </div>
+                                    <div style="height:24px;background:#fecaca;border-radius:8px;width:100%;position:relative;overflow:hidden">
+                                        <div style="position:absolute;inset:0;background:linear-gradient(90deg,#fca5a5,#f87171);border-radius:8px;display:flex;align-items:center;padding-left:10px">
+                                            <span style="font-size:0.5rem;color:white;font-weight:600">Manual Excel workflows</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div style="display:flex;align-items:center;gap:10px">
-                                    <div style="width:20px;height:20px;border-radius:50%;background:#f0fdf4;color:#16a34a;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div>
-                                    <div><div style="font-size:0.75rem;font-weight:500">Upload Agreements</div><div style="font-size:0.6rem;color:#16a34a">Complete</div></div>
+                                <div>
+                                    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                                        <span style="font-size:0.55rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em">After</span>
+                                        <span style="font-size:0.55rem;font-weight:700;color:#16a34a">&lt; 1 day</span>
+                                    </div>
+                                    <div style="height:24px;background:#f3f4f6;border-radius:8px;width:100%;position:relative">
+                                        <div style="width:15%;height:100%;background:linear-gradient(90deg,#4ade80,#16a34a);border-radius:8px"></div>
+                                    </div>
                                 </div>
-                                <div style="display:flex;align-items:center;gap:10px">
-                                    <div style="width:20px;height:20px;border-radius:50%;background:#f0fdf4;color:#16a34a;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div>
-                                    <div><div style="font-size:0.75rem;font-weight:500">Map Portals</div><div style="font-size:0.6rem;color:#16a34a">Complete</div></div>
-                                </div>
-                                <div style="display:flex;align-items:center;gap:10px">
-                                    <div style="width:20px;height:20px;border-radius:50%;background:#f0fdf4;color:#16a34a;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div>
-                                    <div><div style="font-size:0.75rem;font-weight:500">First Report Generated</div><div style="font-size:0.6rem;color:#16a34a">Complete</div></div>
+                                <div style="border-top:1px solid #f3f4f6"></div>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                                    <div style="text-align:center;background:#faf8ff;border-radius:10px;padding:10px">
+                                        <div style="font-size:1.1rem;font-weight:800;color:#7c3aed">95%</div>
+                                        <div style="font-size:0.5rem;color:#9ca3af;font-weight:600">Time saved</div>
+                                    </div>
+                                    <div style="text-align:center;background:#f0fdf4;border-radius:10px;padding:10px">
+                                        <div style="font-size:1.1rem;font-weight:800;color:#16a34a">0</div>
+                                        <div style="font-size:0.5rem;color:#9ca3af;font-weight:600">Manual errors</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div style="margin-top:12px;text-align:center;font-size:0.7rem;font-weight:600;color:#16a34a;background:#f0fdf4;padding:6px;border-radius:6px">First report in under 1 day</div>
                         </div>
                     </div>
                 </div>
@@ -871,28 +992,28 @@
                 <h3>One workflow for every licensor</h3>
                 <p>25+ portals, one interface. Select the licensor, review, submit.</p>
                 <div class="feature-ui">
-                    <div style="max-width:300px;width:100%">
-                        <div class="mini-card">
-                            <div class="mini-card-title">Submit Reports</div>
-                            <div style="display:flex;flex-direction:column;gap:6px">
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#faf8ff;border:1px solid #ddd6fe;border-radius:8px">
-                                    <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:#7c3aed"></span><span style="font-size:0.72rem;font-weight:500">Disney OPA</span></div>
-                                    <span style="font-size:0.58rem;font-weight:600;color:#7c3aed">Ready</span>
-                                </div>
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#faf8ff;border:1px solid #ddd6fe;border-radius:8px">
-                                    <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:#7c3aed"></span><span style="font-size:0.72rem;font-weight:500">NFL / CLC</span></div>
-                                    <span style="font-size:0.58rem;font-weight:600;color:#7c3aed">Ready</span>
-                                </div>
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#faf8ff;border:1px solid #ddd6fe;border-radius:8px">
-                                    <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:#7c3aed"></span><span style="font-size:0.72rem;font-weight:500">Hasbro Portal</span></div>
-                                    <span style="font-size:0.58rem;font-weight:600;color:#7c3aed">Ready</span>
-                                </div>
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#faf8ff;border:1px solid #ddd6fe;border-radius:8px">
-                                    <div style="display:flex;align-items:center;gap:8px"><span style="width:6px;height:6px;border-radius:50%;background:#7c3aed"></span><span style="font-size:0.72rem;font-weight:500">Sanrio</span></div>
-                                    <span style="font-size:0.58rem;font-weight:600;color:#7c3aed">Ready</span>
+                    <div style="max-width:300px;width:100%;position:relative">
+                        <div class="mini-card" style="padding:0;overflow:hidden">
+                            <div style="padding:14px 18px 10px;display:flex;justify-content:space-between;align-items:center">
+                                <span style="font-size:0.72rem;font-weight:600;color:#1a1a2e">Connected Portals</span>
+                                <span style="font-size:0.52rem;font-weight:600;color:#16a34a;background:#f0fdf4;padding:3px 8px;border-radius:6px">25+ portals</span>
+                            </div>
+                            <div class="portal-window" style="height:168px;overflow:hidden;position:relative">
+                                <div class="portal-scroll" id="portalScroll">
+                                    <div class="portal-row"><span class="portal-dot" style="background:#7c3aed"></span><span class="portal-name">Disney</span><span class="portal-badge">Connected</span></div>
+                                    <div class="portal-row"><span class="portal-dot" style="background:#3b82f6"></span><span class="portal-name">NFL / CLC</span><span class="portal-badge">Connected</span></div>
+                                    <div class="portal-row"><span class="portal-dot" style="background:#f59e0b"></span><span class="portal-name">Hasbro</span><span class="portal-badge">Connected</span></div>
+                                    <div class="portal-row"><span class="portal-dot" style="background:#ec4899"></span><span class="portal-name">Sanrio</span><span class="portal-badge">Connected</span></div>
+                                    <div class="portal-row"><span class="portal-dot" style="background:#10b981"></span><span class="portal-name">Warner Bros</span><span class="portal-badge">Connected</span></div>
+                                    <div class="portal-row"><span class="portal-dot" style="background:#6366f1"></span><span class="portal-name">Universal</span><span class="portal-badge">Connected</span></div>
+                                    <div class="portal-row"><span class="portal-dot" style="background:#ef4444"></span><span class="portal-name">Mattel</span><span class="portal-badge">Connected</span></div>
+                                    <div class="portal-row"><span class="portal-dot" style="background:#14b8a6"></span><span class="portal-name">Nintendo</span><span class="portal-badge">Connected</span></div>
+                                    <div class="portal-row"><span class="portal-dot" style="background:#8b5cf6"></span><span class="portal-name">Paramount</span><span class="portal-badge">Connected</span></div>
+                                    <div class="portal-row"><span class="portal-dot" style="background:#f97316"></span><span class="portal-name">Sony</span><span class="portal-badge">Connected</span></div>
+                                    <div class="portal-row"><span class="portal-dot" style="background:#06b6d4"></span><span class="portal-name">NBA</span><span class="portal-badge">Connected</span></div>
+                                    <div class="portal-row"><span class="portal-dot" style="background:#d946ef"></span><span class="portal-name">MLB / MiLB</span><span class="portal-badge">Connected</span></div>
                                 </div>
                             </div>
-                            <div style="margin-top:10px;text-align:center;font-size:0.7rem;font-weight:600;color:white;background:#7c3aed;padding:7px;border-radius:7px">Submit All Reports</div>
                         </div>
                     </div>
                 </div>
@@ -913,10 +1034,6 @@
             <div style="display:flex;align-items:center;gap:6px;font-size:0.85rem;font-weight:600;color:#4b5563">
                 <svg width="14" height="14" fill="none" stroke="#16a34a" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
                 Role-based access
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;font-size:0.85rem;font-weight:600;color:#4b5563">
-                <svg width="14" height="14" fill="none" stroke="#16a34a" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-                AI never trains on your data
             </div>
         </div>
 
@@ -1170,96 +1287,163 @@ const revObs = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 
-// Hero entrance animations
+// Portal cycling scroll
 (function() {
-    const heroMain = document.getElementById('heroMain');
-    const heroProgress = document.getElementById('heroProgress');
-    const heroRate2 = document.getElementById('heroRate2');
-    const heroBadge = document.getElementById('heroBadge');
-    const heroRateBar = document.getElementById('heroRateBar');
+    const el = document.getElementById('portalScroll');
+    if (!el) return;
+    const rows = el.children;
+    const rowH = 42;
+    let offset = 0;
+    const orig = el.innerHTML;
+    el.innerHTML = orig + orig;
+
+    setInterval(() => {
+        offset += rowH;
+        if (offset >= rows.length / 2 * rowH) offset = 0;
+        el.style.transform = 'translateY(-' + offset + 'px)';
+        if (offset === 0) {
+            el.style.transition = 'none';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    el.style.transition = 'transform 0.5s cubic-bezier(.4,.0,.2,1)';
+                });
+            });
+        }
+    }, 1800);
+})();
+
+// Hero left entrance
+window.addEventListener('load', () => {
+    setTimeout(() => document.querySelector('.hero-left').classList.add('visible'), 100);
+});
+</script>
+<script>
+(function() {
     let heroTimer = null;
 
-    function countUp(el, target, prefix, suffix, duration) {
+    function countUp(el, target, prefix, dur) {
         const start = performance.now();
-        const format = (n) => prefix + n.toLocaleString() + suffix;
         function step(now) {
-            const t = Math.min((now - start) / duration, 1);
-            const ease = 1 - Math.pow(1 - t, 3);
-            el.textContent = format(Math.round(target * ease));
+            const t = Math.min((now - start) / dur, 1);
+            const e = 1 - Math.pow(1 - t, 3);
+            el.textContent = prefix + Math.round(target * e).toLocaleString();
             if (t < 1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
     }
 
-    function countUpDecimal(el, target, prefix, suffix, duration) {
+    function animatePct(el, target, dur) {
         const start = performance.now();
         function step(now) {
-            const t = Math.min((now - start) / duration, 1);
-            const ease = 1 - Math.pow(1 - t, 3);
-            el.textContent = prefix + (target * ease).toFixed(2) + suffix;
+            const t = Math.min((now - start) / dur, 1);
+            const e = 1 - Math.pow(1 - t, 3);
+            el.textContent = Math.round(target * e) + '%';
             if (t < 1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
-    }
-
-    function checkStep(i) {
-        const row = document.getElementById('hc' + i);
-        const icon = document.getElementById('hci' + i);
-        row.classList.add('visible');
-        icon.classList.remove('pending');
-        icon.classList.add('done');
     }
 
     function resetHero() {
-        [heroMain, heroProgress, heroRate2].forEach(c => {
-            c.classList.remove('visible', 'accent-pop');
-        });
-        heroBadge.style.opacity = '0';
-        heroRateBar.style.width = '0%';
-        document.getElementById('heroUnits').textContent = '0';
-        document.getElementById('heroRoyalty').textContent = '$0';
-        document.getElementById('heroRate').textContent = '0%';
-        document.getElementById('heroRateVal').textContent = '0%';
-        document.getElementById('heroProd1').textContent = '$0';
-        document.getElementById('heroProd2').textContent = '$0';
-        document.getElementById('heroProd3').textContent = '$0';
-        for (let i = 1; i <= 4; i++) {
-            document.getElementById('hc' + i).classList.remove('visible');
-            const icon = document.getElementById('hci' + i);
-            icon.classList.remove('done');
-            icon.classList.add('pending');
-        }
+        document.querySelectorAll('#heroMosaic .hf-card, #heroMosaic .pill-label, #heroMosaic .hf-accent-bubble').forEach(c => c.classList.remove('visible'));
+        document.querySelectorAll('#heroMosaic .file-check').forEach(r => r.classList.remove('visible'));
+        document.querySelectorAll('#heroMosaic .fc-icon').forEach(i => { i.classList.remove('done'); i.classList.add('pending'); });
+        const ab = document.getElementById('hfBadge');
+        ab.classList.remove('visible', 'met'); ab.classList.add('approaching'); ab.textContent = 'Approaching';
+        document.getElementById('hfBar').style.width = '0%';
+        document.getElementById('hfBar').classList.remove('exceeded');
+        document.getElementById('hfPct').textContent = '0%';
+        document.getElementById('hfPct').classList.remove('green');
+        document.getElementById('hfCur').textContent = '$0';
+        document.getElementById('hfCur').classList.remove('green');
+        document.getElementById('hfNet').textContent = '$0';
+        document.getElementById('hfRoy').textContent = '$0';
+        document.getElementById('hfTotal').textContent = '$0';
+        document.getElementById('hfHL').classList.remove('visible');
+        document.getElementById('hfSales').textContent = '$0';
+        document.getElementById('hfDue').textContent = '$0';
+        document.getElementById('hfToggleDot').style.left = '2px';
+        document.getElementById('hfToggleWrap').style.background = '#4b5563';
     }
 
     function runHeroAnimation() {
         resetHero();
-        const left = document.querySelector('.hero-left');
-        setTimeout(() => left.classList.add('visible'), 100);
-        setTimeout(() => heroMain.classList.add('visible'), 200);
+
+        // Card 1: Agreement monitoring
+        setTimeout(() => document.getElementById('hfPl1').classList.add('visible'), 100);
+        setTimeout(() => document.getElementById('hfC1').classList.add('visible'), 250);
+        setTimeout(() => document.getElementById('hfBadge').classList.add('visible'), 500);
+
+        // Bar animates to 72%
         setTimeout(() => {
-            countUp(document.getElementById('heroUnits'), 2480, '', '', 1000);
-            countUp(document.getElementById('heroRoyalty'), 18600, '$', '', 1000);
-            countUpDecimal(document.getElementById('heroRate'), 8.29, '', '%', 1000);
-            countUp(document.getElementById('heroProd1'), 12400, '$', '', 800);
-            countUp(document.getElementById('heroProd2'), 2850, '$', '', 800);
-            countUp(document.getElementById('heroProd3'), 1740, '$', '', 800);
-        }, 600);
-        setTimeout(() => heroProgress.classList.add('accent-pop'), 1200);
-        setTimeout(() => checkStep(1), 1600);
-        setTimeout(() => checkStep(2), 2000);
-        setTimeout(() => checkStep(3), 2400);
-        setTimeout(() => checkStep(4), 2800);
-        setTimeout(() => heroRate2.classList.add('accent-pop'), 2200);
+            document.getElementById('hfBar').style.width = '72%';
+            animatePct(document.getElementById('hfPct'), 72, 1200);
+            countUp(document.getElementById('hfCur'), 108000, '$', 1200);
+        }, 700);
+
+        // Jumps to 105% — threshold exceeded
         setTimeout(() => {
-            countUpDecimal(document.getElementById('heroRateVal'), 8.5, '', '%', 600);
-            heroRateBar.style.width = '85%';
-        }, 2500);
-        setTimeout(() => heroBadge.style.opacity = '1', 3200);
-        heroTimer = setTimeout(() => runHeroAnimation(), 7000);
+            document.getElementById('hfBar').style.width = '100%';
+            document.getElementById('hfBar').classList.add('exceeded');
+            animatePct(document.getElementById('hfPct'), 105, 800);
+            countUp(document.getElementById('hfCur'), 157500, '$', 800);
+            document.getElementById('hfPct').classList.add('green');
+            document.getElementById('hfCur').classList.add('green');
+            const badge = document.getElementById('hfBadge');
+            badge.classList.remove('approaching'); badge.classList.add('met');
+            badge.textContent = 'Guarantee met';
+        }, 2200);
+
+        // Accent: toggle
+        setTimeout(() => {
+            document.getElementById('hfAb1').classList.add('visible');
+            setTimeout(() => {
+                document.getElementById('hfToggleDot').style.left = '20px';
+                document.getElementById('hfToggleWrap').style.background = '#7c3aed';
+            }, 400);
+        }, 800);
+
+        // Card 2: Calculation
+        setTimeout(() => document.getElementById('hfPl2').classList.add('visible'), 2800);
+        setTimeout(() => document.getElementById('hfC2').classList.add('visible'), 2950);
+        setTimeout(() => countUp(document.getElementById('hfNet'), 18584, '$', 700), 3200);
+        setTimeout(() => {
+            document.getElementById('hfHL').classList.add('visible');
+            countUp(document.getElementById('hfRoy'), 1580, '$', 500);
+        }, 3600);
+        setTimeout(() => countUp(document.getElementById('hfTotal'), 1580, '$', 400), 3900);
+
+        // Card 3: Filing
+        setTimeout(() => document.getElementById('hfPl3').classList.add('visible'), 3600);
+        setTimeout(() => document.getElementById('hfC3').classList.add('visible'), 3750);
+        setTimeout(() => {
+            countUp(document.getElementById('hfSales'), 18584, '$', 500);
+            countUp(document.getElementById('hfDue'), 1580, '$', 500);
+        }, 4000);
+
+        const checks = [['hfFc1','hfFci1'],['hfFc2','hfFci2'],['hfFc3','hfFci3']];
+        checks.forEach(([r, i], idx) => {
+            setTimeout(() => {
+                document.getElementById(r).classList.add('visible');
+                document.getElementById(i).classList.remove('pending');
+                document.getElementById(i).classList.add('done');
+            }, 4500 + idx * 350);
+        });
+
+        // Lock bubble
+        setTimeout(() => document.getElementById('hfAb2').classList.add('visible'), 5200);
+
+        heroTimer = setTimeout(runHeroAnimation, 9000);
     }
 
-    window.addEventListener('load', () => setTimeout(runHeroAnimation, 200));
+    const heroObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) { runHeroAnimation(); heroObs.unobserve(entry.target); }
+        });
+    }, { threshold: 0.3 });
+    heroObs.observe(document.getElementById('heroMosaic'));
 })();
+</script>
+<script>
 
 // Animate How It Works UI elements on scroll
 const hwObs = new IntersectionObserver(entries => {
