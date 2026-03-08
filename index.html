@@ -95,7 +95,7 @@
         .nav-links.mobile-open { display: flex !important; flex-direction: column; position: absolute; top: 56px; left: 0; right: 0; background: #1a0f2e; padding: 16px 32px; border-bottom: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
 
         /* ===== HERO ===== */
-        .hero { padding: 120px 0 24px; background: #1a0f2e; }
+        .hero { padding: 120px 0 24px; background: #1a0f2e; overflow: hidden; }
         .hero-inner {
             display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: center;
         }
@@ -107,7 +107,7 @@
             font-size: 1.15rem; color: rgba(255,255,255,0.65); line-height: 1.6;
             margin-bottom: 32px;
         }
-        .hero-right { position: relative; min-height: 480px; }
+        .hero-right { position: relative; min-height: 560px; }
         .btn-primary {
             display: inline-flex; align-items: center; gap: 8px;
             font-size: 0.95rem; font-weight: 600; color: white;
@@ -117,7 +117,7 @@
         .btn-primary:hover { background: #6d28d9; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(124,58,237,0.25); }
 
         /* Hero mosaic (Option F) */
-        .hero-mosaic { position: relative; width: 100%; height: 480px; }
+        .hero-mosaic { position: relative; width: 100%; height: 560px; }
         .hero-mosaic .pill-label {
             display: inline-block; font-size: 0.58rem; font-weight: 700;
             text-transform: uppercase; letter-spacing: 0.06em;
@@ -244,7 +244,7 @@
         }
 
         /* ===== LOGO BAR ===== */
-        .logo-bar { padding: 24px 0 36px; background: #1a0f2e; border-bottom: none; }
+        .logo-bar { padding: 24px 0 36px; background: #1a0f2e; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: none; }
         .logo-bar-label { font-size: 0.82rem; color: rgba(255,255,255,0.45); text-align: center; margin-bottom: 28px; }
         .logo-bar-track-wrap { max-width: 900px; margin: 0 auto; overflow: hidden; }
         .logo-track {
@@ -257,6 +257,7 @@
             padding: 0 32px; flex-shrink: 0;
         }
         .logo-set img { width: auto; opacity: 0.5; filter: brightness(0) invert(1); transition: opacity 0.3s; flex-shrink: 0; }
+        .logo-set img.no-invert { filter: brightness(10); }
         .logo-set img:hover { opacity: 0.85; }
         @keyframes marquee {
             0% { transform: translateX(0); }
@@ -264,10 +265,10 @@
         }
 
         /* ===== SECTIONS ===== */
-        .section { padding: 80px 0; }
-        .section-header { text-align: center; max-width: 620px; margin: 0 auto 56px; }
+        .section { padding: 100px 0; }
+        .section-header { text-align: center; max-width: 820px; margin: 0 auto 56px; }
         .section-header h2 {
-            font-size: 2.4rem; font-weight: 800; line-height: 1.12;
+            font-size: 2rem; font-weight: 800; line-height: 1.15;
             letter-spacing: -0.025em; margin-bottom: 16px;
         }
         .section-header p { font-size: 1.05rem; color: #6b7280; line-height: 1.6; }
@@ -681,7 +682,7 @@
             .feature-full-inner { grid-template-columns: 1fr; }
             .feature-full-text { padding: 32px 32px 0; }
             .feature-full-ui { min-height: 260px; }
-            .section-header h2 { font-size: 2rem; }
+            .section-header h2 { font-size: 1.75rem; }
             .steps { grid-template-columns: 1fr; gap: 40px; }
             .step::after { display: none; }
             .dash-metrics { grid-template-columns: 1fr; }
@@ -750,7 +751,9 @@
             .btn-primary { font-size: 0.88rem; padding: 12px 24px; }
             .btn-cta { font-size: 0.92rem; padding: 12px 28px; }
             .logo-bar { padding: 20px 0 28px; }
-            .logo-set { gap: 40px; padding: 0 20px; }
+            .logo-bar-label { font-size: 0.72rem; margin-bottom: 18px; }
+            .logo-set { gap: 32px; padding: 0 16px; }
+            .logo-set img { transform: scale(0.75); }
             .faq-q { font-size: 0.92rem; padding: 20px 0; }
             .faq-a { font-size: 0.85rem; }
             .footer { padding: 32px 0; }
@@ -908,17 +911,17 @@
     <script>
     const logoFiles = [
         {src:'erp logos/Oracle_logo.svg.png', alt:'Oracle', h:20},
-        {src:'erp logos/Shopify Logo.png', alt:'Shopify', h:34},
-        {src:'erp logos/SAP_2011_logo.svg.png', alt:'SAP', h:38},
+        {src:'erp logos/shopify-white.png', alt:'Shopify', h:34, white:true},
+        {src:'erp logos/sap-white.png', alt:'SAP', h:28, white:true},
         {src:'erp logos/Square,_Inc._logo.svg.png', alt:'Square', h:22},
-        {src:'erp logos/Intuit_QuickBooks_logo.svg.png', alt:'QuickBooks', h:32},
+        {src:'erp logos/quickbooks-white.png', alt:'QuickBooks', h:32, white:true},
         {src:'erp logos/rillet-logo-cropped.svg', alt:'Rillet', h:26},
         {src:'erp logos/dual-entry-logo.png', alt:'Dual Entry', h:30},
         {src:'erp logos/NetSuite-Logo.png', alt:'NetSuite', h:28},
         {src:'erp logos/amazon-logo-transparent.png', alt:'Amazon', h:24},
     ];
     function buildLogoSet() {
-        return logoFiles.map(l => `<img src="${l.src}" alt="${l.alt}" loading="lazy" style="height:${l.h}px">`).join('');
+        return logoFiles.map(l => `<img src="${l.src}" alt="${l.alt}" loading="lazy" style="height:${l.h}px"${l.white ? ' class="no-invert"' : ''}>`).join('');
     }
     const track = document.getElementById('logoTrack');
     for (let i = 0; i < 3; i++) {
@@ -934,8 +937,8 @@
 <section class="section" id="features">
     <div class="container">
         <div class="section-header reveal">
-            <h2>Stop losing weeks to spreadsheets every quarter.</h2>
-            <p>Your team loses weeks every quarter formatting data across various licensors. One mistake can trigger an audit that costs tens of thousands. There's a better way.</p>
+            <h2>Stay compliant and automate away royalty reporting.</h2>
+            <p>Upload your sales data once - Roya maps, validates, and submits to every licensor.</p>
         </div>
 
         <!-- Dashboard screenshot (Numeral-style large product view) -->
