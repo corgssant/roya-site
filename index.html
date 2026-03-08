@@ -639,21 +639,99 @@
             .hw-card.reversed .hw-text { order: 0; }
             .hw-card.reversed .hw-ui { order: 0; }
             .hw-ui { min-height: 280px; }
+            .map-container { gap: 50px; }
+            .field-col { width: 110px; }
+            .st-report { width: 280px; padding: 18px 20px; }
+            .source-chip { width: 170px; padding: 8px 12px; }
         }
         @media (max-width: 640px) {
-            .container { padding: 0 20px; }
+            .container { padding: 0 16px; }
+            .nav-inner { padding: 0 16px; }
             .nav-links { display: none; }
             .nav-mobile { display: block; }
-            .hero { padding: 120px 0 80px; }
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            .section { padding: 80px 0; }
-            .section-header h2 { font-size: 1.6rem; }
-            .feature-card { padding: 28px; }
-            .feature-card h3 { font-size: 1.1rem; }
-            .cta-section h2 { font-size: 1.7rem; }
+            .nav-links.mobile-open { padding: 16px 16px; }
+            .hero { padding: 100px 0 60px; }
+            .hero h1 { font-size: 1.75rem; }
+            .hero p { font-size: 0.95rem; margin-bottom: 24px; }
+            .hero-right { min-height: 400px; overflow: hidden; }
+            .hero-mosaic { height: 400px; transform: scale(0.65); transform-origin: top center; }
+            .section { padding: 60px 0; }
+            .section-header { margin-bottom: 48px; }
+            .section-header h2 { font-size: 1.5rem; }
+            .section-header p { font-size: 0.92rem; }
+            .feature-card { padding: 24px 20px; }
+            .feature-card h3 { font-size: 1.05rem; }
+            .feature-card > p { font-size: 0.85rem; margin-bottom: 20px; }
+            .feature-ui { min-height: 160px; }
+            .feature-ui .mini-card { max-width: 100% !important; }
+            .feature-ui .stacked-cards { max-width: 100% !important; }
+            .feature-ui .va-wrap { max-width: 100% !important; }
+            .feature-full-text { padding: 24px 20px 0; }
+            .feature-full-text h3 { font-size: 1.1rem; }
+            .feature-full-text p { font-size: 0.85rem; }
+            .feature-full-ui { padding: 20px 16px 0; min-height: 220px; }
+            .dash-mini { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .hw-text { padding: 28px 20px; }
+            .hw-text h3 { font-size: 1.15rem; }
+            .hw-text p { font-size: 0.85rem; }
+            .hw-ui { padding: 20px 16px; min-height: 240px; overflow: hidden; }
+            .map-container { gap: 30px; max-width: 100%; transform: scale(0.85); transform-origin: top left; }
+            .field-col { width: 100px; }
+            .field-pill { font-size: 0.65rem; padding: 5px 8px; }
+            .source-chip { width: 150px; padding: 8px 10px; }
+            .source-chip .chip-name { font-size: 0.65rem; }
+            .source-chip .chip-detail { font-size: 0.52rem; }
+            .st-report { width: 260px; padding: 16px 18px; }
+            .st-report .st-row { font-size: 0.68rem; }
+            .card-calc { width: 250px; }
+            .card-file { width: 230px; }
+            .card-agreement { width: 280px; left: 10px; }
+            .step { padding: 0 16px; }
+            .step h3 { font-size: 1rem; }
+            .step p { font-size: 0.85rem; }
+            .cta-section { padding: 80px 0; }
+            .cta-section h2 { font-size: 1.5rem; }
+            .cta-section p { font-size: 0.92rem; }
+            .btn-primary { font-size: 0.88rem; padding: 12px 24px; }
+            .btn-cta { font-size: 0.92rem; padding: 12px 28px; }
+            .logo-bar { padding: 40px 0; }
+            .logo-set { gap: 40px; padding: 0 20px; }
+            .faq-q { font-size: 0.92rem; padding: 20px 0; }
+            .faq-a { font-size: 0.85rem; }
+            .footer { padding: 32px 0; }
             .footer-inner { flex-direction: column; gap: 14px; text-align: center; }
             .footer-links { flex-wrap: wrap; justify-content: center; }
+        }
+        @media (max-width: 640px) {
+            /* Dashboard sidebar + table overflow fix */
+            .dash-mini > div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+                min-height: auto !important;
+            }
+            .dash-mini > div > div:first-child[style*="border-right"] {
+                display: none !important;
+            }
+            .dash-mini div[style*="font-size:0.65rem"] {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .dash-mini div[style*="font-size:0.65rem"] > div {
+                min-width: 500px;
+            }
+        }
+        @media (max-width: 380px) {
+            .hero h1 { font-size: 1.5rem; }
+            .hero-mosaic { transform: scale(0.55); }
+            .section-header h2 { font-size: 1.35rem; }
+            .cta-section h2 { font-size: 1.35rem; }
+            .feature-card { padding: 20px 16px; }
+            .hw-text { padding: 24px 16px; }
+            .hw-ui { padding: 16px 12px; }
+            .map-container { transform: scale(0.75); }
+            .st-report { width: 240px; }
+            .card-agreement { width: 260px; }
+            .card-calc { width: 230px; }
+            .card-file { width: 210px; }
         }
     </style>
 </head>
