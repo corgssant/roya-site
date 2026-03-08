@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    circle { fill: #f3f0ff; }
+    text { fill: #7c3aed; }
+    @media (prefers-color-scheme: dark) {
+      circle { fill: #7c3aed; }
+      text { fill: #ffffff; }
+    }
+  </style>
+  <circle cx="32" cy="32" r="32"/>
+  <text x="32" y="44" font-family="Inter, -apple-system, sans-serif" font-size="38" font-weight="800" text-anchor="middle">R</text>
+</svg>
