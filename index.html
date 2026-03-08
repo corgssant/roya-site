@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roya — Royalty Reporting, Automated</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: #1a1a2e;
+            background: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; font-family: inherit; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+        /* ===== NAV ===== */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .nav-inner {
+            max-width: 1100px; margin: 0 auto; padding: 0 32px;
+            display: flex; align-items: center; justify-content: space-between; height: 56px;
+        }
+        .nav-logo { font-size: 1.2rem; font-weight: 800; color: #7c3aed; }
+        .nav-links { display: flex; gap: 28px; align-items: center; }
+        .nav-links a { font-size: 0.88rem; font-weight: 500; color: #6b7280; transition: color 0.2s; }
+        .nav-links a:hover { color: #1a1a2e; }
+        .nav-cta {
+            font-size: 0.82rem; font-weight: 600; color: white !important;
+            background: #7c3aed; padding: 8px 18px; border-radius: 8px; border: none;
+        }
+        .nav-cta:hover { background: #6d28d9; }
+        .nav-mobile { display: none; background: none; border: none; font-size: 1.4rem; color: #6b7280; }
+
+        /* ===== HERO ===== */
+        .hero { padding: 160px 0 120px; }
+        .hero-inner {
+            display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: center;
+        }
+        .hero h1 {
+            font-size: 3.2rem; font-weight: 800; line-height: 1.08;
+            letter-spacing: -0.035em; margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.15rem; color: #6b7280; line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        .hero-right { position: relative; min-height: 420px; }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 0.95rem; font-weight: 600; color: white;
+            background: #7c3aed; padding: 13px 28px; border-radius: 10px; border: none;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { background: #6d28d9; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(124,58,237,0.25); }
+
+        .hero-product {
+            border: 1px solid #e5e7eb; border-radius: 16px;
+            overflow: hidden; background: white; position: relative;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05), 0 8px 40px rgba(0,0,0,0.04);
+        }
+        .hero-float-card {
+            position: absolute; background: white; border: 1px solid #e5e7eb;
+            border-radius: 12px; padding: 14px 18px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        /* ===== HOW IT WORKS - ALTERNATING ===== */
+        .hw-card {
+            border: 1px solid #e5e7eb; border-radius: 20px; overflow: hidden;
+            background: white; margin-bottom: 32px;
+        }
+        .hw-card-inner {
+            display: grid; grid-template-columns: 1fr 1.4fr; min-height: 420px;
+        }
+        .hw-card.reversed .hw-card-inner {
+            grid-template-columns: 1.4fr 1fr;
+        }
+        .hw-card.reversed .hw-text { order: 2; }
+        .hw-card.reversed .hw-ui { order: 1; }
+        .hw-text {
+            padding: 48px 44px;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .hw-step-label {
+            font-size: 0.65rem; font-weight: 700; color: #7c3aed;
+            text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px;
+        }
+        .hw-text h3 {
+            font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px;
+        }
+        .hw-text p {
+            font-size: 0.92rem; color: #6b7280; line-height: 1.55; margin-bottom: 20px;
+        }
+        .hw-link {
+            font-size: 0.88rem; font-weight: 600; color: #7c3aed;
+            display: inline-flex; align-items: center; gap: 4px;
+        }
+        .hw-ui {
+            padding: 32px; display: flex; align-items: center; justify-content: center;
+            overflow: hidden; background: #fafafa;
+        }
+
+        /* ===== LOGO BAR ===== */
+        .logo-bar { padding: 64px 0; border-bottom: 1px solid #f3f4f6; }
+        .logo-bar-label { font-size: 0.82rem; color: #9ca3af; text-align: center; margin-bottom: 28px; }
+        .logo-bar-track-wrap { max-width: 900px; margin: 0 auto; overflow: hidden; }
+        .logo-track {
+            display: flex; width: max-content;
+            animation: marquee 30s linear infinite;
+        }
+        .logo-track:hover { animation-play-state: paused; }
+        .logo-set {
+            display: flex; align-items: center; gap: 64px;
+            padding: 0 32px; flex-shrink: 0;
+        }
+        .logo-set img { width: auto; opacity: 0.45; filter: grayscale(100%); transition: opacity 0.3s, filter 0.3s; flex-shrink: 0; }
+        .logo-set img:hover { opacity: 0.85; filter: grayscale(0%); }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ===== SECTIONS ===== */
+        .section { padding: 120px 0; }
+        .section-header { text-align: center; max-width: 620px; margin: 0 auto 72px; }
+        .section-header h2 {
+            font-size: 2.4rem; font-weight: 800; line-height: 1.12;
+            letter-spacing: -0.025em; margin-bottom: 16px;
+        }
+        .section-header p { font-size: 1.05rem; color: #6b7280; line-height: 1.6; }
+
+        /* ===== FEATURE GRID (Numeral style) ===== */
+        .feature-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 1px; background: #e5e7eb; border: 1px solid #e5e7eb; border-radius: 20px; overflow: hidden;
+        }
+        .feature-card {
+            background: white; padding: 40px;
+            display: flex; flex-direction: column;
+        }
+        .feature-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: #f3f4f6; display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+        }
+        .feature-card h3 {
+            font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+        .feature-card > p {
+            font-size: 0.92rem; color: #6b7280; line-height: 1.55;
+            margin-bottom: 28px;
+        }
+        .feature-ui {
+            flex: 1; display: flex; align-items: flex-end; justify-content: center;
+            min-height: 200px; position: relative;
+        }
+
+        /* ===== MINI CARD (used in feature UIs) ===== */
+        .mini-card {
+            background: white; border: 1px solid #e5e7eb; border-radius: 12px;
+            padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .mini-card-title {
+            font-size: 0.72rem; font-weight: 600; color: #1a1a2e; margin-bottom: 10px;
+        }
+        .mini-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 5px 0; font-size: 0.75rem;
+        }
+        .mini-row-label { color: #9ca3af; }
+        .mini-row-value { font-weight: 500; }
+        .mini-row-value.purple { color: #7c3aed; }
+        .mini-badge {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 0.65rem; font-weight: 600; padding: 3px 8px; border-radius: 10px;
+        }
+        .mini-badge.green { color: #16a34a; background: #f0fdf4; border: 1px solid #bbf7d0; }
+        .mini-badge.orange { color: #f97316; background: #fff7ed; border: 1px solid #fed7aa; }
+        .mini-badge.purple { color: #7c3aed; background: #f5f3ff; border: 1px solid #ddd6fe; }
+
+        /* Stacked / layered cards in feature UIs */
+        .stacked-cards { position: relative; width: 100%; }
+        .stacked-cards .mini-card { position: relative; }
+        .stacked-cards .card-back {
+            position: absolute; top: -8px; left: 12px; right: 12px; height: 100%;
+            background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px;
+            z-index: 0;
+        }
+        .stacked-cards .card-front { position: relative; z-index: 1; }
+
+        /* ===== FULL-WIDTH FEATURE ===== */
+        .feature-full {
+            border: 1px solid #e5e7eb; border-radius: 20px; overflow: hidden;
+            background: white; margin-bottom: 24px;
+        }
+        .feature-full-inner {
+            display: grid; grid-template-columns: 1fr 1.3fr; min-height: 380px;
+        }
+        .feature-full-text {
+            padding: 48px 44px;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .feature-full-text .feature-icon { margin-bottom: 20px; }
+        .feature-full-text h3 {
+            font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px;
+        }
+        .feature-full-text p {
+            font-size: 0.92rem; color: #6b7280; line-height: 1.55;
+        }
+        .feature-full-ui {
+            padding: 32px 32px 0; display: flex; align-items: flex-end; justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Dashboard mini */
+        .dash-mini {
+            width: 100%; background: white; border: 1px solid #e5e7eb; border-radius: 14px 14px 0 0;
+            overflow: hidden; box-shadow: 0 -2px 16px rgba(0,0,0,0.04);
+        }
+        .dash-top {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 20px; border-bottom: 1px solid #f3f4f6;
+        }
+        .dash-top-title h4 { font-size: 0.85rem; font-weight: 600; }
+        .dash-top-title span { font-size: 0.65rem; color: #9ca3af; }
+        .dash-metrics {
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .dash-metric {
+            padding: 16px 20px;
+            border-right: 1px solid #f3f4f6;
+        }
+        .dash-metric:last-child { border-right: none; }
+        .dash-metric .dm-label { font-size: 0.62rem; color: #9ca3af; margin-bottom: 4px; }
+        .dash-metric .dm-value { font-size: 1.1rem; font-weight: 700; }
+        .dash-metric .dm-value.purple { color: #7c3aed; }
+        .dash-metric .dm-delta { font-size: 0.6rem; margin-top: 2px; }
+        .dash-metric .dm-delta.up { color: #16a34a; }
+        .dash-metric .dm-delta.dn { color: #ef4444; }
+        .dash-products { padding: 16px 20px; }
+        .dash-products .dp-title { font-size: 0.65rem; font-weight: 600; color: #9ca3af; margin-bottom: 8px; }
+        .dash-prod-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 4px 0; font-size: 0.72rem;
+        }
+        .dash-prod-name { font-weight: 500; }
+        .dash-prod-amt { color: #7c3aed; font-weight: 600; }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            padding: 120px 0; background: #1a1a2e; text-align: center;
+        }
+        .cta-section h2 { font-size: 2.4rem; font-weight: 800; color: white; margin-bottom: 16px; letter-spacing: -0.02em; }
+        .cta-section p { font-size: 1.05rem; color: #9ca3af; margin-bottom: 32px; max-width: 460px; margin-left: auto; margin-right: auto; }
+        .btn-cta {
+            font-size: 1rem; font-weight: 600; color: #1a1a2e; background: white;
+            padding: 13px 32px; border-radius: 10px; border: none; transition: all 0.2s;
+        }
+        .btn-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(255,255,255,0.15); }
+
+        /* ===== FOOTER ===== */
+        .footer { padding: 40px 0; border-top: 1px solid #f3f4f6; }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+        .footer-logo { font-size: 1.05rem; font-weight: 800; color: #7c3aed; }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { font-size: 0.82rem; color: #9ca3af; }
+        .footer-links a:hover { color: #6b7280; }
+        .footer-copy { font-size: 0.78rem; color: #c4c7cc; }
+
+        /* ===== GETTING STARTED ===== */
+        .steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; position: relative; }
+        .step {
+            text-align: center; padding: 0 32px; position: relative;
+        }
+        .step:not(:last-child)::after {
+            content: ''; position: absolute; top: 24px; right: 0;
+            width: 1px; height: 40%; background: #e5e7eb;
+        }
+        .step-num {
+            width: 48px; height: 48px; border-radius: 14px;
+            background: #f5f3ff; color: #7c3aed; font-size: 1.1rem; font-weight: 700;
+            display: inline-flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+        }
+        .step h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+        .step p { font-size: 0.9rem; color: #6b7280; line-height: 1.55; }
+
+        /* ===== FAQ ===== */
+        .faq-list { max-width: 720px; margin: 0 auto; }
+        .faq-item {
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .faq-q {
+            width: 100%; text-align: left; background: none; border: none;
+            padding: 24px 0; font-size: 1rem; font-weight: 600; color: #1a1a2e;
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 16px; cursor: pointer; font-family: inherit;
+        }
+        .faq-q:hover { color: #7c3aed; }
+        .faq-arrow {
+            width: 20px; height: 20px; flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+        .faq-item.open .faq-arrow { transform: rotate(180deg); }
+        .faq-a {
+            max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease;
+            font-size: 0.92rem; color: #6b7280; line-height: 1.65;
+        }
+        .faq-item.open .faq-a {
+            max-height: 300px; padding-bottom: 24px;
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+            .hero h1 { font-size: 2.6rem; }
+            .hero-right { min-height: 320px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .feature-full-inner { grid-template-columns: 1fr; }
+            .feature-full-text { padding: 32px 32px 0; }
+            .feature-full-ui { min-height: 260px; }
+            .section-header h2 { font-size: 2rem; }
+            .steps { grid-template-columns: 1fr; gap: 40px; }
+            .step::after { display: none; }
+            .dash-metrics { grid-template-columns: 1fr; }
+            .dash-metric { border-right: none; border-bottom: 1px solid #f3f4f6; }
+            .hw-card-inner { grid-template-columns: 1fr !important; }
+            .hw-card.reversed .hw-text { order: 0; }
+            .hw-card.reversed .hw-ui { order: 0; }
+            .hw-ui { min-height: 280px; }
+        }
+        @media (max-width: 640px) {
+            .container { padding: 0 20px; }
+            .nav-links { display: none; }
+            .nav-mobile { display: block; }
+            .hero { padding: 120px 0 80px; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .section { padding: 80px 0; }
+            .section-header h2 { font-size: 1.6rem; }
+            .feature-card { padding: 28px; }
+            .feature-card h3 { font-size: 1.1rem; }
+            .cta-section h2 { font-size: 1.7rem; }
+            .footer-inner { flex-direction: column; gap: 14px; text-align: center; }
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+    <div class="nav-inner">
+        <a href="#" class="nav-logo">Roya</a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#faq">FAQ</a>
+            <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="nav-cta">Get Early Access</a>
+        </div>
+        <button class="nav-mobile">&#9776;</button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-inner">
+            <div class="hero-left">
+                <h1>Let us worry about royalty reporting.</h1>
+                <p>The fastest, easiest way to stay compliant with complex licensing agreements.</p>
+                <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="btn-primary">Get early access <span>&rarr;</span></a>
+            </div>
+            <div class="hero-right">
+                <!-- Main dashboard card -->
+                <div class="hero-float-card" style="top:20px;left:0;right:0;z-index:2">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+                        <div>
+                            <div style="font-size:0.85rem;font-weight:600">Disney - Q1 2026</div>
+                            <div style="font-size:0.62rem;color:#9ca3af">Consolidated &bull; 3 Agreements</div>
+                        </div>
+                        <span class="mini-badge green">Approved</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
+                        <div style="background:#fafafa;border-radius:8px;padding:10px 12px">
+                            <div style="font-size:0.58rem;color:#9ca3af;margin-bottom:2px">Reportable Units</div>
+                            <div style="font-size:0.95rem;font-weight:700" class="mono">2,480</div>
+                        </div>
+                        <div style="background:#fafafa;border-radius:8px;padding:10px 12px">
+                            <div style="font-size:0.58rem;color:#9ca3af;margin-bottom:2px">Total Royalty</div>
+                            <div style="font-size:0.95rem;font-weight:700;color:#7c3aed" class="mono">$18,600</div>
+                        </div>
+                        <div style="background:#fafafa;border-radius:8px;padding:10px 12px">
+                            <div style="font-size:0.58rem;color:#9ca3af;margin-bottom:2px">Effective Rate</div>
+                            <div style="font-size:0.95rem;font-weight:700" class="mono">8.29%</div>
+                        </div>
+                    </div>
+                    <div style="font-size:0.6rem;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Top Products</div>
+                    <div class="mini-row" style="padding:3px 0"><span style="font-size:0.72rem;font-weight:500">Star Wars: Galactic Chess</span><span style="font-size:0.72rem;font-weight:600;color:#7c3aed" class="mono">$12,400</span></div>
+                    <div class="mini-row" style="padding:3px 0"><span style="font-size:0.72rem;font-weight:500">Frozen: Ice Palace Puzzle</span><span style="font-size:0.72rem;font-weight:600;color:#7c3aed" class="mono">$2,850</span></div>
+                    <div class="mini-row" style="padding:3px 0"><span style="font-size:0.72rem;font-weight:500">Marvel: Strategy Board Game</span><span style="font-size:0.72rem;font-weight:600;color:#7c3aed" class="mono">$1,740</span></div>
+                </div>
+                <!-- Floating status card -->
+                <div class="hero-float-card" style="bottom:10px;right:-10px;z-index:3;padding:10px 14px">
+                    <div style="display:flex;align-items:center;gap:6px">
+                        <div style="width:6px;height:6px;border-radius:50%;background:#16a34a"></div>
+                        <span style="font-size:0.68rem;font-weight:500;color:#16a34a">Report submitted</span>
+                    </div>
+                </div>
+                <!-- Floating rate card -->
+                <div class="hero-float-card" style="bottom:50px;left:-10px;z-index:3;padding:10px 14px">
+                    <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Royalty Rate</div>
+                    <div style="font-size:0.82rem;font-weight:700;color:#7c3aed" class="mono">8.5%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- LOGO BAR -->
+<section class="logo-bar">
+    <div class="container">
+        <div class="logo-bar-label">We integrate directly with your existing systems</div>
+    </div>
+    <div class="logo-bar-track-wrap">
+        <div class="logo-track" id="logoTrack"></div>
+    </div>
+    <script>
+    const logoFiles = [
+        {src:'erp logos/Oracle_logo.svg.png', alt:'Oracle', h:20},
+        {src:'erp logos/Shopify Logo.png', alt:'Shopify', h:34},
+        {src:'erp logos/SAP_2011_logo.svg.png', alt:'SAP', h:38},
+        {src:'erp logos/Square,_Inc._logo.svg.png', alt:'Square', h:22},
+        {src:'erp logos/Intuit_QuickBooks_logo.svg.png', alt:'QuickBooks', h:32},
+        {src:'erp logos/rillet-logo-cropped.svg', alt:'Rillet', h:26},
+        {src:'erp logos/dual-entry-logo.png', alt:'Dual Entry', h:30},
+        {src:'erp logos/NetSuite-Logo.png', alt:'NetSuite', h:28},
+    ];
+    function buildLogoSet() {
+        return logoFiles.map(l => `<img src="${l.src}" alt="${l.alt}" loading="lazy" style="height:${l.h}px">`).join('');
+    }
+    const track = document.getElementById('logoTrack');
+    for (let i = 0; i < 3; i++) {
+        const set = document.createElement('div');
+        set.className = 'logo-set';
+        set.innerHTML = buildLogoSet();
+        track.appendChild(set);
+    }
+    </script>
+</section>
+
+<!-- FEATURES INTRO + DASHBOARD -->
+<section class="section" id="features">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>Stay compliant and automate away royalty reporting.</h2>
+            <p>Intelligent workflows for data ingestion, licensor mapping, and report generation - backed by white-glove support.</p>
+        </div>
+
+        <!-- Dashboard screenshot (Numeral-style large product view) -->
+        <div class="reveal" style="margin-bottom:80px">
+            <div class="dash-mini" style="border-radius:16px;border:1px solid #e5e7eb;box-shadow:0 2px 12px rgba(0,0,0,0.05),0 8px 40px rgba(0,0,0,0.04);max-width:920px;margin:0 auto">
+                <!-- Sidebar + Main layout -->
+                <div style="display:grid;grid-template-columns:180px 1fr;min-height:380px">
+                    <!-- Sidebar -->
+                    <div style="border-right:1px solid #f3f4f6;padding:18px 16px;background:#fafafa;border-radius:16px 0 0 16px">
+                        <div style="font-size:0.85rem;font-weight:800;color:#7c3aed;margin-bottom:24px">Roya</div>
+                        <div style="display:flex;flex-direction:column;gap:2px">
+                            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:#f0ecff;border-radius:7px;font-size:0.72rem;font-weight:600;color:#7c3aed">
+                                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                                Dashboard
+                            </div>
+                            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;font-size:0.72rem;font-weight:500;color:#6b7280">
+                                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                Reports
+                            </div>
+                            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;font-size:0.72rem;font-weight:500;color:#6b7280">
+                                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                                Submissions
+                            </div>
+                            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;font-size:0.72rem;font-weight:500;color:#6b7280">
+                                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                Agreements
+                            </div>
+                            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;font-size:0.72rem;font-weight:500;color:#6b7280">
+                                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                                Settings
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Main content -->
+                    <div style="padding:20px 24px">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                            <div>
+                                <div style="font-size:0.92rem;font-weight:700">Work Queue</div>
+                                <div style="font-size:0.62rem;color:#9ca3af">4 reports &bull; 2 due this month</div>
+                            </div>
+                            <div style="font-size:0.68rem;font-weight:600;color:white;background:#7c3aed;padding:6px 14px;border-radius:7px">+ New Report</div>
+                        </div>
+                        <!-- Table -->
+                        <div style="font-size:0.65rem">
+                            <div style="display:grid;grid-template-columns:1.2fr 0.8fr 0.7fr 0.9fr 0.7fr 0.6fr;padding:7px 0;border-bottom:1px solid #f3f4f6;color:#9ca3af;font-weight:600">
+                                <span>Report</span><span>Period</span><span>Frequency</span><span>Status</span><span>Due Date</span><span>Action</span>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1.2fr 0.8fr 0.7fr 0.9fr 0.7fr 0.6fr;padding:10px 0;border-bottom:1px solid #f9fafb;align-items:center">
+                                <span style="font-weight:500;font-size:0.72rem">NFL</span>
+                                <span class="mono" style="color:#6b7280">Feb 2026</span>
+                                <span style="color:#6b7280">Monthly</span>
+                                <span style="display:flex;align-items:center;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:#16a34a"></span><span style="color:#16a34a">Submitted</span></span>
+                                <span class="mono" style="color:#6b7280">Apr 15</span>
+                                <span style="color:#7c3aed;font-weight:500">View</span>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1.2fr 0.8fr 0.7fr 0.9fr 0.7fr 0.6fr;padding:10px 0;border-bottom:1px solid #f9fafb;align-items:center">
+                                <span style="font-weight:500;font-size:0.72rem">Hasbro</span>
+                                <span class="mono" style="color:#6b7280">Q1 2026</span>
+                                <span style="color:#6b7280">Quarterly</span>
+                                <span style="display:flex;align-items:center;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:#f97316"></span><span style="color:#f97316">In Progress</span></span>
+                                <span class="mono" style="color:#6b7280">Apr 30</span>
+                                <span style="color:#f97316;font-weight:500">Resume</span>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1.2fr 0.8fr 0.7fr 0.9fr 0.7fr 0.6fr;padding:10px 0;border-bottom:1px solid #f9fafb;align-items:center">
+                                <span style="font-weight:500;font-size:0.72rem">Disney</span>
+                                <span class="mono" style="color:#6b7280">Q1 2026</span>
+                                <span style="color:#6b7280">Quarterly</span>
+                                <span style="display:flex;align-items:center;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:#d1d5db"></span><span style="color:#9ca3af">Not Started</span></span>
+                                <span class="mono" style="color:#6b7280">Apr 30</span>
+                                <span style="color:#7c3aed;font-weight:500">Start</span>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1.2fr 0.8fr 0.7fr 0.9fr 0.7fr 0.6fr;padding:10px 0;align-items:center">
+                                <span style="font-weight:500;font-size:0.72rem">Warner Bros.</span>
+                                <span class="mono" style="color:#6b7280">Q1 2026</span>
+                                <span style="color:#6b7280">Quarterly</span>
+                                <span style="display:flex;align-items:center;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:#d1d5db"></span><span style="color:#9ca3af">Not Started</span></span>
+                                <span class="mono" style="color:#6b7280">May 15</span>
+                                <span style="color:#7c3aed;font-weight:500">Start</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2x2: Features -->
+        <div class="feature-grid reveal">
+
+            <!-- Review Exceptions -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <h3>Review exceptions</h3>
+                <p>Territory mismatches, rate overrides, and missing data are flagged automatically. Resolve each one in seconds.</p>
+                <div class="feature-ui">
+                    <div style="max-width:300px;width:100%">
+                        <div class="mini-card" style="margin-bottom:8px;border-color:#bbf7d0;background:#fafff9">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                                <span style="font-size:0.62rem;font-weight:600;color:#16a34a;text-transform:uppercase;letter-spacing:0.05em">Territory Mismatch</span>
+                                <span style="font-size:0.62rem;font-weight:500;color:#16a34a">Resolved</span>
+                            </div>
+                            <div style="font-size:0.72rem">3 SKUs in <strong>Japan</strong> - excluded</div>
+                        </div>
+                        <div class="mini-card" style="margin-bottom:8px;border-color:#fed7aa;background:#fffbf5">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                                <span style="font-size:0.62rem;font-weight:600;color:#f97316;text-transform:uppercase;letter-spacing:0.05em">Rate Override</span>
+                                <span style="font-size:0.62rem;font-weight:500;color:#7c3aed">Review</span>
+                            </div>
+                            <div style="font-size:0.72rem">Promo rate <strong>6.0%</strong> vs standard <strong>8.5%</strong></div>
+                        </div>
+                        <div class="mini-card" style="border-color:#fed7aa;background:#fffbf5">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                                <span style="font-size:0.62rem;font-weight:600;color:#f97316;text-transform:uppercase;letter-spacing:0.05em">Missing IP Code</span>
+                                <span style="font-size:0.62rem;font-weight:500;color:#7c3aed">Review</span>
+                            </div>
+                            <div style="font-size:0.72rem">No code for <strong>DIS-GAME-2024</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Audit Trail -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3>Immutable audit trail</h3>
+                <p>Every calculation, approval, and submission is logged. Full transparency for internal reviews and audits.</p>
+                <div class="feature-ui">
+                    <div class="stacked-cards" style="max-width:300px;width:100%">
+                        <div class="card-back"></div>
+                        <div class="mini-card card-front">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                                <span class="mini-card-title" style="margin:0">Audit Trail</span>
+                                <span class="mini-badge green" style="font-size:0.58rem">5 events</span>
+                            </div>
+                            <div style="border-left:2px solid #e5e7eb;padding-left:12px;display:flex;flex-direction:column;gap:8px">
+                                <div><div style="font-size:0.55rem;color:#9ca3af" class="mono">9:14 AM</div><div style="font-size:0.7rem">Sales data imported - <strong>847</strong> items</div></div>
+                                <div><div style="font-size:0.55rem;color:#9ca3af" class="mono">9:15 AM</div><div style="font-size:0.7rem">Rate <span style="background:#ede9fe;color:#7c3aed;padding:1px 4px;border-radius:3px;font-size:0.65rem">8.5%</span> applied</div></div>
+                                <div><div style="font-size:0.55rem;color:#9ca3af" class="mono">9:15 AM</div><div style="font-size:0.7rem"><span style="background:#fff7ed;color:#f97316;padding:1px 4px;border-radius:3px;font-size:0.65rem">3 SKUs flagged</span></div></div>
+                                <div><div style="font-size:0.55rem;color:#9ca3af" class="mono">9:22 AM</div><div style="font-size:0.7rem">Report <span style="background:#f0fdf4;color:#16a34a;padding:1px 4px;border-radius:3px;font-size:0.65rem">approved</span></div></div>
+                                <div><div style="font-size:0.55rem;color:#9ca3af" class="mono">9:23 AM</div><div style="font-size:0.7rem">Submitted to <strong>Disney OPA</strong></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Up and Running -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <h3>Up and running in hours</h3>
+                <p>Connect your ERP, upload agreements, and generate your first report. Our team handles setup end-to-end.</p>
+                <div class="feature-ui">
+                    <div style="max-width:300px;width:100%">
+                        <div class="mini-card">
+                            <div class="mini-card-title">Onboarding</div>
+                            <div style="display:flex;flex-direction:column;gap:10px">
+                                <div style="display:flex;align-items:center;gap:10px">
+                                    <div style="width:20px;height:20px;border-radius:50%;background:#f0fdf4;color:#16a34a;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div>
+                                    <div><div style="font-size:0.75rem;font-weight:500">Connect ERP</div><div style="font-size:0.6rem;color:#16a34a">Complete</div></div>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:10px">
+                                    <div style="width:20px;height:20px;border-radius:50%;background:#f0fdf4;color:#16a34a;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div>
+                                    <div><div style="font-size:0.75rem;font-weight:500">Upload Agreements</div><div style="font-size:0.6rem;color:#16a34a">Complete</div></div>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:10px">
+                                    <div style="width:20px;height:20px;border-radius:50%;background:#f0fdf4;color:#16a34a;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div>
+                                    <div><div style="font-size:0.75rem;font-weight:500">Map Portals</div><div style="font-size:0.6rem;color:#16a34a">Complete</div></div>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:10px">
+                                    <div style="width:20px;height:20px;border-radius:50%;background:#f0fdf4;color:#16a34a;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="10" height="10" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M2.5 6.5l3 3 5-5"/></svg></div>
+                                    <div><div style="font-size:0.75rem;font-weight:500">First Report Generated</div><div style="font-size:0.6rem;color:#16a34a">Complete</div></div>
+                                </div>
+                            </div>
+                            <div style="margin-top:12px;text-align:center;font-size:0.7rem;font-weight:600;color:#16a34a;background:#f0fdf4;padding:6px;border-radius:6px">Live in under 1 hour</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                </div>
+                <h3>Enterprise-grade security</h3>
+                <p>Your data is encrypted at rest and in transit. Role-based access and SOC 2 Type II compliance built in.</p>
+                <div class="feature-ui">
+                    <div style="max-width:300px;width:100%">
+                        <div class="mini-card">
+                            <div class="mini-card-title">Security</div>
+                            <div style="display:flex;flex-direction:column;gap:6px">
+                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px">
+                                    <div style="font-size:0.72rem;font-weight:500">Data Encryption</div>
+                                    <span style="font-size:0.58rem;font-weight:600;color:#16a34a">Active</span>
+                                </div>
+                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px">
+                                    <div style="font-size:0.72rem;font-weight:500">Role-Based Access</div>
+                                    <span style="font-size:0.58rem;font-weight:600;color:#16a34a">Active</span>
+                                </div>
+                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px">
+                                    <div style="font-size:0.72rem;font-weight:500">Audit Trail</div>
+                                    <span style="font-size:0.58rem;font-weight:600;color:#16a34a">Active</span>
+                                </div>
+                                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px">
+                                    <div style="font-size:0.72rem;font-weight:500">SOC 2 Type II</div>
+                                    <span style="font-size:0.58rem;font-weight:600;color:#16a34a">Active</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" style="background:#fafafa" id="workflow">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>How it works</h2>
+            <p>From raw sales data to submitted reports - one cohesive experience that handles every licensor's unique requirements.</p>
+        </div>
+
+        <!-- Step 1: Ingest & Map — text left, UI right -->
+        <div class="hw-card reveal">
+            <div class="hw-card-inner">
+                <div class="hw-text">
+                    <div class="feature-icon">
+                        <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    </div>
+                    <div class="hw-step-label">Step 1</div>
+                    <h3>Ingest and map</h3>
+                    <p>Upload your license agreements or connect your ERP. Roya extracts royalty rates, territories, channels, and minimum guarantees - then maps your raw sales data into each licensor's exact template, down to the SKU level.</p>
+                    <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="hw-link">Book a demo &rsaquo;</a>
+                </div>
+                <div class="hw-ui">
+                    <div style="width:100%;max-width:420px;display:flex;flex-direction:column;gap:8px">
+                        <div class="mini-card" style="padding:14px 18px">
+                            <div style="font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#9ca3af;margin-bottom:8px">ERP Transaction Data</div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:0.7rem">
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label">Transaction ID</span><span class="mini-row-value mono" style="font-size:0.65rem">99700002</span></div>
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label">Item ID</span><span class="mini-row-value mono" style="font-size:0.65rem">COL-PHN-001</span></div>
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label">Description</span><span class="mini-row-value" style="font-size:0.65rem">Iron Man Slim-Fit Case</span></div>
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label">Merch Total</span><span class="mini-row-value mono" style="font-size:0.65rem">$19,905</span></div>
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label">Channel</span><span class="mini-row-value" style="font-size:0.65rem">Wholesale</span></div>
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label">Territory</span><span class="mini-row-value" style="font-size:0.65rem">AU</span></div>
+                            </div>
+                        </div>
+                        <div style="text-align:center;font-size:0.6rem;font-weight:600;color:#7c3aed;padding:2px 0">ROYA MAPS &darr;</div>
+                        <div class="mini-card" style="padding:14px 18px;border-color:#ddd6fe;background:#faf8ff">
+                            <div style="font-size:0.6rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#7c3aed;margin-bottom:8px">Disney Licensor Template</div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:0.7rem">
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Licensed Article</span><span class="mini-row-value" style="font-size:0.65rem">COL-PHN-001-NA-N/A</span></div>
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Size / Color</span><span class="mini-row-value" style="font-size:0.65rem">N/A / N/A</span></div>
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Mark</span><span class="mini-row-value" style="font-size:0.65rem">Arc Reactor Emblem</span></div>
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Classification</span><span class="mini-row-value" style="font-size:0.65rem">Collectibles</span></div>
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Units</span><span class="mini-row-value mono" style="font-size:0.65rem">378</span></div>
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Gross Sales</span><span class="mini-row-value mono" style="font-size:0.65rem">$19,905</span></div>
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Net Sales</span><span class="mini-row-value mono" style="font-size:0.65rem">$18,584</span></div>
+                                <div class="mini-row" style="padding:3px 0"><span class="mini-row-label" style="color:#7c3aed">Royalty (10%)</span><span class="mini-row-value mono" style="font-size:0.65rem;color:#7c3aed;font-weight:600">$1,858</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Generate Reports — UI left, text right (reversed) -->
+        <div class="hw-card reversed reveal">
+            <div class="hw-card-inner">
+                <div class="hw-text">
+                    <div class="feature-icon">
+                        <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </div>
+                    <div class="hw-step-label">Step 2</div>
+                    <h3>Generate reports</h3>
+                    <p>One click to calculate royalties across all agreements. Gross sales, deductions, net sales, and rates are applied automatically per your contract terms.</p>
+                    <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="hw-link">Book a demo &rsaquo;</a>
+                </div>
+                <div class="hw-ui">
+                    <div style="width:100%;max-width:420px">
+                        <div class="mini-card" style="padding:18px 22px;width:100%">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                                <div>
+                                    <div style="font-size:0.82rem;font-weight:600">Disney - Q1 2026</div>
+                                    <div style="font-size:0.6rem;color:#9ca3af">MAR-ENT-2022-009 &bull; 3 Properties</div>
+                                </div>
+                                <span class="mini-badge purple" style="font-size:0.58rem">Ready for review</span>
+                            </div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+                                <div style="background:#fafafa;border-radius:8px;padding:10px 12px">
+                                    <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Gross Sales</div>
+                                    <div style="font-size:0.88rem;font-weight:700" class="mono">$84,200</div>
+                                </div>
+                                <div style="background:#fafafa;border-radius:8px;padding:10px 12px">
+                                    <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Deductions</div>
+                                    <div style="font-size:0.88rem;font-weight:700" class="mono">($3,816)</div>
+                                </div>
+                                <div style="background:#fafafa;border-radius:8px;padding:10px 12px">
+                                    <div style="font-size:0.55rem;color:#9ca3af;margin-bottom:2px">Net Sales</div>
+                                    <div style="font-size:0.88rem;font-weight:700" class="mono">$80,384</div>
+                                </div>
+                                <div style="background:#f5f3ff;border-radius:8px;padding:10px 12px;border:1px solid #ede9fe">
+                                    <div style="font-size:0.55rem;color:#7c3aed;margin-bottom:2px">Royalty Due</div>
+                                    <div style="font-size:0.88rem;font-weight:700;color:#7c3aed" class="mono">$6,833</div>
+                                </div>
+                            </div>
+                            <div style="font-size:0.58rem;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">By Property</div>
+                            <div class="mini-row" style="padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:0.72rem;font-weight:500">Iron Man Collectibles</span><span style="font-size:0.72rem;font-weight:600;color:#7c3aed" class="mono">$3,420</span></div>
+                            <div class="mini-row" style="padding:5px 0;border-bottom:1px solid #f3f4f6"><span style="font-size:0.72rem;font-weight:500">Spider-Man Collectibles</span><span style="font-size:0.72rem;font-weight:600;color:#7c3aed" class="mono">$2,180</span></div>
+                            <div class="mini-row" style="padding:5px 0"><span style="font-size:0.72rem;font-weight:500">Star Wars Accessories</span><span style="font-size:0.72rem;font-weight:600;color:#7c3aed" class="mono">$1,233</span></div>
+                            <div style="margin-top:14px;display:flex;gap:8px">
+                                <div style="flex:1;text-align:center;padding:8px;font-size:0.7rem;font-weight:600;color:white;background:#7c3aed;border-radius:8px">Approve</div>
+                                <div style="flex:1;text-align:center;padding:8px;font-size:0.7rem;font-weight:600;color:#6b7280;background:#f3f4f6;border-radius:8px">Export</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Submit Everywhere — text left, UI right -->
+        <div class="hw-card reveal">
+            <div class="hw-card-inner">
+                <div class="hw-text">
+                    <div class="feature-icon">
+                        <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                    </div>
+                    <div class="hw-step-label">Step 3</div>
+                    <h3>Submit everywhere</h3>
+                    <p>Push formatted reports to every licensor portal in the exact format they require. No more manual uploads, copy-pasting, or reformatting spreadsheets.</p>
+                    <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="hw-link">Book a demo &rsaquo;</a>
+                </div>
+                <div class="hw-ui">
+                    <div style="width:100%;max-width:420px">
+                        <div class="mini-card" style="padding:18px 22px;width:100%">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                                <div style="font-size:0.78rem;font-weight:600">Submission Status</div>
+                                <span class="mini-badge green" style="font-size:0.58rem">All submitted</span>
+                            </div>
+                            <div style="display:flex;flex-direction:column;gap:0">
+                                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;margin-bottom:8px">
+                                    <div style="display:flex;align-items:center;gap:10px">
+                                        <div style="width:28px;height:28px;border-radius:8px;background:white;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#1a1a2e">D</div>
+                                        <div>
+                                            <div style="font-size:0.75rem;font-weight:600">Disney</div>
+                                            <div style="font-size:0.58rem;color:#6b7280">OPA Portal &bull; Q1 2026</div>
+                                        </div>
+                                    </div>
+                                    <div style="display:flex;align-items:center;gap:5px"><div style="width:6px;height:6px;border-radius:50%;background:#16a34a"></div><span style="font-size:0.65rem;font-weight:500;color:#16a34a">Sent</span></div>
+                                </div>
+                                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;margin-bottom:8px">
+                                    <div style="display:flex;align-items:center;gap:10px">
+                                        <div style="width:28px;height:28px;border-radius:8px;background:white;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#1a1a2e">N</div>
+                                        <div>
+                                            <div style="font-size:0.75rem;font-weight:600">NFL (CLC)</div>
+                                            <div style="font-size:0.58rem;color:#6b7280">CLC Brandcomply &bull; Jan 2026</div>
+                                        </div>
+                                    </div>
+                                    <div style="display:flex;align-items:center;gap:5px"><div style="width:6px;height:6px;border-radius:50%;background:#16a34a"></div><span style="font-size:0.65rem;font-weight:500;color:#16a34a">Sent</span></div>
+                                </div>
+                                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;margin-bottom:8px">
+                                    <div style="display:flex;align-items:center;gap:10px">
+                                        <div style="width:28px;height:28px;border-radius:8px;background:white;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#1a1a2e">H</div>
+                                        <div>
+                                            <div style="font-size:0.75rem;font-weight:600">Hasbro</div>
+                                            <div style="font-size:0.58rem;color:#6b7280">Hasbro Licensing &bull; Q1 2026</div>
+                                        </div>
+                                    </div>
+                                    <div style="display:flex;align-items:center;gap:5px"><div style="width:6px;height:6px;border-radius:50%;background:#16a34a"></div><span style="font-size:0.65rem;font-weight:500;color:#16a34a">Sent</span></div>
+                                </div>
+                                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px">
+                                    <div style="display:flex;align-items:center;gap:10px">
+                                        <div style="width:28px;height:28px;border-radius:8px;background:white;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#1a1a2e">P</div>
+                                        <div>
+                                            <div style="font-size:0.75rem;font-weight:600">Pokemon</div>
+                                            <div style="font-size:0.58rem;color:#6b7280">TPC Portal &bull; Q1 2026</div>
+                                        </div>
+                                    </div>
+                                    <div style="display:flex;align-items:center;gap:5px"><div style="width:6px;height:6px;border-radius:50%;background:#16a34a"></div><span style="font-size:0.65rem;font-weight:500;color:#16a34a">Sent</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>Frequently asked questions</h2>
+        </div>
+        <div class="faq-list reveal">
+
+            <div class="faq-item">
+                <button class="faq-q">Can't I just build an internal tool using AI?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
+                <div class="faq-a">You could, but a script won't protect you during an audit. Roya works closely with licensors to ensure your data is mapped exactly how they require. We act as a trusted, third-party system of record connecting licensees and licensors - with full audit trails, approval workflows, and portal-ready formatting that an internal tool can't replicate.</div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">How do I know the calculations are accurate?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
+                <div class="faq-a">Roya isn't a black box. We turn complex legal contracts into strict math rules - whether you have tiered rates, territory exclusions, or minimum guarantees. Every step is logged and flagged for your team to review before anything is finalized.</div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">What platforms do you integrate with?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
+                <div class="faq-a">We connect directly with platforms like NetSuite, SAP, Shopify, and QuickBooks. But even without a big ERP, getting started is easy - Roya is built to instantly ingest and standardize raw CSV or Excel exports. Just drop your files in and go.</div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">Is my data secure?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
+                <div class="faq-a">Yes. We secure your sales data and contracts with enterprise-grade encryption (AES-256, TLS 1.3). Our platform is engineered to strict SOC 2 Type II compliance standards with role-based access controls and immutable audit logs.</div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">How much does Roya cost?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
+                <div class="faq-a">We work with licensees of all sizes. Our Growth tier offers simple, volume-based pricing for smaller brands (based on the number of licensor portals you submit to), and our Enterprise tier includes unlimited licenses and custom integrations. If price is a concern, reach out - we'd love to find a way to make it work.</div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-q">What happens if I get audited?<svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="#9ca3af" stroke-width="1.5"><path d="M5 7.5l5 5 5-5"/></svg></button>
+                <div class="faq-a">Roya turns a painful, weeks-long audit into a five-minute export. We track exactly what data was used, what rules were applied, and who approved each report - giving you a perfect paper trail to hand directly to auditors.</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+    <div class="container">
+        <h2>Ready to automate royalty reporting?</h2>
+        <p>Join leading licensees who are saving hundreds of hours monthly with Roya.</p>
+        <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="btn-cta" style="text-decoration:none;display:inline-block;">Get Early Access</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <span class="footer-logo">Roya</span>
+            <div class="footer-links">
+                <a href="#features">Features</a>
+                <a href="#workflow">How It Works</a>
+                <a href="mailto:vlad@royaengine.com">Contact</a>
+            </div>
+            <span class="footer-copy">&copy; 2026 Roya Engine, Inc.</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Scroll reveal
+const revObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+    });
+});
+</script>
+</body>
+</html>
