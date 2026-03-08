@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roya — Royalty Reporting, Automated</title>
+    <title>Roya - Royalty Reporting, Automated</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :focus-visible { outline: 2px solid #7c3aed; outline-offset: 2px; border-radius: 4px; }
@@ -86,18 +86,19 @@
         }
         .hero-mosaic .hf-card.visible { opacity: 1; transform: translateY(0); }
         .hf-accent-bubble {
-            position: absolute; background: #374151; border-radius: 14px;
+            position: absolute; background: white; border: 1px solid #e5e7eb; border-radius: 14px;
             padding: 10px 14px; z-index: 20;
             display: flex; flex-direction: column; align-items: center; gap: 4px;
             opacity: 0; transform: scale(0.8);
             transition: all 0.35s cubic-bezier(.4,.0,.2,1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
         }
         .hf-accent-bubble.visible { opacity: 1; transform: scale(1); }
-        .hf-accent-bubble .bt { font-size: 0.52rem; font-weight: 600; color: #e5e7eb; }
+        .hf-accent-bubble .bt { font-size: 0.52rem; font-weight: 600; color: #374151; }
         .card-agreement { top: 30px; left: 60px; width: 340px; }
         .agree-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
         .agree-title { font-size: 0.95rem; font-weight: 600; color: #1a1a2e; }
-        .agree-sub { font-size: 0.6rem; color: #9ca3af; margin-top: 2px; }
+        .agree-sub { font-size: 0.6rem; color: #6b7280; font-weight: 500; margin-top: 2px; }
         .agree-badge { font-size: 0.55rem; font-weight: 600; padding: 3px 10px; border-radius: 8px; opacity: 0; transition: all 0.4s; }
         .agree-badge.visible { opacity: 1; }
         .agree-badge.approaching { background: #fff7ed; color: #f97316; }
@@ -115,7 +116,7 @@
         .card-calc { top: 290px; left: 0; width: 290px; }
         .calc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
         .calc-icon { width: 36px; height: 36px; border-radius: 10px; background: #faf8ff; display: flex; align-items: center; justify-content: center; }
-        .calc-htitle { font-size: 0.6rem; color: #9ca3af; }
+        .calc-htitle { font-size: 0.6rem; color: #6b7280; font-weight: 500; }
         .calc-hname { font-size: 0.92rem; font-weight: 600; color: #1a1a2e; }
         .calc-line { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.78rem; }
         .calc-label { color: #6b7280; font-weight: 500; }
@@ -135,7 +136,7 @@
         .file-period { font-size: 0.78rem; font-weight: 700; color: #1a1a2e; }
         .file-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0; }
         .file-stat { background: #fafafa; border-radius: 10px; padding: 10px 12px; }
-        .file-stat-label { font-size: 0.5rem; font-weight: 600; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.04em; }
+        .file-stat-label { font-size: 0.5rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.04em; }
         .file-stat-val { font-size: 0.95rem; font-weight: 700; color: #1a1a2e; margin-top: 2px; }
         .file-checks { display: flex; flex-direction: column; gap: 0; border: 1px solid #f3f4f6; border-radius: 10px; overflow: hidden; }
         .file-check { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #f3f4f6; font-size: 0.78rem; font-weight: 500; color: #1a1a2e; opacity: 0; transition: all 0.3s ease; }
@@ -239,7 +240,7 @@
             margin-bottom: 28px;
         }
         .feature-ui {
-            flex: 1; display: flex; align-items: flex-end; justify-content: center;
+            flex: 1; display: flex; align-items: center; justify-content: center;
             min-height: 200px; position: relative;
         }
 
@@ -255,7 +256,7 @@
             display: flex; justify-content: space-between; align-items: center;
             padding: 5px 0; font-size: 0.75rem;
         }
-        .mini-row-label { color: #9ca3af; }
+        .mini-row-label { color: #6b7280; }
         .mini-row-value { font-weight: 500; }
         .mini-row-value.purple { color: #7c3aed; }
         .mini-badge {
@@ -275,6 +276,44 @@
             z-index: 0;
         }
         .stacked-cards .card-front { position: relative; z-index: 1; }
+
+        /* Option A: Stacked compliance cards */
+        .va-wrap { width: 100%; max-width: 300px; position: relative; height: 280px; }
+        .va-card {
+            position: absolute; left: 0; right: 0; background: white; border: 1px solid #e5e7eb;
+            border-radius: 14px; padding: 16px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            transition: all 0.5s cubic-bezier(.4,.0,.2,1);
+        }
+        .va-card-back1 { top: 16px; left: 10px; right: 10px; height: 60px; opacity: 0.5; z-index: 1; }
+        .va-card-back2 { top: 8px; left: 5px; right: 5px; height: 60px; opacity: 0.3; z-index: 0; }
+        .va-card-front { top: 24px; z-index: 2; opacity: 0; transform: translateY(10px); }
+        .va-card-front.visible { opacity: 1; transform: translateY(0); }
+        .va-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+        .va-icon { width: 36px; height: 36px; border-radius: 10px; background: #faf8ff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .va-sku { font-size: 0.55rem; color: #6b7280; font-weight: 500; }
+        .va-name { font-size: 0.82rem; font-weight: 600; color: #1a1a2e; }
+        .va-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .va-cell {
+            background: #fafafa; border-radius: 8px; padding: 8px 10px;
+            display: flex; align-items: center; justify-content: space-between;
+            opacity: 0; transition: all 0.3s;
+        }
+        .va-cell.visible { opacity: 1; }
+        .va-cell.fail { background: #fef2f2; }
+        .va-cell-label { font-size: 0.52rem; font-weight: 600; color: #6b7280; text-transform: uppercase; }
+        .va-cell-val { font-size: 0.68rem; font-weight: 600; color: #374151; }
+        .va-cell.fail .va-cell-val { color: #dc2626; }
+        .va-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: #d1d5db; transition: background 0.3s; }
+        .va-dot.pass { background: #16a34a; }
+        .va-dot.fail { background: #dc2626; }
+        .va-badge {
+            position: absolute; top: 12px; right: -8px; z-index: 10;
+            padding: 5px 12px; border-radius: 20px; font-size: 0.55rem; font-weight: 700;
+            opacity: 0; transform: scale(0.8);
+            transition: all 0.35s cubic-bezier(.4,.0,.2,1);
+        }
+        .va-badge.visible { opacity: 1; transform: scale(1); }
 
         /* ===== FULL-WIDTH FEATURE ===== */
         .feature-full {
@@ -310,7 +349,7 @@
             padding: 14px 20px; border-bottom: 1px solid #f3f4f6;
         }
         .dash-top-title h4 { font-size: 0.85rem; font-weight: 600; }
-        .dash-top-title span { font-size: 0.65rem; color: #9ca3af; }
+        .dash-top-title span { font-size: 0.65rem; color: #6b7280; }
         .dash-metrics {
             display: grid; grid-template-columns: 1fr 1fr 1fr;
             border-bottom: 1px solid #f3f4f6;
@@ -320,14 +359,14 @@
             border-right: 1px solid #f3f4f6;
         }
         .dash-metric:last-child { border-right: none; }
-        .dash-metric .dm-label { font-size: 0.62rem; color: #9ca3af; margin-bottom: 4px; }
+        .dash-metric .dm-label { font-size: 0.62rem; color: #6b7280; margin-bottom: 4px; }
         .dash-metric .dm-value { font-size: 1.1rem; font-weight: 700; }
         .dash-metric .dm-value.purple { color: #7c3aed; }
         .dash-metric .dm-delta { font-size: 0.6rem; margin-top: 2px; }
         .dash-metric .dm-delta.up { color: #16a34a; }
         .dash-metric .dm-delta.dn { color: #ef4444; }
         .dash-products { padding: 16px 20px; }
-        .dash-products .dp-title { font-size: 0.65rem; font-weight: 600; color: #9ca3af; margin-bottom: 8px; }
+        .dash-products .dp-title { font-size: 0.65rem; font-weight: 600; color: #6b7280; margin-bottom: 8px; }
         .dash-prod-row {
             display: flex; justify-content: space-between; align-items: center;
             padding: 4px 0; font-size: 0.72rem;
@@ -408,13 +447,13 @@
             display: flex; flex-direction: column; gap: 5px; width: 130px;
         }
         .col-label {
-            font-size: 0.55rem; font-weight: 700; text-transform: uppercase;
+            font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
             letter-spacing: 0.08em; margin-bottom: 6px; padding-left: 2px;
         }
-        .col-label.erp { color: #9ca3af; }
+        .col-label.erp { color: #6b7280; }
         .col-label.licensor { color: #7c3aed; }
         .field-pill {
-            font-size: 0.6rem; font-weight: 500; padding: 5px 9px;
+            font-size: 0.72rem; font-weight: 500; padding: 6px 11px;
             border-radius: 6px; border: 1px solid #e5e7eb;
             background: #fff; color: #374151;
             opacity: 0; transform: translateX(-12px);
@@ -463,7 +502,7 @@
         .source-chip .chip-type.agreement { color: #7c3aed; background: #f5f3ff; }
         .source-chip .chip-type.history { color: #d97706; background: #fffbeb; }
         .source-chip .chip-name { font-size: 0.72rem; font-weight: 600; color: #1a1a2e; margin-bottom: 2px; }
-        .source-chip .chip-detail { font-size: 0.58rem; color: #9ca3af; font-family: 'JetBrains Mono', monospace; }
+        .source-chip .chip-detail { font-size: 0.58rem; color: #6b7280; font-family: 'JetBrains Mono', monospace; }
         .source-chip:nth-child(1) { transform: rotate(-1.5deg) translate(-10px, 20px); z-index: 3; }
         .source-chip:nth-child(2) { transform: rotate(1deg) translate(12px, -10px); z-index: 2; }
         .source-chip:nth-child(3) { transform: rotate(-0.5deg) translate(-8px, -42px); z-index: 1; }
@@ -524,7 +563,7 @@
         .st-report .st-row {
             display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.75rem;
         }
-        .st-report .st-row .st-label { color: #9ca3af; font-weight: 500; }
+        .st-report .st-row .st-label { color: #6b7280; font-weight: 500; }
         .st-report .st-row .st-val { font-weight: 600; color: #1a1a2e; }
         .st-report .st-row.st-total .st-label { font-weight: 700; color: #7c3aed; font-size: 0.82rem; }
         .st-report .st-row.st-total .st-val { font-weight: 700; color: #7c3aed; font-size: 0.82rem; }
@@ -550,7 +589,7 @@
         .submit-dot.mapped { background: #7c3aed; }
         .submit-dot.sent { background: #7c3aed; }
         .submit-badge {
-            font-size: 0.68rem; font-weight: 500; color: #9ca3af;
+            font-size: 0.68rem; font-weight: 500; color: #6b7280;
             transition: color 0.4s ease;
         }
         .submit-badge.mapped { color: #7c3aed; }
@@ -647,14 +686,14 @@
                 <div class="hero-mosaic" id="heroMosaic">
                     <!-- Accent: Auto-submit toggle -->
                     <div class="hf-accent-bubble" id="hfAb1" style="top:50px;right:0">
-                        <div id="hfToggleWrap" style="width:40px;height:22px;background:#4b5563;border-radius:11px;position:relative;transition:background 0.3s">
+                        <div id="hfToggleWrap" style="width:40px;height:22px;background:#d1d5db;border-radius:11px;position:relative;transition:background 0.3s">
                             <div id="hfToggleDot" style="width:18px;height:18px;border-radius:50%;background:white;position:absolute;top:2px;left:2px;transition:left 0.3s"></div>
                         </div>
                         <span class="bt">Auto-submit</span>
                     </div>
                     <!-- Accent: Encrypted lock -->
                     <div class="hf-accent-bubble" id="hfAb2" style="bottom:0;left:50%;transform:translateX(-50%)">
-                        <svg width="14" height="14" fill="none" stroke="#a78bfa" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                        <svg width="14" height="14" fill="none" stroke="#7c3aed" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
                         <span class="bt">Encrypted</span>
                     </div>
                     <!-- Card 1: Agreement monitoring -->
@@ -662,7 +701,7 @@
                         <div class="pill-label" id="hfPl1">Monitor & Validate</div>
                         <div class="agree-header">
                             <div>
-                                <div class="agree-title">Disney — Minimum Guarantee</div>
+                                <div class="agree-title">Disney - Minimum Guarantee</div>
                                 <div class="agree-sub">Annual threshold tracking</div>
                             </div>
                             <span class="agree-badge approaching" id="hfBadge">Approaching</span>
@@ -796,13 +835,13 @@
                         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
                             <div>
                                 <div style="font-size:0.92rem;font-weight:700">Work Queue</div>
-                                <div style="font-size:0.62rem;color:#9ca3af">4 reports &bull; 2 due this month</div>
+                                <div style="font-size:0.62rem;color:#6b7280">4 reports &bull; 2 due this month</div>
                             </div>
                             <div style="font-size:0.68rem;font-weight:600;color:white;background:#7c3aed;padding:6px 14px;border-radius:7px">+ New Report</div>
                         </div>
                         <!-- Table -->
                         <div style="font-size:0.65rem">
-                            <div style="display:grid;grid-template-columns:1.2fr 0.8fr 0.7fr 0.9fr 0.7fr 0.6fr;padding:7px 0;border-bottom:1px solid #f3f4f6;color:#9ca3af;font-weight:600">
+                            <div style="display:grid;grid-template-columns:1.2fr 0.8fr 0.7fr 0.9fr 0.7fr 0.6fr;padding:7px 0;border-bottom:1px solid #f3f4f6;color:#6b7280;font-weight:600">
                                 <span>Report</span><span>Period</span><span>Frequency</span><span>Status</span><span>Due Date</span><span>Action</span>
                             </div>
                             <div style="display:grid;grid-template-columns:1.2fr 0.8fr 0.7fr 0.9fr 0.7fr 0.6fr;padding:10px 0;border-bottom:1px solid #f9fafb;align-items:center">
@@ -825,7 +864,7 @@
                                 <span style="font-weight:500;font-size:0.72rem">Disney</span>
                                 <span class="mono" style="color:#6b7280">Q1 2026</span>
                                 <span style="color:#6b7280">Quarterly</span>
-                                <span style="display:flex;align-items:center;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:#d1d5db"></span><span style="color:#9ca3af">Not Started</span></span>
+                                <span style="display:flex;align-items:center;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:#d1d5db"></span><span style="color:#6b7280">Not Started</span></span>
                                 <span class="mono" style="color:#6b7280">Apr 30</span>
                                 <span style="color:#7c3aed;font-weight:500">Start</span>
                             </div>
@@ -833,7 +872,7 @@
                                 <span style="font-weight:500;font-size:0.72rem">Warner Bros.</span>
                                 <span class="mono" style="color:#6b7280">Q1 2026</span>
                                 <span style="color:#6b7280">Quarterly</span>
-                                <span style="display:flex;align-items:center;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:#d1d5db"></span><span style="color:#9ca3af">Not Started</span></span>
+                                <span style="display:flex;align-items:center;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:#d1d5db"></span><span style="color:#6b7280">Not Started</span></span>
                                 <span class="mono" style="color:#6b7280">May 15</span>
                                 <span style="color:#7c3aed;font-weight:500">Start</span>
                             </div>
@@ -846,43 +885,47 @@
         <!-- 2x2: Features -->
         <div class="feature-grid reveal">
 
-            <!-- Review Exceptions -->
+            <!-- Compliance Check -->
             <div class="feature-card">
                 <div class="feature-icon">
-                    <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
                 </div>
-                <h3>Catch errors before they cost you</h3>
-                <p>Wrong territory, misapplied rate, missing IP code — caught in seconds, not in an audit.</p>
+                <h3>Validate before you ship</h3>
+                <p>Check any SKU, territory, or retailer against your agreements instantly - before a PO goes out, not during an audit.</p>
                 <div class="feature-ui">
-                    <div style="max-width:320px;width:100%;position:relative">
-                        <div class="mini-card" style="padding:0;overflow:hidden">
-                            <div style="display:grid;grid-template-columns:3fr 1.2fr 32px;padding:8px 16px;background:#f9fafb;border-bottom:1px solid #e5e7eb">
-                                <span style="font-size:0.5rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em">Product</span>
-                                <span style="font-size:0.5rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em">Rate</span>
-                                <span></span>
+                    <div class="va-wrap" id="vaComp">
+                        <div class="va-card va-card-back1"></div>
+                        <div class="va-card va-card-back2"></div>
+                        <div class="va-card va-card-front" id="vaFront">
+                            <div class="va-header">
+                                <div class="va-icon">
+                                    <svg width="16" height="16" fill="none" stroke="#7c3aed" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg>
+                                </div>
+                                <div>
+                                    <div class="va-sku mono">SKU-2024-0847</div>
+                                    <div class="va-name">Iron Man Phone Case</div>
+                                </div>
                             </div>
-                            <div style="display:grid;grid-template-columns:3fr 1.2fr 32px;padding:10px 16px;border-bottom:1px solid #f3f4f6;align-items:center">
-                                <span style="font-size:0.72rem;font-weight:500">Chess Set</span>
-                                <span style="font-size:0.72rem;font-weight:600" class="mono">8.5%</span>
-                                <span style="width:8px;height:8px;border-radius:50%;background:#16a34a;margin:auto"></span>
-                            </div>
-                            <div style="display:grid;grid-template-columns:3fr 1.2fr 32px;padding:10px 16px;border-bottom:1px solid #f3f4f6;align-items:center;background:#fff7ed">
-                                <span style="font-size:0.72rem;font-weight:600;color:#9a3412">Board Game</span>
-                                <span style="font-size:0.72rem;font-weight:700;color:#f97316" class="mono">6.0%</span>
-                                <span style="width:8px;height:8px;border-radius:50%;background:#f97316;margin:auto"></span>
-                            </div>
-                            <div style="display:grid;grid-template-columns:3fr 1.2fr 32px;padding:10px 16px;border-bottom:1px solid #f3f4f6;align-items:center">
-                                <span style="font-size:0.72rem;font-weight:500">Ice Puzzle</span>
-                                <span style="font-size:0.72rem;font-weight:600" class="mono">8.5%</span>
-                                <span style="width:8px;height:8px;border-radius:50%;background:#16a34a;margin:auto"></span>
-                            </div>
-                            <div style="display:grid;grid-template-columns:3fr 1.2fr 32px;padding:10px 16px;align-items:center;background:#fef2f2">
-                                <span style="font-size:0.72rem;font-weight:600;color:#991b1b">Card Game</span>
-                                <span style="font-size:0.72rem;font-weight:700;color:#dc2626" class="mono">&mdash;</span>
-                                <span style="width:8px;height:8px;border-radius:50%;background:#dc2626;margin:auto"></span>
+                            <div class="va-grid">
+                                <div class="va-cell" id="vaC1">
+                                    <div><div class="va-cell-label">Territory</div><div class="va-cell-val">US, CA</div></div>
+                                    <span class="va-dot" id="vaD1"></span>
+                                </div>
+                                <div class="va-cell" id="vaC2">
+                                    <div><div class="va-cell-label">Channel</div><div class="va-cell-val">Wholesale</div></div>
+                                    <span class="va-dot" id="vaD2"></span>
+                                </div>
+                                <div class="va-cell" id="vaC3">
+                                    <div><div class="va-cell-label">License</div><div class="va-cell-val">Active</div></div>
+                                    <span class="va-dot" id="vaD3"></span>
+                                </div>
+                                <div class="va-cell" id="vaC4">
+                                    <div><div class="va-cell-label">Retailer</div><div class="va-cell-val">Target</div></div>
+                                    <span class="va-dot" id="vaD4"></span>
+                                </div>
                             </div>
                         </div>
-                        <div style="position:absolute;top:-10px;right:-10px;background:#374151;color:#e5e7eb;padding:5px 12px;border-radius:20px;font-size:0.55rem;font-weight:700">2 flagged</div>
+                        <div class="va-badge" id="vaBadge"></div>
                     </div>
                 </div>
             </div>
@@ -893,17 +936,17 @@
                     <svg width="18" height="18" fill="none" stroke="#6b7280" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
                 <h3>Audit-ready from day one</h3>
-                <p>Every calculation, approval, and field change — logged, timestamped, and explainable.</p>
+                <p>Every calculation, approval, and field change - logged, timestamped, and explainable.</p>
                 <div class="feature-ui">
                     <div style="max-width:300px;width:100%;position:relative">
                         <div class="stacked-cards">
                             <div class="card-back"></div>
                             <div class="mini-card card-front" style="padding:16px 20px">
-                                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+                                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
                                     <span style="font-size:0.72rem;font-weight:600;color:#1a1a2e">Activity</span>
                                     <span style="font-size:0.52rem;font-weight:600;color:#16a34a;background:#f0fdf4;padding:3px 8px;border-radius:6px">12 events</span>
                                 </div>
-                                <div style="display:flex;align-items:flex-end;gap:3px;height:48px;margin-bottom:16px">
+                                <div style="display:flex;align-items:flex-end;gap:3px;height:48px;margin-bottom:10px">
                                     <div style="flex:1;background:#ede9fe;border-radius:2px;height:25%"></div>
                                     <div style="flex:1;background:#ede9fe;border-radius:2px;height:50%"></div>
                                     <div style="flex:1;background:#ede9fe;border-radius:2px;height:35%"></div>
@@ -913,21 +956,21 @@
                                     <div style="flex:1;background:#ede9fe;border-radius:2px;height:55%"></div>
                                     <div style="flex:1;background:#7c3aed;border-radius:2px;height:100%"></div>
                                 </div>
-                                <div style="display:flex;flex-direction:column;gap:8px">
+                                <div style="display:flex;flex-direction:column;gap:6px">
                                     <div style="display:flex;align-items:center;gap:8px">
                                         <span style="width:6px;height:6px;border-radius:50%;background:#7c3aed;flex-shrink:0"></span>
-                                        <span style="font-size:0.65rem;color:#6b7280">Data imported</span>
-                                        <span style="font-size:0.52rem;color:#9ca3af;margin-left:auto" class="mono">9:14</span>
+                                        <span style="font-size:0.65rem;color:#374151;font-weight:500">Data imported</span>
+                                        <span style="font-size:0.52rem;color:#6b7280;font-weight:500;margin-left:auto" class="mono">9:14</span>
                                     </div>
                                     <div style="display:flex;align-items:center;gap:8px">
                                         <span style="width:6px;height:6px;border-radius:50%;background:#f97316;flex-shrink:0"></span>
-                                        <span style="font-size:0.65rem;color:#6b7280">3 SKUs flagged</span>
-                                        <span style="font-size:0.52rem;color:#9ca3af;margin-left:auto" class="mono">9:15</span>
+                                        <span style="font-size:0.65rem;color:#374151;font-weight:500">3 SKUs flagged</span>
+                                        <span style="font-size:0.52rem;color:#6b7280;font-weight:500;margin-left:auto" class="mono">9:15</span>
                                     </div>
                                     <div style="display:flex;align-items:center;gap:8px">
                                         <span style="width:6px;height:6px;border-radius:50%;background:#16a34a;flex-shrink:0"></span>
-                                        <span style="font-size:0.65rem;color:#6b7280">Approved & submitted</span>
-                                        <span style="font-size:0.52rem;color:#9ca3af;margin-left:auto" class="mono">9:22</span>
+                                        <span style="font-size:0.65rem;color:#374151;font-weight:500">Approved & submitted</span>
+                                        <span style="font-size:0.52rem;color:#6b7280;font-weight:500;margin-left:auto" class="mono">9:22</span>
                                     </div>
                                 </div>
                             </div>
@@ -945,39 +988,34 @@
                 <p>Connect your ERP or drop in a CSV. We handle setup, migration, and white-glove onboarding.</p>
                 <div class="feature-ui">
                     <div style="max-width:300px;width:100%">
-                        <div class="mini-card">
-                            <div style="display:flex;flex-direction:column;gap:16px">
-                                <div>
-                                    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-                                        <span style="font-size:0.55rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em">Before</span>
-                                        <span style="font-size:0.55rem;font-weight:700;color:#dc2626">3 weeks</span>
-                                    </div>
-                                    <div style="height:24px;background:#fecaca;border-radius:8px;width:100%;position:relative;overflow:hidden">
-                                        <div style="position:absolute;inset:0;background:linear-gradient(90deg,#fca5a5,#f87171);border-radius:8px;display:flex;align-items:center;padding-left:10px">
-                                            <span style="font-size:0.5rem;color:white;font-weight:600">Manual Excel workflows</span>
-                                        </div>
-                                    </div>
+                        <div class="mini-card" style="display:flex;flex-direction:column;align-items:center;padding:24px 20px">
+                            <!-- Animated progress ring -->
+                            <div style="position:relative;width:120px;height:120px;margin-bottom:16px">
+                                <svg width="120" height="120" viewBox="0 0 120 120" style="transform:rotate(-90deg)">
+                                    <circle cx="60" cy="60" r="52" fill="none" stroke="#f3f4f6" stroke-width="8"/>
+                                    <circle id="timeRing" cx="60" cy="60" r="52" fill="none" stroke="url(#ringGrad)" stroke-width="8" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7" style="transition:stroke-dashoffset 1.5s cubic-bezier(.4,.0,.2,1)"/>
+                                    <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient></defs>
+                                </svg>
+                                <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+                                    <div id="timeVal" style="font-size:1.5rem;font-weight:800;color:#7c3aed" class="mono">0</div>
+                                    <div style="font-size:0.5rem;font-weight:600;color:#6b7280;text-transform:uppercase">hours</div>
                                 </div>
-                                <div>
-                                    <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-                                        <span style="font-size:0.55rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em">After</span>
-                                        <span style="font-size:0.55rem;font-weight:700;color:#16a34a">&lt; 1 day</span>
-                                    </div>
-                                    <div style="height:24px;background:#f3f4f6;border-radius:8px;width:100%;position:relative">
-                                        <div style="width:15%;height:100%;background:linear-gradient(90deg,#4ade80,#16a34a);border-radius:8px"></div>
-                                    </div>
-                                </div>
-                                <div style="border-top:1px solid #f3f4f6"></div>
-                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-                                    <div style="text-align:center;background:#faf8ff;border-radius:10px;padding:10px">
-                                        <div style="font-size:1.1rem;font-weight:800;color:#7c3aed">95%</div>
-                                        <div style="font-size:0.5rem;color:#9ca3af;font-weight:600">Time saved</div>
-                                    </div>
-                                    <div style="text-align:center;background:#f0fdf4;border-radius:10px;padding:10px">
-                                        <div style="font-size:1.1rem;font-weight:800;color:#16a34a">0</div>
-                                        <div style="font-size:0.5rem;color:#9ca3af;font-weight:600">Manual errors</div>
-                                    </div>
-                                </div>
+                            </div>
+                            <!-- Animated milestone dots -->
+                            <div style="display:flex;align-items:center;gap:0;width:100%;margin-bottom:16px">
+                                <div id="msD1" style="width:10px;height:10px;border-radius:50%;background:#d1d5db;flex-shrink:0;transition:background 0.3s,transform 0.3s"></div>
+                                <div id="msL1" style="flex:1;height:2px;background:#d1d5db;transition:background 0.5s"></div>
+                                <div id="msD2" style="width:10px;height:10px;border-radius:50%;background:#d1d5db;flex-shrink:0;transition:background 0.3s,transform 0.3s"></div>
+                                <div id="msL2" style="flex:1;height:2px;background:#d1d5db;transition:background 0.5s"></div>
+                                <div id="msD3" style="width:10px;height:10px;border-radius:50%;background:#d1d5db;flex-shrink:0;transition:background 0.3s,transform 0.3s"></div>
+                                <div id="msL3" style="flex:1;height:2px;background:#d1d5db;transition:background 0.5s"></div>
+                                <div id="msD4" style="width:10px;height:10px;border-radius:50%;background:#d1d5db;flex-shrink:0;transition:background 0.3s,transform 0.3s"></div>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;width:100%;padding:0 0">
+                                <span style="font-size:0.48rem;font-weight:600;color:#6b7280;text-transform:uppercase">Import</span>
+                                <span style="font-size:0.48rem;font-weight:600;color:#6b7280;text-transform:uppercase">Map</span>
+                                <span style="font-size:0.48rem;font-weight:600;color:#6b7280;text-transform:uppercase">Calculate</span>
+                                <span style="font-size:0.48rem;font-weight:600;color:#6b7280;text-transform:uppercase">Submit</span>
                             </div>
                         </div>
                     </div>
@@ -1048,7 +1086,7 @@
             <p>From raw sales data to submitted reports - one cohesive experience that handles every licensor's unique requirements.</p>
         </div>
 
-        <!-- Step 1: Ingest & Map — text left, UI right -->
+        <!-- Step 1: Ingest & Map - text left, UI right -->
         <div class="hw-card reveal">
             <div class="hw-card-inner">
                 <div class="hw-text">
@@ -1089,7 +1127,7 @@
             </div>
         </div>
 
-        <!-- Step 2: Generate Reports — UI left, text right (reversed) -->
+        <!-- Step 2: Generate Reports - UI left, text right (reversed) -->
         <div class="hw-card reversed reveal">
             <div class="hw-card-inner">
                 <div class="hw-text">
@@ -1143,7 +1181,7 @@
             </div>
         </div>
 
-        <!-- Step 3: Submit Everywhere — text left, UI right -->
+        <!-- Step 3: Submit Everywhere - text left, UI right -->
         <div class="hw-card reveal">
             <div class="hw-card-inner">
                 <div class="hw-text">
@@ -1164,7 +1202,7 @@
                                 <div style="display:flex;align-items:center;gap:10px">
                                     <div class="submit-dot"></div>
                                     <span style="font-size:0.82rem;font-weight:500">NFL (CLC)</span>
-                                    <span style="font-size:0.65rem;color:#9ca3af" class="mono">.xlsx</span>
+                                    <span style="font-size:0.65rem;color:#6b7280" class="mono">.xlsx</span>
                                 </div>
                                 <span class="submit-badge">&mdash;</span>
                             </div>
@@ -1172,7 +1210,7 @@
                                 <div style="display:flex;align-items:center;gap:10px">
                                     <div class="submit-dot"></div>
                                     <span style="font-size:0.82rem;font-weight:500">Disney</span>
-                                    <span style="font-size:0.65rem;color:#9ca3af" class="mono">.xml</span>
+                                    <span style="font-size:0.65rem;color:#6b7280" class="mono">.xml</span>
                                 </div>
                                 <span class="submit-badge">&mdash;</span>
                             </div>
@@ -1180,7 +1218,7 @@
                                 <div style="display:flex;align-items:center;gap:10px">
                                     <div class="submit-dot"></div>
                                     <span style="font-size:0.82rem;font-weight:500">Hasbro</span>
-                                    <span style="font-size:0.65rem;color:#9ca3af" class="mono">.csv</span>
+                                    <span style="font-size:0.65rem;color:#6b7280" class="mono">.csv</span>
                                 </div>
                                 <span class="submit-badge">&mdash;</span>
                             </div>
@@ -1188,7 +1226,7 @@
                                 <div style="display:flex;align-items:center;gap:10px">
                                     <div class="submit-dot"></div>
                                     <span style="font-size:0.82rem;font-weight:500">Sanrio</span>
-                                    <span style="font-size:0.65rem;color:#9ca3af" class="mono">.xlsx</span>
+                                    <span style="font-size:0.65rem;color:#6b7280" class="mono">.xlsx</span>
                                 </div>
                                 <span class="submit-badge">&mdash;</span>
                             </div>
@@ -1196,7 +1234,7 @@
                                 <div style="display:flex;align-items:center;gap:10px">
                                     <div class="submit-dot"></div>
                                     <span style="font-size:0.82rem;font-weight:500">Paramount</span>
-                                    <span style="font-size:0.65rem;color:#9ca3af" class="mono">.csv</span>
+                                    <span style="font-size:0.65rem;color:#6b7280" class="mono">.csv</span>
                                 </div>
                                 <span class="submit-badge">&mdash;</span>
                             </div>
@@ -1273,7 +1311,7 @@
             <div class="footer-links">
                 <a href="#features">Features</a>
                 <a href="#workflow">How It Works</a>
-                <a href="mailto:vlad@royaengine.com">Contact</a>
+                <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank">Contact</a>
             </div>
             <span class="footer-copy">&copy; 2026 Roya Engine, Inc.</span>
         </div>
@@ -1310,6 +1348,120 @@ document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
             });
         }
     }, 1800);
+})();
+
+// Compliance check animation (Option A: stacked cards)
+(function() {
+    const front = document.getElementById('vaFront');
+    if (!front) return;
+    const badge = document.getElementById('vaBadge');
+    const checks = [
+        { c: 'vaC1', d: 'vaD1', pass: true },
+        { c: 'vaC2', d: 'vaD2', pass: true },
+        { c: 'vaC3', d: 'vaD3', pass: true },
+        { c: 'vaC4', d: 'vaD4', pass: false }
+    ];
+
+    function resetChecks() {
+        front.classList.remove('visible');
+        badge.classList.remove('visible');
+        badge.textContent = '';
+        checks.forEach(c => {
+            const cell = document.getElementById(c.c);
+            const dot = document.getElementById(c.d);
+            cell.classList.remove('visible', 'fail');
+            dot.classList.remove('pass', 'fail');
+        });
+    }
+
+    function runChecks() {
+        resetChecks();
+        setTimeout(() => front.classList.add('visible'), 200);
+
+        checks.forEach((c, i) => {
+            setTimeout(() => {
+                const cell = document.getElementById(c.c);
+                const dot = document.getElementById(c.d);
+                cell.classList.add('visible');
+                setTimeout(() => {
+                    if (c.pass) {
+                        dot.classList.add('pass');
+                    } else {
+                        dot.classList.add('fail');
+                        cell.classList.add('fail');
+                        badge.textContent = 'Not authorized';
+                        badge.style.background = '#dc2626';
+                        badge.style.color = 'white';
+                        badge.classList.add('visible');
+                    }
+                }, 200);
+            }, 600 + i * 400);
+        });
+        setTimeout(runChecks, 5500);
+    }
+
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { runChecks(); obs.unobserve(e.target); } });
+    }, { threshold: 0.3 });
+    obs.observe(front.closest('.feature-card'));
+})();
+
+// Time ring animation
+(function() {
+    const ring = document.getElementById('timeRing');
+    const val = document.getElementById('timeVal');
+    if (!ring) return;
+    const circ = 326.7;
+    const milestones = ['msD1','msD2','msD3','msD4'];
+    const lines = ['msL1','msL2','msL3'];
+    const purple = '#7c3aed';
+
+    function resetRing() {
+        ring.style.transition = 'none';
+        ring.style.strokeDashoffset = circ;
+        val.textContent = '0';
+        milestones.forEach(id => { const d = document.getElementById(id); d.style.background = '#d1d5db'; d.style.transform = 'scale(1)'; });
+        lines.forEach(id => document.getElementById(id).style.background = '#d1d5db');
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                ring.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(.4,.0,.2,1)';
+            });
+        });
+    }
+
+    function countTo(target, dur) {
+        const start = performance.now();
+        function step(now) {
+            const t = Math.min((now - start) / dur, 1);
+            const e = 1 - Math.pow(1 - t, 3);
+            val.textContent = Math.round(target * e);
+            if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    }
+
+    function runRing() {
+        resetRing();
+        setTimeout(() => {
+            ring.style.strokeDashoffset = circ * 0.05;
+            countTo(4, 1500);
+        }, 300);
+        milestones.forEach((id, i) => {
+            setTimeout(() => {
+                const d = document.getElementById(id);
+                d.style.background = purple;
+                d.style.transform = 'scale(1.3)';
+                setTimeout(() => d.style.transform = 'scale(1)', 200);
+                if (i > 0) document.getElementById(lines[i - 1]).style.background = purple;
+            }, 600 + i * 350);
+        });
+        setTimeout(runRing, 4500);
+    }
+
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { runRing(); obs.unobserve(e.target); } });
+    }, { threshold: 0.3 });
+    obs.observe(ring.closest('.feature-card'));
 })();
 
 // Hero left entrance
@@ -1362,7 +1514,7 @@ window.addEventListener('load', () => {
         document.getElementById('hfSales').textContent = '$0';
         document.getElementById('hfDue').textContent = '$0';
         document.getElementById('hfToggleDot').style.left = '2px';
-        document.getElementById('hfToggleWrap').style.background = '#4b5563';
+        document.getElementById('hfToggleWrap').style.background = '#d1d5db';
     }
 
     function runHeroAnimation() {
@@ -1380,7 +1532,7 @@ window.addEventListener('load', () => {
             countUp(document.getElementById('hfCur'), 108000, '$', 1200);
         }, 700);
 
-        // Jumps to 105% — threshold exceeded
+        // Jumps to 105% - threshold exceeded
         setTimeout(() => {
             document.getElementById('hfBar').style.width = '100%';
             document.getElementById('hfBar').classList.add('exceeded');
