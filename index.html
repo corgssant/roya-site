@@ -178,7 +178,7 @@
             font-size: 1.15rem; color: rgba(255,255,255,0.65); line-height: 1.6;
             margin-bottom: 32px;
         }
-        .hero-right { position: relative; min-height: 680px; }
+        .hero-right { position: relative; min-height: 580px; }
         .btn-primary {
             display: inline-flex; align-items: center; gap: 8px;
             font-size: 0.95rem; font-weight: 600; color: white;
@@ -188,19 +188,19 @@
         .btn-primary:hover { background: #6d28d9; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(124,58,237,0.25); }
 
         /* Hero mosaic (Option G - Clean) */
-        .hero-mosaic { position: relative; width: 100%; height: 680px; }
+        .hero-mosaic { position: relative; width: 100%; height: 580px; }
         .hero-mosaic .hg-card {
-            position: absolute; background: white; border-radius: 18px;
-            padding: 28px 28px; border: 1px solid #e5e7eb;
+            position: absolute; background: white; border-radius: 16px;
+            padding: 18px 22px; border: 1px solid #e5e7eb;
             box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-            opacity: 0; transform: translateY(20px);
+            opacity: 0; transform: translateY(16px);
             transition: all 0.5s cubic-bezier(.4,.0,.2,1);
         }
         .hero-mosaic .hg-card.visible { opacity: 1; transform: translateY(0); }
         .step-pill {
             display: inline-flex; align-items: center; gap: 6px;
             font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 0.05em; color: #7c3aed; margin-bottom: 16px;
+            letter-spacing: 0.05em; color: #7c3aed; margin-bottom: 8px;
         }
         .step-num {
             width: 20px; height: 20px; border-radius: 50%;
@@ -209,21 +209,21 @@
             display: flex; align-items: center; justify-content: center;
         }
         /* Card 1: Monitor */
-        .card-monitor { top: 10px; left: 40px; width: 360px; }
-        .monitor-title { font-size: 1.1rem; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
-        .monitor-licensor { font-size: 0.85rem; font-weight: 500; color: #6b7280; margin-bottom: 18px; }
-        .monitor-bar-wrap { width: 100%; height: 10px; background: #f3f4f6; border-radius: 5px; overflow: hidden; margin-bottom: 10px; }
-        .monitor-bar { height: 100%; border-radius: 5px; width: 0%; transition: width 1.5s ease, background 0.5s; background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+        .card-monitor { top: 10px; left: 40px; width: 340px; }
+        .monitor-title { font-size: 1.1rem; font-weight: 700; color: #1a1a2e; margin-bottom: 2px; }
+        .monitor-licensor { font-size: 0.85rem; font-weight: 500; color: #6b7280; margin-bottom: 12px; }
+        .monitor-bar-wrap { width: 100%; height: 8px; background: #f3f4f6; border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+        .monitor-bar { height: 100%; border-radius: 4px; width: 0%; transition: width 1.5s ease, background 0.5s; background: linear-gradient(90deg, #7c3aed, #a78bfa); }
         .monitor-bar.exceeded { background: linear-gradient(90deg, #16a34a, #4ade80); }
         .monitor-nums { display: flex; justify-content: space-between; align-items: center; }
-        .monitor-pct { font-size: 1.6rem; font-weight: 800; color: #7c3aed; transition: color 0.5s; line-height: 1; }
+        .monitor-pct { font-size: 1.4rem; font-weight: 800; color: #7c3aed; transition: color 0.5s; line-height: 1; }
         .monitor-pct.green { color: #16a34a; }
-        .monitor-amount { font-size: 0.95rem; font-weight: 600; color: #6b7280; }
+        .monitor-amount { font-size: 0.85rem; font-weight: 600; color: #6b7280; }
         .monitor-amount strong { color: #1a1a2e; transition: color 0.5s; }
         .monitor-amount strong.green { color: #16a34a; }
         .monitor-badge {
-            display: inline-block; font-size: 0.75rem; font-weight: 700;
-            padding: 5px 14px; border-radius: 20px; margin-top: 12px;
+            display: inline-block; font-size: 0.7rem; font-weight: 700;
+            padding: 4px 12px; border-radius: 20px; margin-top: 8px;
             opacity: 0; transform: scale(0.8);
             transition: all 0.4s cubic-bezier(.4,.0,.2,1);
         }
@@ -242,7 +242,7 @@
         .toggle-bubble.visible { opacity: 1; transform: scale(1); }
         .toggle-label { font-size: 0.8rem; font-weight: 600; color: #374151; }
         /* Card 2: Calculate */
-        .card-calc { top: 280px; left: 0; width: 280px; }
+        .card-calc { top: 250px; left: 0; width: 270px; }
         .calc-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; }
         .calc-label { font-size: 0.9rem; font-weight: 500; color: #6b7280; }
         .calc-val { font-size: 0.9rem; font-weight: 600; color: #374151; }
@@ -258,11 +258,11 @@
         .calc-total-label { font-size: 0.95rem; font-weight: 700; color: #374151; }
         .calc-total-val { font-size: 1.15rem; font-weight: 800; color: #7c3aed; }
         /* Card 3: File */
-        .card-file { top: 280px; right: 0; width: 260px; }
-        .file-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .card-file { top: 250px; right: 0; width: 250px; }
+        .file-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .file-title { font-size: 1rem; font-weight: 700; color: #1a1a2e; }
         .file-period { font-size: 0.85rem; font-weight: 700; color: #7c3aed; background: #f5f3ff; padding: 4px 12px; border-radius: 8px; }
-        .file-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+        .file-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
         .file-stat { background: #fafafa; border-radius: 12px; padding: 12px 14px; }
         .file-stat-label { font-size: 0.7rem; font-weight: 600; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.03em; }
         .file-stat-val { font-size: 1.1rem; font-weight: 700; color: #1a1a2e; margin-top: 2px; }
