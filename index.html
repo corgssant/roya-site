@@ -556,6 +556,45 @@
         .step h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
         .step p { font-size: 0.9rem; color: #6b7280; line-height: 1.55; }
 
+        /* ===== TIMELINE ===== */
+        .timeline-section { padding: 100px 0; background: #fff; }
+        .timeline-eyebrow { font-size: 0.9rem; color: #6b7280; text-align: center; margin-bottom: 12px; }
+        .timeline-section h2 { font-size: 2.2rem; font-weight: 800; text-align: center; letter-spacing: -0.03em; margin-bottom: 12px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .timeline-cta { text-align: center; margin-bottom: 48px; }
+        .timeline-cta a { font-size: 0.95rem; color: #6b7280; font-weight: 500; transition: color 0.2s; }
+        .timeline-cta a:hover { color: #7c3aed; }
+        .timeline-track { position: relative; display: flex; justify-content: space-between; align-items: flex-start; max-width: 900px; margin: 0 auto 0; padding: 0 20px; }
+        .timeline-labels { display: flex; justify-content: space-between; max-width: 900px; margin: 0 auto 0; padding: 0 20px; }
+        .timeline-pill {
+            font-size: 0.82rem; font-weight: 600; color: #1a1a2e;
+            border: 1px solid #e5e7eb; border-radius: 20px; padding: 6px 18px;
+            background: white;
+        }
+        .timeline-pill.active { background: #1a1a2e; color: white; border-color: #1a1a2e; }
+        .timeline-line { position: relative; max-width: 900px; margin: 16px auto; padding: 0 40px; display: flex; align-items: center; }
+        .timeline-line-bar { flex: 1; height: 2px; background: #e5e7eb; position: relative; }
+        .timeline-dot {
+            width: 12px; height: 12px; border-radius: 50%; border: 2px solid #e5e7eb;
+            background: white; position: absolute; top: 50%; transform: translateY(-50%);
+        }
+        .timeline-dot:nth-child(2) { left: 0; }
+        .timeline-dot:nth-child(3) { left: 50%; transform: translate(-50%, -50%); }
+        .timeline-dot:nth-child(4) { right: 0; background: #7c3aed; border-color: #7c3aed; }
+        .timeline-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; max-width: 900px; margin: 24px auto 0; padding: 0 20px; }
+        .timeline-card {
+            border: 1px solid #e5e7eb; border-radius: 16px; padding: 28px 24px;
+            background: white;
+        }
+        .timeline-card:last-child { border-color: #d1d5db; }
+        .timeline-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: #1a1a2e; }
+        .timeline-card:last-child h3 { color: #7c3aed; }
+        .timeline-check {
+            display: flex; align-items: flex-start; gap: 10px;
+            font-size: 0.88rem; color: #374151; line-height: 1.5; margin-bottom: 10px;
+        }
+        .timeline-check svg { flex-shrink: 0; margin-top: 3px; color: #9ca3af; }
+        .timeline-check:last-child { margin-bottom: 0; }
+
         /* ===== FAQ ===== */
         .faq-list { max-width: 720px; margin: 0 auto; }
         .faq-item {
@@ -845,6 +884,11 @@
             .logo-bar-label { font-size: 0.72rem; margin-bottom: 18px; }
             .logo-set { gap: 32px; padding: 0 16px; }
             .logo-set img { transform: scale(0.75); }
+            .timeline-section { padding: 60px 0; }
+            .timeline-section h2 { font-size: 1.5rem; }
+            .timeline-cards { grid-template-columns: 1fr; gap: 16px; }
+            .timeline-labels { justify-content: space-around; }
+            .timeline-card h3 { font-size: 1rem; }
             .faq-q { font-size: 0.92rem; padding: 20px 0; }
             .faq-a { font-size: 0.85rem; }
             .footer { padding: 32px 0; }
@@ -1460,6 +1504,47 @@
             </div>
         </div>
 
+    </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+    <div class="container">
+        <p class="timeline-eyebrow reveal">New software shouldn't take a year to implement.</p>
+        <h2 class="reveal">Here's what you can get done with Roya in just 30 days.</h2>
+        <div class="timeline-cta reveal"><a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank">Get started with Roya &rarr;</a></div>
+    </div>
+    <div class="timeline-labels reveal">
+        <span class="timeline-pill">Today</span>
+        <span class="timeline-pill">Day 5</span>
+        <span class="timeline-pill active">Day 30</span>
+    </div>
+    <div class="timeline-line reveal">
+        <div class="timeline-line-bar">
+            <span class="timeline-dot"></span>
+            <span class="timeline-dot"></span>
+            <span class="timeline-dot"></span>
+        </div>
+    </div>
+    <div class="timeline-cards reveal">
+        <div class="timeline-card">
+            <h3>Get started.</h3>
+            <div class="timeline-check"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span>Connect your ERP or drop in a CSV</span></div>
+            <div class="timeline-check"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span>Upload your licensing agreements</span></div>
+            <div class="timeline-check"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span>Roya maps your data automatically</span></div>
+        </div>
+        <div class="timeline-card">
+            <h3>Get comfortable.</h3>
+            <div class="timeline-check"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span>Review your first automated reports</span></div>
+            <div class="timeline-check"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span>Set up approval workflows</span></div>
+            <div class="timeline-check"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span>Submit to your first licensor portal</span></div>
+        </div>
+        <div class="timeline-card">
+            <h3>Wonder why you didn't switch sooner.</h3>
+            <div class="timeline-check"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span>All licensors reporting through Roya</span></div>
+            <div class="timeline-check"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span>Reporting cycle down from weeks to hours</span></div>
+            <div class="timeline-check"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg><span>Audit-ready from day one</span></div>
+        </div>
     </div>
 </section>
 
