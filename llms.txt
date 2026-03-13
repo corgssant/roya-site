@@ -2,12 +2,12 @@
 
 > Automate royalty reporting for licensees. Stop losing weeks to Excel every quarter.
 
-Roya is an AI-powered platform that automates the entire royalty reporting workflow for brand licensees — from raw sales data to submitted reports.
+Roya is an AI-powered platform that automates the entire royalty reporting workflow for brand licensees - from raw sales data to submitted reports.
 
 ## What Roya Does
 
 - **Data Ingestion**: Connect your ERP (NetSuite, SAP, Shopify, QuickBooks, etc.) or drop in CSV/Excel files. Roya standardizes everything automatically.
-- **Licensor Mapping**: Each licensor has unique reporting templates and rules. Roya maps your sales data to every licensor's specific format — territories, channels, SKUs, royalty tiers.
+- **Licensor Mapping**: Each licensor has unique reporting templates and rules. Roya maps your sales data to every licensor's specific format - territories, channels, SKUs, royalty tiers.
 - **Compliance Validation**: Check any SKU, territory, or retailer against your agreements instantly. Every calculation, approval, and field change is logged and timestamped for audit readiness.
 - **Portal Submission**: Submit compliant reports to 25+ licensor portals from one interface. Select the licensor, review, submit.
 
