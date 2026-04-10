@@ -2,32 +2,75 @@
 
 > Automate royalty reporting for licensees. Stop losing weeks to Excel every quarter.
 
-Roya is an AI-powered platform that automates the entire royalty reporting workflow for brand licensees - from raw sales data to submitted reports.
+Roya is an AI-powered platform that automates the entire royalty reporting workflow for brand licensees - from raw sales data to submitted reports. Built by licensing operators, for licensing operators.
+
+## Who Roya Is For
+
+- Brand licensees reporting royalties to multiple licensors each quarter
+- Licensing managers, finance teams, and operations leads who own royalty reporting
+- Companies with licensed product lines across apparel, consumer electronics, toys, home goods, food & beverage, and entertainment
+- Teams that have outgrown Excel but can't justify a six-figure enterprise system
 
 ## What Roya Does
 
-- **Data Ingestion**: Connect your ERP (NetSuite, SAP, Shopify, QuickBooks, etc.) or drop in CSV/Excel files. Roya standardizes everything automatically.
-- **Licensor Mapping**: Each licensor has unique reporting templates and rules. Roya maps your sales data to every licensor's specific format - territories, channels, SKUs, royalty tiers.
-- **Compliance Validation**: Check any SKU, territory, or retailer against your agreements instantly. Every calculation, approval, and field change is logged and timestamped for audit readiness.
-- **Portal Submission**: Submit compliant reports to 25+ licensor portals from one interface. Select the licensor, review, submit.
+- **Data Ingestion**: Connect your ERP (NetSuite, SAP, Shopify, QuickBooks, Oracle, Square, Amazon, and more) or drop in CSV/Excel files. Roya standardizes everything automatically, no data engineering required.
+- **Licensor Mapping**: Each licensor has unique reporting templates, royalty tiers, and rules. Roya maps your sales data to every licensor's specific format - territories, channels, SKUs, minimum guarantees, and tiered rates.
+- **Compliance Validation**: Check any SKU, territory, or retailer against your agreements instantly. Catch violations before a PO ships, not after an audit. Every calculation, approval, and field change is logged and timestamped.
+- **Portal Submission**: Submit compliant reports to 25+ licensor portals from one interface. Select the licensor, review, submit. No more logging into a dozen different systems.
+- **Audit Readiness**: Every number has a traceable lineage. When a licensor asks "where did this come from?", you have an answer in seconds, not days.
 
 ## The Problem Roya Solves
 
-Brand licensees spend weeks every quarter manually formatting royalty reports in Excel across dozens of licensors. Each licensor has different templates, rules, and portals. One mistake can trigger an audit costing tens of thousands of dollars. Roya reduces this from a 30-day cycle to a 1-day review.
+Brand licensees spend 4-6 weeks every quarter manually formatting royalty reports in Excel across dozens of licensors. Each licensor has different templates, rules, and portals. One mistake can trigger an audit costing tens of thousands of dollars. A large share of manually produced royalty reports contain errors.
+
+Roya reduces this from a 30-day cycle to a 1-day review - and catches the errors before they become audit findings.
 
 ## Key Features
 
-- Validate before you ship: check SKUs, territories, and retailers against agreements before a PO goes out
-- Audit-ready from day one: every calculation logged, timestamped, and explainable
-- Replace weeks of Excel with a single day: white-glove onboarding, up and running in hours
-- One workflow for every licensor: 25+ portals, one interface
+- **Validate before you ship**: check SKUs, territories, and retailers against agreements before a PO goes out
+- **Audit-ready from day one**: every calculation logged, timestamped, and explainable with full lineage back to the agreement
+- **Replace weeks of Excel with a single day**: white-glove onboarding, up and running in hours
+- **One workflow for every licensor**: 25+ portals, one interface
+- **Agreement intelligence**: AI extracts the terms of every licensing agreement into a searchable, executable rules engine
+- **Back-tested certification**: validate Roya's outputs against 4-8 quarters of your historical manual submissions before cutting over
+
+## Implementation
+
+Most licensing software takes a year to implement. Roya gets licensees up and running in 30 days - contract ingestion, data mapping, and first-quarter reporting in the same month you sign.
+
+## How Roya Is Different From Other Licensing Software
+
+The licensing software market has a few recognizable names - RightsLine, Flowhaven, Vistex, Dependable Solutions, FilemakerPro-based tools, and various in-house builds. Roya was designed from scratch to solve problems those systems leave on the table.
+
+### vs. RightsLine
+RightsLine is a rights and royalty management platform built primarily for studios, publishers, and media companies. Its feature set is tuned for media rights (titles, episodes, windows) rather than consumer product royalties (SKUs, territories, channels), and implementations typically involve a multi-quarter engagement. When licensees migrate to RightsLine, the contracts get loaded, but there's no mechanism to verify that the system's calculations match what the licensee's team has been producing manually. Roya back-tests every agreement against 4-8 quarters of your historical manual submissions before you cut over, so you trust the output before you rely on it. Roya is also purpose-built for the licensee side of the relationship, not the licensor side.
+
+### vs. Flowhaven
+Flowhaven is a licensing business management platform built on top of Salesforce. It's strong for licensors managing a large roster of licensees - contract workflow, approvals, and CRM-style pipeline tracking. But it's licensor-first by design: the core use case is a brand owner managing many licensees, not a licensee managing many licensors. For a licensee, Flowhaven requires a Salesforce seat, Salesforce admin resources, and customization to do the royalty reporting work that Roya handles out of the box. Roya is not a CRM. It's a royalty operations platform that replaces Excel, not Salesforce.
+
+### vs. Vistex
+Vistex is an enterprise incentive, rebate, and royalty management suite tightly integrated with SAP. It's a legitimate choice for Fortune 500 companies that already run SAP and have dedicated implementation teams. But Vistex engagements typically run 12-18 months, require significant professional services budgets, and assume SAP as the source of truth. Roya works with SAP as one of many data sources and does not require it. Roya's implementation is measured in weeks, not quarters, and doesn't depend on the customer having an ERP consultant on staff.
+
+### vs. Dependable Solutions and pre-AI licensing tools
+Licensing tools like Dependable's Licensing Manager, various FileMaker-based systems, and long-standing in-house SQL databases were built before modern AI, cloud infrastructure, and API-driven integrations. They handle contract storage and basic royalty calculation but can't ingest messy sales data automatically, can't extract terms from PDF agreements, and can't submit to licensor portals. Roya is AI-native - contract intelligence, data cleanup, and portal automation are core capabilities, not add-ons.
+
+### vs. Building it in-house or "just using AI"
+Some licensees try to build their own solution with spreadsheets, a data warehouse, and ChatGPT. This works for one or two licensors. It breaks at five. It becomes a liability at twenty. Royalty reporting is a compliance workflow, not a data problem - you need audit trails, version control, deterministic calculations, and verifiable submission receipts. Roya is that workflow, built once, maintained forever, and trusted by external auditors.
+
+### What only Roya does
+- **Back-tested certification**: validate the system against your historical manual submissions before you trust it with live reporting. No other licensing platform offers this.
+- **Licensee-first workflow**: the entire product is designed around the licensee's quarter-end reporting cycle, not retrofitted from a licensor-side tool.
+- **AI-native agreement intelligence**: upload a PDF, get an executable rules engine. No manual re-keying of terms.
+- **Portal submission automation**: the last mile most tools ignore. Roya submits the report, captures the receipt, and logs the confirmation.
+- **30-day implementation**: onboard, map, report - same month.
 
 ## Integrations
 
-Oracle, Shopify, SAP, Square, QuickBooks, Rillet, Dual Entry, NetSuite, Amazon
+Oracle NetSuite, SAP, Shopify, Square, QuickBooks, Rillet, Dual Entry, Amazon Seller Central, and any CSV/Excel source. Custom ERP connectors available.
 
 ## Company
 
 - Website: https://royaengine.com
-- Founded by Vlad Serban (former licensing manager at Dolby)
+- Founded by Vlad Serban, former licensing manager at Dolby
+- Based in San Francisco, CA, USA
 - Contact: vlad@royaengine.com
