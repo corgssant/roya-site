@@ -159,15 +159,19 @@
         }
         .nav-inner {
             max-width: 1100px; margin: 0 auto; padding: 0 32px;
-            display: flex; align-items: center; justify-content: space-between; height: 56px;
+            display: grid; grid-template-columns: auto 1fr auto; align-items: center; height: 56px; gap: 32px;
         }
         .nav-logo { font-size: 1.2rem; font-weight: 800; color: white; }
-        .nav-links { display: flex; gap: 28px; align-items: center; }
+        .nav-links { display: flex; gap: 32px; align-items: center; justify-content: center; }
         .nav-links a { font-size: 0.88rem; font-weight: 500; color: rgba(255,255,255,0.7); transition: color 0.2s; }
         .nav-links a:hover { color: white; }
+        .nav-actions { display: flex; gap: 20px; align-items: center; }
+        .nav-actions a { font-size: 0.88rem; font-weight: 500; color: rgba(255,255,255,0.7); transition: color 0.2s; }
+        .nav-actions a:hover { color: white; }
+        .nav-mobile-signin { display: none; }
         .nav-cta {
-            font-size: 0.82rem; font-weight: 600; color: white !important;
-            background: #7c3aed; padding: 10px 20px; border-radius: 8px; border: none;
+            font-size: 0.88rem; font-weight: 600; color: white !important;
+            background: #7c3aed; padding: 10px 22px; border-radius: 999px; border: none;
         }
         .nav-cta:hover { background: #6d28d9; }
         .nav-mobile { display: none; background: none; border: none; font-size: 1.4rem; color: rgba(255,255,255,0.7); }
@@ -828,10 +832,14 @@
         }
         @media (max-width: 640px) {
             .container { padding: 0 20px; }
-            .nav-inner { padding: 0 16px; }
+            .nav-inner { padding: 0 16px; gap: 12px; }
             .nav-links { display: none; }
             .nav-mobile { display: block; }
             .nav-links.mobile-open { padding: 16px 16px; }
+            .nav-actions { gap: 14px; }
+            .nav-actions a:not(.nav-cta) { display: none; }
+            .nav-cta { padding: 8px 16px; font-size: 0.82rem; }
+            .nav-mobile-signin { display: block; }
             .hero { padding: 90px 0 20px; }
             .hero h1 { font-size: 2rem; }
             .hero p { font-size: 1rem; margin-bottom: 24px; }
@@ -945,8 +953,11 @@
             <a href="#how-it-works">How it works</a>
             <a href="#features">Features</a>
             <a href="#faq">FAQ</a>
+            <a href="https://app.royaengine.com" target="_blank" class="nav-mobile-signin">Sign in</a>
+        </div>
+        <div class="nav-actions">
             <a href="https://app.royaengine.com" target="_blank">Sign in</a>
-            <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="nav-cta">Get Early Access</a>
+            <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="nav-cta">Book a demo</a>
         </div>
         <button class="nav-mobile" aria-label="Open navigation menu">&#9776;</button>
     </div>
@@ -959,7 +970,7 @@
             <div class="hero-left">
                 <h1>Let us worry about royalty reporting.</h1>
                 <p>The fastest, easiest way to stay compliant with complex licensing agreements.</p>
-                <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="btn-primary">Get early access <span>&rarr;</span></a>
+                <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="btn-primary">Book a demo <span>&rarr;</span></a>
             </div>
             <div class="hero-right">
                 <div class="hero-mosaic" id="heroMosaic">
@@ -1550,7 +1561,7 @@
     <div class="container">
         <h2>Ready to automate royalty reporting?</h2>
         <p>Join leading licensees saving hundreds of hours monthly with Roya.</p>
-        <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="btn-cta" style="text-decoration:none;display:inline-block;">Get Early Access</a>
+        <a href="https://calendar.app.google/cM2LckjCnoHXDM2CA" target="_blank" class="btn-cta" style="text-decoration:none;display:inline-block;">Book a demo</a>
     </div>
 </section>
 
